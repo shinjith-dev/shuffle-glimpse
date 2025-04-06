@@ -9,13 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@repo/ui": "*",
+    "@monicon/react": "^1.2.2",
+    "@monicon/webpack": "1.2.2",
     "next": "^14.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-native-web": "^0.19.10"
+    "react-native-web": "^0.19.10",
+    "sglmps": "*",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.323",
     "@repo/typescript-config": "*",
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.14",

@@ -1,7 +1,7 @@
 {
   "extends": "@repo/typescript-config/react-native-library",
   "include": ["."],
-  "exclude": ["dist", "build", "node_modules"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "strict": true
   }
