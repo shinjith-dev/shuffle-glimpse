@@ -1,19 +1,17 @@
 {
-  "name": "api",
-  "version": "1.0.0",
-  "description": "api interceptor for shuffleglimpse",
-  "main": "index.js",
-  "author": "shinjith-dev",
-  "license": "MIT",
-  "scripts": {
-    "dev": "nodemon"
-  },
-  "dependencies": {
-    "axios": "^1.8.4",
-    "dotenv": "^16.4.7",
-    "express": "^5.1.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.9"
-  }
+	"name": "api",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"cf-typegen": "wrangler types",
+		"format": "prettier . --write"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20250406.0",
+		"typescript": "^5.5.2",
+		"wrangler": "^4.7.2"
+	}
 }
