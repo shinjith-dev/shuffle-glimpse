@@ -27,10 +27,8 @@
 	 * Environment Variables
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
 	 */
-	"vars": {
-		"SPOTIFY_CLIENT_ID": "6791e5cd4cad41d1aead0ad621172e1e",
-		"SPOTIFY_CLIENT_SECRET": "3c2c660662be4be7a7c94d3656cb7d51",
-	},
+	// "vars": {
+	// },
 	/**
 	 * Note: Use secrets to store sensitive data.
 	 * https://developers.cloudflare.com/workers/configuration/secrets/
