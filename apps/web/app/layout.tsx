@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { ThemeManager } from "sglmps/lib";
+import "../styles/global.css";
 
 export default function RootLayout({
   children,

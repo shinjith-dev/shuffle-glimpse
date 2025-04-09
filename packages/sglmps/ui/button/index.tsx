@@ -1,16 +1,54 @@
 import React from "react";
 import { Pressable, PressableProps, Text, TextProps } from "react-native";
 import { THEME, TSpacing } from "../../lib";
-import { bgColor, button, fgColor, iconButton, textButton } from "./style";
+import { bgColor,  iconButton, textButton } from "./style";
 import { Icon, IconProps } from "../icon";
+import { cva ,type VariantProps} from "cva";
+import {ButtonHTMLAttributes} from 'react'
+import { twMerge } from "tailwind-merge";
 
-export interface ButtonProps extends PressableProps {
+export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
+export const buttonVariants = cva(["flex", "items-center", "transition-all", "justify-center", "cursor-pointer"], {
+  variants: {
+    color: {
+primary: ["hover:scale-105", "border-brand"],
+secondary: ["border-bg-30", "hover:bg-bg-40"]
+    },
+    variant:{
+      solid:["text-fg"],
+      outlined:["border"]
+    },
+  },
+  compoundVariants: [
+    {
+      variant:'solid',
+      color: 'primary',
+class:'bg-brand'
+    },
+     {
+      variant:'solid',
+      color: 'secondary',
+class:'text-bg-30 bg-30'
+    },
+     {
+      variant:'outlined',
+      color: 'primary',
+class:'bg-brand'
+    },
+     {
+      variant:'outlined',
+      color: 'secondary',
+class:'text-bg-30'
+    }
+  ]
+});
+
+export type ButtonProps =  |
+  ButtonHTMLAttributes<HTMLButtonElement>
+& ButtonVariantProps & {
   size: TSpacing;
   children: string;
-  textProps?: TextProps;
-  variant: "solid" | "outlined";
   rounded: boolean;
-  color: "primary" | "secondary";
 }
 
 const buttonDefaultProps: ButtonProps = {
@@ -21,23 +59,30 @@ const buttonDefaultProps: ButtonProps = {
   color: "primary",
 };
 
-export const Button: React.FC<Partial<ButtonProps>> = (props) => {
-  const options = { ...buttonDefaultProps, ...props };
+export const Button: React.FC<Partial<ButtonProps>> = ({
+size="md",
+  variant='solid',
+  color='primary',
+  rounded=true,
+  children,
+...props
+}) => {
 
   return (
-    <Pressable
-      style={({ pressed, hovered }) => [
-        button(options).button,
-        (pressed || hovered) && button(options).hovered,
-      ]}
+    <button
+      className={twMerge(buttonVariants({variant,color}))}
+      style={{
+        height: THEME.spacing[size] * 14,
+        padding: `0 ${THEME.spacing[size] * 8}px`,
+        borderRadius: rounded
+          ? THEME.spacing[size] * 10
+          : THEME.radius[size],
+        fontSize: THEME.fontSize[size],
+      }}
+      {...props}
     >
-      <Text
-        {...options.textProps}
-        style={[button(options).text, options.textProps?.style]}
-      >
-        {options.children}
-      </Text>
-    </Pressable>
+      {children}
+    </button>
   );
 };
 
@@ -105,9 +150,7 @@ export const IconButton: React.FC<Partial<IconButtonProps>> = (props) => {
         size={THEME.iconSize[options.size]}
         name={options.icon}
         color={
-          options.variant === "solid"
-            ? fgColor[options.color]
-            : bgColor[options.color]
+          options.variant === "solid" ? THEME.color.fg : bgColor[options.color]
         }
       />
     </Pressable>

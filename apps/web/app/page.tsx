@@ -7,7 +7,7 @@ import { useTheme } from "sglmps/hooks";
 export default function Web() {
   const { theme } = useTheme();
   return (
-    <div style={{ padding: 16, backgroundColor: THEME.color[theme].bg }}>
+    <div style={{ padding: 16, backgroundColor: THEME.color["bg-10"] }}>
       <div
         style={{
           display: "flex",
