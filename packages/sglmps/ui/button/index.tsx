@@ -1,33 +1,10 @@
 import React from "react";
-import { Pressable, PressableProps, Text, TextProps } from "react-native";
 import { THEME, TSpacing } from "../../lib";
-import { bgColor, iconButton, textButton } from "./style";
 import { Icon, IconProps } from "../icon";
 import { cva, type VariantProps } from "cva";
 import { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
-
-export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
-export const buttonVariants = cva(
-  [
-    "flex",
-    "items-center",
-    "transition-all",
-    "justify-center",
-    "cursor-pointer",
-    "font-medium",
-  ],
-  {
-    variants: {
-      color: {
-        brand: ["bg-brand", "hover:scale-103", "text-white"],
-        primary: ["bg-white", "hover:scale-103", "text-bg"],
-        secondary: ["bg-bg-30", "hover:bg-bg-40", "text-white"],
-        tertiary: ["bg-bg-20", "hover:bg-bg-30", "text-white"],
-      },
-    },
-  },
-);
+import { ButtonVariantProps, IconButtonVariantProps, TextButtonVariantProps, buttonVariants, iconButtonVariants, textButtonVariants } from "./style";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   ButtonVariantProps & {
@@ -88,27 +65,6 @@ export const OutlinedButton: React.FC<Partial<OutlinedButtonProps>> = ({
   );
 };
 
-export type TextButtonVariantProps = VariantProps<typeof textButtonVariants>;
-export const textButtonVariants = cva(
-  [
-    "flex",
-    "items-center",
-    "transition-all",
-    "justify-center",
-    "cursor-pointer",
-    "text-white",
-    "font-medium",
-  ],
-  {
-    variants: {
-      color: {
-        primary: ["text-brand", "hover:scale-103"],
-        secondary: ["text-bg-80", "hover:text-white"],
-      },
-    },
-  },
-);
-
 export type TextButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   TextButtonVariantProps & {
     size: TSpacing;
@@ -117,7 +73,7 @@ export type TextButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
 
 export const TextButton: React.FC<Partial<TextButtonProps>> = ({
   size = "md",
-  color = "primary",
+  color = "brand",
   children,
   ...props
 }) => {
@@ -136,45 +92,12 @@ export const TextButton: React.FC<Partial<TextButtonProps>> = ({
   );
 };
 
-export type IconButtonVariantProps = VariantProps<typeof iconButtonVariants>;
-export const iconButtonVariants = cva(
-  [
-    "flex",
-    "items-center",
-    "transition-all",
-    "justify-center",
-    "cursor-pointer",
-    "font-medium",
-  ],
-  {
-    variants: {
-      color: {
-        brand: ["bg-brand", "hover:scale-103", "text-white"],
-        primary: ["bg-white", "hover:scale-103", "text-bg"],
-        secondary: ["bg-bg-30", "hover:bg-bg-40", "text-white"],
-        tertiary: ["bg-bg-20", "hover:bg-bg-30", "text-white"],
-      },
-      variant: {
-        solid: [],
-        ghost: [],
-      },
-    },
-  },
-);
-
-const iconButtonDefaultProps: IconButtonProps = {
-  size: "md",
-  children: "Button",
-  variant: "solid",
-  color: "primary",
-  icon: "hugeicons:smile-dizzy",
-};
-
 export type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   IconButtonVariantProps & {
     size: TSpacing;
     children: string;
     rounded: boolean;
+    icon: string
   };
 
 export const IconButton: React.FC<Partial<IconButtonProps>> = ({
@@ -182,24 +105,23 @@ export const IconButton: React.FC<Partial<IconButtonProps>> = ({
   color = "brand",
   rounded = true,
   variant = "solid",
+  icon = "hugeicons:smile-dizzy",
   children,
   ...props
 }) => {
   return (
     <button
-      className={twMerge(buttonVariants({ color }))}
+      className={twMerge(iconButtonVariants({ color, variant }))}
       style={{
-        height: THEME.spacing[props?.size] * 14,
-        width: THEME.spacing[props?.size] * 14,
-        backgroundColor:
-          props.variant === "solid" ? bgColor[props.color] : undefined,
-        borderRadius: THEME.spacing[props?.size] * 10,
-        alignItems: "center",
-        justifyContent: "center",
+        height: THEME.spacing[size] * 14,
+        width: THEME.spacing[size] * 14,
+        borderRadius: THEME.spacing[size] * 10,
       }}
       {...props}
     >
-      {children}
+      <Icon
+        name={icon}
+      />
     </button>
   );
 };

@@ -19,17 +19,27 @@ export default function Web() {
         }}
       >
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Button>Brand Button</Button>
-          <OutlinedButton>Outlined Button</OutlinedButton>
+          <Button>Button</Button>
           <IconButton variant="solid" />
           <IconButton variant="ghost" />
+          <TextButton>Button</TextButton>
         </div>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Button color="primary">Primary Button</Button>
-          <Button color="secondary">Secondary Button</Button>
-          <Button color="tertiary">Tertiary Button</Button>
-          <TextButton>Text Button</TextButton>
-          <TextButton color="secondary">Text Button</TextButton>
+          <Button color="primary">Button</Button>
+          <IconButton color="primary" variant="solid" />
+          <IconButton color="primary" variant="ghost" />
+          <TextButton color="primary">Text Button</TextButton>
+        </div>
+        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <Button color="secondary">Button</Button>
+          <IconButton color="secondary" variant="solid" />
+          <IconButton color="secondary" variant="ghost" />
+          <OutlinedButton>Outlined Button</OutlinedButton>
+        </div>
+        <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+          <Button color="tertiary">Button</Button>
+          <IconButton color="tertiary" variant="solid" />
+          <IconButton color="tertiary" variant="ghost" />
         </div>
       </div>
     </div>
