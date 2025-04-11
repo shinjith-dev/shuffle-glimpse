@@ -4,10 +4,12 @@
 
 @theme {
   --color-bg: #000000;
-    --color-bg-10:#121212;
-    --color-bg-20: #1f1f1f;
-    --color-bg-30: #2b2b2b;
-    --color-bg-40: #343434;
+  --color-bg-10: #121212;
+  --color-bg-20: #1f1f1f;
+  --color-bg-30: #2b2b2b;
+  --color-bg-40: #343434;
+  --color-bg-70: #7c7c7c;
+  --color-bg-80: #b3b3b3;
   --color-brand: #1db954;
   --color-danger-10: #851d22;
   --color-danger-20: #581919;
@@ -29,6 +31,5 @@
 }
 
 body {
-  font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", "Helvetica",
-    "Arial", sans-serif;
+  font-family: sans-serif, "Helvetica Neue", "Helvetica", "Arial";
 }

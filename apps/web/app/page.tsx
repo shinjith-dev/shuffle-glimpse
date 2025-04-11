@@ -1,7 +1,7 @@
 "use client";
 
 import { THEME } from "sglmps/lib";
-import { Button, IconButton, TextButton } from "sglmps/ui";
+import { Button, IconButton, OutlinedButton, TextButton } from "sglmps/ui";
 import { useTheme } from "sglmps/hooks";
 
 export default function Web() {
@@ -12,31 +12,24 @@ export default function Web() {
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: 12,
+          gap: 16,
           padding: 16,
           borderRadius: 16,
           marginBottom: 16,
         }}
       >
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Button>Solid Button</Button>
-          <Button variant="outlined">Outlined Button</Button>
-          <TextButton>Text Button</TextButton>
+          <Button>Brand Button</Button>
+          <OutlinedButton>Outlined Button</OutlinedButton>
           <IconButton variant="solid" />
           <IconButton variant="ghost" />
         </div>
         <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-          <Button rounded color="secondary">
-            Rounded Button
-          </Button>
-          <Button rounded variant="outlined" color="secondary">
-            Rounded Outlined Button
-          </Button>
-          <TextButton underline color="secondary">
-            Text Underlined
-          </TextButton>
-          <IconButton variant="outlined" color="secondary" />
-          <IconButton variant="ghost" color="secondary" />
+          <Button color="primary">Primary Button</Button>
+          <Button color="secondary">Secondary Button</Button>
+          <Button color="tertiary">Tertiary Button</Button>
+          <TextButton>Text Button</TextButton>
+          <TextButton color="secondary">Text Button</TextButton>
         </div>
       </div>
     </div>
