@@ -8,8 +8,32 @@ let tokenCache: TokenCache = {
 	expiresAt: 0,
 };
 
+const ALLOWED_ORIGINS = ['https://yourdomain.com', 'http://localhost:3000'];
+
 export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+		const origin = request.headers.get('Origin');
+
+		if (request.method === 'OPTIONS') {
+			return new Response(null, {
+				status: 204,
+				headers: {
+					'Access-Control-Allow-Origin': origin && ALLOWED_ORIGINS.includes(origin) ? origin : 'null',
+					'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+					'Access-Control-Allow-Headers': '*',
+				},
+			});
+		}
+
+		if (!origin || !ALLOWED_ORIGINS.includes(origin)) {
+			return new Response('Forbidden', {
+				status: 403,
+				headers: {
+					'Access-Control-Allow-Origin': 'null',
+				},
+			});
+		}
+
 		const url = new URL(request.url);
 		const now = Date.now();
 
