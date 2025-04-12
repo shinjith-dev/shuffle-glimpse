@@ -1,10 +1,16 @@
 import React from "react";
 import { THEME, TSpacing } from "../../lib";
 import { Icon, IconProps } from "../icon";
-import { cva, type VariantProps } from "cva";
 import { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
-import { ButtonVariantProps, IconButtonVariantProps, TextButtonVariantProps, buttonVariants, iconButtonVariants, textButtonVariants } from "./style";
+import {
+  ButtonVariantProps,
+  IconButtonVariantProps,
+  TextButtonVariantProps,
+  buttonVariants,
+  iconButtonVariants,
+  textButtonVariants,
+} from "./style";
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   ButtonVariantProps & {
@@ -97,7 +103,7 @@ export type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
     size: TSpacing;
     children: string;
     rounded: boolean;
-    icon: string
+    icon: string;
   };
 
 export const IconButton: React.FC<Partial<IconButtonProps>> = ({
@@ -119,9 +125,7 @@ export const IconButton: React.FC<Partial<IconButtonProps>> = ({
       }}
       {...props}
     >
-      <Icon
-        name={icon}
-      />
+      <Icon name={icon} />
     </button>
   );
 };

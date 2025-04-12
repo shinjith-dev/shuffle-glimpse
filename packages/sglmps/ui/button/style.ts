@@ -95,7 +95,7 @@ export const iconButtonVariants = cva(
       {
         color: "secondary",
         variant: "ghost",
-        class: "text-bg-80",
+        class: "text-bg-80 hover:text-fg",
       },
       {
         color: "tertiary",
@@ -105,7 +105,7 @@ export const iconButtonVariants = cva(
       {
         color: "tertiary",
         variant: "ghost",
-        class: "text-bg-70",
+        class: "text-bg-70 hover:text-bg-90",
       },
     ],
   },
