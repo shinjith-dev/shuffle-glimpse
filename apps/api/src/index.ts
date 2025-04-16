@@ -28,9 +28,9 @@ export default {
 			return new Response(null, {
 				status: 204,
 				headers: {
-					'Access-Control-Allow-Origin': origin && ALLOWED_ORIGINS.includes(origin) ? origin : 'null',
+					'Access-Control-Allow-Origin': '*', // origin && ALLOWED_ORIGINS.includes(origin) ? origin : 'null',
 					'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-					'Access-Control-Allow-Headers': '*',
+					'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 				},
 			});
 		}

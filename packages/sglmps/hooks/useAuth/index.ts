@@ -4,7 +4,7 @@ import axios from "axios";
 export function useAuth() {
   const callback = (code: string) => {
     axios.post(
-      "http://localhost:8787/api/token",
+      "https://sglmps.shinjith.dev/api/token",
       {
         grant_type: "authorization_code",
         code,
