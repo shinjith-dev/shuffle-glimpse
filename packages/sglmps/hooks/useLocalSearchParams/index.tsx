@@ -1,8 +1,2 @@
-import { useRouter } from "next/router";
-
-const useGlobalSearchParams = () => {
-  const { query } = useRouter();
-  return query;
-};
-
-export default useGlobalSearchParams;
+import { useSearchParams } from "next/navigation";
+export default useSearchParams;

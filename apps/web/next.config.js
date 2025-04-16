@@ -1,7 +1,7 @@
 const { MoniconPlugin } = require("@monicon/webpack");
 
 module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   webpack: (config) => {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
