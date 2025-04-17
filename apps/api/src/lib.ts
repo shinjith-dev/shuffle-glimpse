@@ -13,7 +13,7 @@ export const storeState = async (env: Env) => {
 	return state;
 };
 
-export const validateState = async (env: Env, state?: string) => {
+export const validateState = async (env: Env, state?: string | null) => {
 	if (!state) return false;
 
 	const stored = await env.AUTH_STATES.get(state);

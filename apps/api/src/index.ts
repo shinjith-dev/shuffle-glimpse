@@ -1,14 +1,15 @@
-import { generateRandomString, storeState, validateState } from './lib';
+import { storeState, validateState } from './lib';
 
-const ALLOWED_ORIGINS = ['https://yourdomain.com', 'http://localhost:3000', 'http://127.0.0.1:3000', null];
 const FRONTEND_URL = 'http://127.0.0.1:3000';
+const ALLOWED_ORIGINS = [FRONTEND_URL, null];
 
 export default {
 	async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
 		const origin = request.headers.get('Origin');
 
 		const corsHeaders = {
-			'Access-Control-Allow-Origin': origin && ALLOWED_ORIGINS.includes(origin) ? origin : 'null',
+			// origin is null on dev mode
+			'Access-Control-Allow-Origin': '*', //origin && ALLOWED_ORIGINS.includes(origin) ? origin : 'null',
 			'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
 			'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 		};
@@ -21,7 +22,7 @@ export default {
 		}
 
 		if (!ALLOWED_ORIGINS.includes(origin)) {
-			return new Response('borbidden', {
+			return new Response('forbidden', {
 				status: 403,
 				headers: {
 					'Access-Control-Allow-Origin': 'null',
@@ -51,12 +52,12 @@ export default {
 			}
 
 			if (url.pathname === '/get-token') {
-				const reqBody = (await request.json()) as { state?: string };
+				const reqBody = new URLSearchParams(await request.text());
 
-				if (!validateState(env, reqBody?.state)) return new Response('state_mismatch', { status: 400 });
+				if (!validateState(env, reqBody.get('state'))) return new Response('state_mismatch', { status: 400 });
 
 				const body = {
-					...reqBody,
+					...Object.fromEntries(reqBody),
 					redirect_uri: `${FRONTEND_URL}/callback`,
 					grant_type: 'authorization_code',
 				};
@@ -82,10 +83,10 @@ export default {
 			}
 
 			if (url.pathname === '/refresh-token') {
-				const reqBody = (await request.json()) as {};
+				const reqBody = new URLSearchParams(await request.text());
 
 				const body = {
-					...reqBody,
+					...Object.fromEntries(reqBody),
 					redirect_uri: `${FRONTEND_URL}/callback`,
 					grant_type: 'refresh_code',
 				};
@@ -110,7 +111,8 @@ export default {
 				});
 			}
 		} catch (err) {
-			return new Response(JSON.stringify(err), {
+			console.log(String(err));
+			return new Response('server_error', {
 				status: 500,
 				headers: corsHeaders,
 			});
