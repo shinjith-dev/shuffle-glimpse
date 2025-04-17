@@ -11,7 +11,7 @@ export default function CallBackHandler() {
   useEffect(() => {
     if (searchParams.has('error') || !searchParams.get('code'))
       console.log("Error authenticating user")
-    else callback(searchParams.get('code') || '')
+    else callback(searchParams.get('code') || '', searchParams.get('state') || '')
   }, [searchParams, callback])
 
   return null;

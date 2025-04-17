@@ -41,4 +41,10 @@
 	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
 	 */
 	// "services": [{ "binding": "MY_SERVICE", "service": "my-service" }]
+	"kv_namespaces": [
+		{
+			"binding": "AUTH_STATES",
+			"id": "c52b4c6f01124c848d4050597a5cf020",
+		},
+	],
 }
