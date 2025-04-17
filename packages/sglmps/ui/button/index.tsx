@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { THEME, TSpacing } from "../../lib";
 import { Icon, IconProps } from "../icon";
 import { ButtonHTMLAttributes } from "react";
@@ -17,12 +17,14 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
     size: TSpacing;
     children: string;
     rounded: boolean;
+    startIcon?: ReactElement;
   };
 
 export const Button: React.FC<Partial<ButtonProps>> = ({
   size = "md",
   color = "brand",
   rounded = true,
+  startIcon,
   children,
   ...props
 }) => {
@@ -37,6 +39,7 @@ export const Button: React.FC<Partial<ButtonProps>> = ({
       }}
       {...props}
     >
+      {startIcon}
       {children}
     </button>
   );

@@ -1,5 +1,4 @@
 import { cva, VariantProps } from "cva";
-import { THEME } from "../../lib";
 
 export type ButtonVariantProps = VariantProps<typeof buttonVariants>;
 export const buttonVariants = cva(
@@ -10,6 +9,7 @@ export const buttonVariants = cva(
     "justify-center",
     "cursor-pointer",
     "font-medium",
+    "gap-1.5",
   ],
   {
     variants: {

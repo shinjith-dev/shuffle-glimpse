@@ -18,9 +18,9 @@ export const THEME = {
     "2xl": 28,
   },
   fontSize: {
-    xs: 11,
-    sm: 12,
-    md: 14,
+    xs: 12,
+    sm: 14,
+    md: 15,
     lg: 16,
     xl: 18,
     "2xl": 20,
