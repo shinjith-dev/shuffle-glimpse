@@ -1,2 +1,2 @@
-import { useSearchParams } from "next/navigation";
-export default useSearchParams;
+import { useSearchParams as useLocalSearchParams } from "next/navigation";
+export default useLocalSearchParams;

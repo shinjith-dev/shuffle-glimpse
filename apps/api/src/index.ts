@@ -48,7 +48,10 @@ export default {
 					state,
 				});
 
-				return Response.redirect(`https://accounts.spotify.com/authorize?${params.toString()}`, 302);
+				return new Response(`https://accounts.spotify.com/authorize?${params.toString()}`, {
+					status: 200,
+					headers: corsHeaders,
+				});
 			}
 
 			if (url.pathname === '/get-token') {

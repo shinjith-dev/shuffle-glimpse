@@ -1,3 +1,5 @@
+"use client";
+import { auth } from "@/api";
 import { THEME } from "@/lib";
 import { Button } from "@/ui/button";
 import Image from "@/ui/image";
@@ -6,6 +8,14 @@ import React from "react";
 import { View } from "react-native";
 
 const Login: React.FC = () => {
+  const handleLogin = () => {
+    try {
+      auth.login();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <YStack
       gap={20}
@@ -24,6 +34,7 @@ const Login: React.FC = () => {
       />
       <View>
         <Button
+          onClick={handleLogin}
           color="primary"
           startIcon={
             <Image

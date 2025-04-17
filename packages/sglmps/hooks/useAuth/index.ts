@@ -1,13 +1,17 @@
 "use client";
-import axios from "axios";
+import { auth } from "@/api";
+import useRouter from "../useRouter";
 
 export function useAuth() {
+  const router = useRouter();
+
   const callback = (code: string, state: string) => {
-    axios.post(
-      "http://127.0.0.1:8787/get-token",
-      { code, state },
-      { headers: { "Content-Type": "application/x-www-form-urlencoded" } },
-    );
+    try {
+      auth.getToken({ code, state });
+      router.replace("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return { callback };
