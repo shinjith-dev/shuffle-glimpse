@@ -14,7 +14,7 @@ interface TableHeaderProps {
   header: HeaderItem[];
 }
 
-export default function TabelHeader({ header }: TableHeaderProps) {
+export default function TableHeader({ header }: TableHeaderProps) {
   return (
     <XStack style={styles.header}>
       {header.map((h) =>

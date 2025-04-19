@@ -1,5 +1,4 @@
 "use client";
-import React, { ReactElement } from "react";
 import { FlatList, FlatListProps } from "react-native";
 import TableItem from "./item";
 import TableHeader, { HeaderItem } from "./header";

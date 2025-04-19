@@ -13,6 +13,7 @@ import styles from "./style";
 import { useQueryClient } from "@tanstack/react-query";
 import { getTopTracks } from "@/api";
 import { timeRanges } from "@/constants";
+import TopTracksGlimpseLoading from "./glimpse-loading";
 
 const TopTracksGlimpse: React.FC = () => {
   const queryClient = useQueryClient();
@@ -28,6 +29,8 @@ const TopTracksGlimpse: React.FC = () => {
       });
     });
   }, [queryClient]);
+
+  if (!topTracks) return <TopTracksGlimpseLoading />;
 
   return (
     <YStack style={styles.glimpse}>
@@ -49,36 +52,34 @@ const TopTracksGlimpse: React.FC = () => {
         </XStack>
       </XStack>
 
-      {topTracks && (
-        <View style={styles.glimpseTable}>
-          <Table
-            header={[
-              { key: "sino", label: "#" },
-              { key: "name", label: "Name", width: "50%" },
-              { key: "album.name", label: "Album", width: "35%" },
-              {
-                key: "duration",
-                label: (
-                  <Icon
-                    name="hugeicons:time-quarter-02"
-                    size={16}
-                    color={THEME.color["bg-80"]}
-                  />
-                ),
-                width: "10%",
-              },
-            ]}
-            data={topTracks?.items.map((t, index) => ({
-              ...t,
-              duration: dayjs({ milliseconds: t.duration_ms }).format(
-                t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
+      <View style={styles.glimpseTable}>
+        <Table
+          header={[
+            { key: "sino", label: "#" },
+            { key: "name", label: "Name", width: "50%" },
+            { key: "album.name", label: "Album", width: "35%" },
+            {
+              key: "duration",
+              label: (
+                <Icon
+                  name="hugeicons:time-quarter-02"
+                  size={16}
+                  color={THEME.color["bg-80"]}
+                />
               ),
-              sino: index + 1,
-              name: <TopTracksTrack track={t} />,
-            }))}
-          />
-        </View>
-      )}
+              width: "10%",
+            },
+          ]}
+          data={topTracks?.items.map((t, index) => ({
+            ...t,
+            duration: dayjs({ milliseconds: t.duration_ms }).format(
+              t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
+            ),
+            sino: index + 1,
+            name: <TopTracksTrack track={t} />,
+          }))}
+        />
+      </View>
     </YStack>
   );
 };

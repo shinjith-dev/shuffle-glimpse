@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useTopArtists } from "@/queries";
 import Text from "@/ui/text";
 import TopArtistsArtist from "./artist";
+import TopArtistsGlimpseLoading from "./glimpse-loading";
 
 const TopArtistsGlimpse: React.FC = () => {
   const queryClient = useQueryClient();
@@ -24,6 +25,8 @@ const TopArtistsGlimpse: React.FC = () => {
       });
     });
   }, [queryClient]);
+
+  if (!topArtists) return <TopArtistsGlimpseLoading />;
 
   return (
     <YStack style={styles.glimpse}>
@@ -45,13 +48,11 @@ const TopArtistsGlimpse: React.FC = () => {
         </XStack>
       </XStack>
 
-      {topArtists && (
-        <XStack style={styles.glimpseArtists}>
-          {topArtists.items.map((a) => (
-            <TopArtistsArtist key={a.id} artist={a} />
-          ))}
-        </XStack>
-      )}
+      <XStack style={styles.glimpseArtists}>
+        {topArtists.items.map((a) => (
+          <TopArtistsArtist key={a.id} artist={a} />
+        ))}
+      </XStack>
     </YStack>
   );
 };
