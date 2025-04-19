@@ -60,7 +60,7 @@ export const OutlinedButton: React.FC<Partial<OutlinedButtonProps>> = ({
 }) => {
   return (
     <button
-      className="border-bg-70 cursor-pointer border text-white transition-all hover:scale-103 hover:border-white"
+      className="border-bg-70 cursor-pointer border text-white transition-all hover:scale-103 hover:border-white disabled:hover:scale-100"
       style={{
         height: THEME.spacing[size] * 14,
         padding: `0 ${THEME.spacing[size] * 8}px`,
@@ -90,7 +90,7 @@ export const TextButton: React.FC<Partial<TextButtonProps>> = ({
     <button
       className={twMerge(textButtonVariants({ color }))}
       style={{
-        padding: `4px 8px`,
+        padding: `4px 6px`,
         borderRadius: THEME.radius[size],
         fontSize: THEME.fontSize[size],
       }}

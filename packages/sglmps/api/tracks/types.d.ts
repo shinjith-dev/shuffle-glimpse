@@ -1,5 +1,5 @@
 interface GetTopTracksRequest {
-  timeRange?: "short_term" | "medium_term" | "long_term";
+  timeRange?: RequestTimeRange;
   limit?: number; // allowed range 1-50,
   page?: number;
 }

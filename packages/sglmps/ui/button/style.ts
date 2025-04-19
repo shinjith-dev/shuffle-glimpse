@@ -37,7 +37,7 @@ export const textButtonVariants = cva(
   {
     variants: {
       color: {
-        brand: ["text-brand", "hover:scale-103"],
+        brand: ["text-brand", "hover:scale-103", "disabled:hover:scale-100"],
         primary: ["text-bg-80", "hover:text-fg"],
       },
     },

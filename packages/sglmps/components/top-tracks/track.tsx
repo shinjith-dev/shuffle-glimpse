@@ -2,12 +2,13 @@ import { XStack, YStack } from "@/ui";
 import Image from "@/ui/image";
 import Text from "@/ui/text";
 import { memo } from "react";
+import styles from "./style";
 
 interface Props {
   track: TrackItem;
 }
 
-const TopTracksTrack: React.FC<Props> = ({ track }) => {
+const TopTracksTrack: React.FC<Props> = memo(({ track }) => {
   const image =
     track.album.images.length > 0
       ? track.album.images.reduce<ImageResponse>(
@@ -18,18 +19,18 @@ const TopTracksTrack: React.FC<Props> = ({ track }) => {
       : undefined;
 
   return (
-    <XStack alignItems="center" gap={12} style={{ flex: 0, maxWidth: "100%" }}>
+    <XStack style={styles.track}>
       {image && (
         <Image
           width={image.width}
           height={image.height}
           alt="thumbnail"
           src={image.url}
-          style={{ width: 40, height: 40, borderRadius: 4 }}
+          style={styles.trackThumbnail}
         />
       )}
-      <YStack style={{ maxWidth: "100%" }}>
-        <Text variant="body1" numberOfLines={1} style={{ maxWidth: "100%" }}>
+      <YStack style={{ maxWidth: "90%" }}>
+        <Text variant="body1" numberOfLines={1}>
           {track.name}
         </Text>
         <Text variant="body2" numberOfLines={1}>
@@ -38,6 +39,6 @@ const TopTracksTrack: React.FC<Props> = ({ track }) => {
       </YStack>
     </XStack>
   );
-};
+});
 
-export default memo(TopTracksTrack);
+export default TopTracksTrack;

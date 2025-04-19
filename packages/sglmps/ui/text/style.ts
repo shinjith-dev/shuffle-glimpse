@@ -3,7 +3,12 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   heading1: {
-    fontSize: THEME.fontSize["4xl"],
+    fontSize: THEME.fontSize["8xl"],
+    color: THEME.color.fg,
+    fontWeight: 600,
+  },
+  heading2: {
+    fontSize: THEME.fontSize["3xl"],
     color: THEME.color.fg,
     fontWeight: 600,
   },

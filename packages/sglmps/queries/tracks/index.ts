@@ -9,6 +9,6 @@ export const useTopTracks = ({
   limit = 20,
 }: GetTopTracksRequest) =>
   useQuery({
-    queryKey: ["top-tracks", timeRange, page, limit],
+    queryKey: ["top-tracks", { limit, timeRange, page }],
     queryFn: () => getTopTracks({ limit, timeRange, page }),
   });

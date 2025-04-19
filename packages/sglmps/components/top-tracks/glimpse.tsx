@@ -1,26 +1,56 @@
 "use client";
-import { useTopTracks } from "@/queries/tracks";
-import { YStack } from "@/ui/layout";
+import { useTopTracks } from "@/queries";
+import { XStack, YStack } from "@/ui/layout";
 import Table from "@/ui/table";
 import Text from "@/ui/text";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TopTracksTrack from "./track";
 import { View } from "react-native";
-import { Icon } from "@/ui";
+import { Icon, TextButton } from "@/ui";
 import { THEME } from "@/lib";
 import dayjs from "@/lib/dayjs";
+import styles from "./style";
+import { useQueryClient } from "@tanstack/react-query";
+import { getTopTracks } from "@/api";
+import { timeRanges } from "@/constants";
 
 const TopTracksGlimpse: React.FC = () => {
-  const { data: topTracks } = useTopTracks({ limit: 5 });
+  const queryClient = useQueryClient();
+  const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
+  const { data: topTracks } = useTopTracks({ limit: 5, timeRange });
+
+  useEffect(() => {
+    timeRanges.forEach((range) => {
+      queryClient.prefetchQuery({
+        queryKey: ["top-tracks", { limit: 5, page: 1, timeRange: range.key }],
+        queryFn: () =>
+          getTopTracks({ limit: 5, page: 1, timeRange: range.key }),
+      });
+    });
+  }, [queryClient]);
 
   return (
-    <YStack
-      gap={12}
-      style={{ width: "100%", maxHeight: "100%", overflow: "hidden" }}
-    >
-      <Text variant="heading1">Top tracks this month</Text>
+    <YStack style={styles.glimpse}>
+      <XStack style={styles.glimpseHeader}>
+        <Text variant="heading2">Top tracks</Text>
+
+        <XStack gap={4}>
+          {timeRanges.map((tp) => (
+            <TextButton
+              key={tp.key}
+              size="sm"
+              onClick={() => setTimeRange(tp.key)}
+              color={tp.key === timeRange ? "brand" : "primary"}
+              disabled={tp.key === timeRange}
+            >
+              {tp.label}
+            </TextButton>
+          ))}
+        </XStack>
+      </XStack>
+
       {topTracks && (
-        <View style={{ flexGrow: 1, width: "100%" }}>
+        <View style={styles.glimpseTable}>
           <Table
             header={[
               { key: "sino", label: "#" },
