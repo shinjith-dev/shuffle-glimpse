@@ -1,14 +1,14 @@
+import { YStack } from "@/ui";
 import React from "react";
-import { View } from "react-native";
+import TopTracksGlimpse from "../top-tracks/glimpse";
 import styles from "./style";
-import Sidebar from "../sidebar";
 
-const App: React.FC = () => {
+const Glimpse: React.FC = () => {
   return (
-    <View style={styles.app}>
-      <Sidebar />
-    </View>
+    <YStack style={styles.glimpse}>
+      <TopTracksGlimpse />
+    </YStack>
   );
 };
 
-export default App;
+export default Glimpse;

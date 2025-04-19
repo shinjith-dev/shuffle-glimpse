@@ -34,7 +34,11 @@
 }
 
 body {
-  font-family: sans-serif, "Helvetica Neue", "Helvetica", "Arial";
+  font-family: "Poppins", sans-serif, "Helvetica Neue", "Helvetica", "Arial";
   height: 100svh;
   width: 100vw;
+}
+
+* {
+  font-family: "Poppins", sans-serif, "Helvetica Neue", "Helvetica", "Arial" !important;
 }

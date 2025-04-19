@@ -9,23 +9,23 @@ import {
 import styles from "./styles";
 
 export interface LayoutProps extends ViewProps {
-  jc?: FlexStyle["justifyContent"];
-  ai?: FlexAlignType;
-  fg?: number | undefined;
-  fs?: number | undefined;
-  fb?: DimensionValue | undefined;
-  f?: number;
+  justifyContent?: FlexStyle["justifyContent"];
+  alignItems?: FlexAlignType;
+  flexGrow?: number | undefined;
+  flexShrink?: number | undefined;
+  flexBasis?: DimensionValue | undefined;
+  flex?: number;
   gap?: number;
 }
 
 export const XStack = ({
-  jc,
-  ai,
+  justifyContent,
+  alignItems,
   gap,
-  fg,
-  f,
-  fs,
-  fb,
+  flexGrow,
+  flex,
+  flexShrink,
+  flexBasis,
   style,
   ...props
 }: LayoutProps) => {
@@ -35,13 +35,13 @@ export const XStack = ({
       style={[
         styles.xstack,
         {
-          justifyContent: jc,
-          alignItems: ai,
+          justifyContent,
+          alignItems,
           gap,
-          flex: f,
-          flexGrow: fg,
-          flexShrink: fs,
-          flexBasis: fb,
+          flex,
+          flexGrow,
+          flexShrink,
+          flexBasis,
         },
         style,
       ]}
@@ -50,13 +50,13 @@ export const XStack = ({
 };
 
 export const YStack = ({
-  jc,
-  ai,
+  justifyContent,
+  alignItems,
   gap,
-  fg,
-  f,
-  fs,
-  fb,
+  flexGrow,
+  flex,
+  flexShrink,
+  flexBasis,
   style,
   ...props
 }: LayoutProps) => {
@@ -66,13 +66,13 @@ export const YStack = ({
       style={[
         styles.ystack,
         {
-          justifyContent: jc,
-          alignItems: ai,
+          justifyContent,
+          alignItems,
           gap,
-          flex: f,
-          flexGrow: fg,
-          flexShrink: fs,
-          flexBasis: fb,
+          flex,
+          flexGrow,
+          flexShrink,
+          flexBasis,
         },
         style,
       ]}

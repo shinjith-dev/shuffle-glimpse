@@ -19,9 +19,9 @@ const Login: React.FC = () => {
   return (
     <YStack
       gap={20}
-      ai="center"
-      jc="center"
-      f={1}
+      alignItems="center"
+      justifyContent="center"
+      flex={1}
       style={{ height: "100%", backgroundColor: THEME.color.bg }}
     >
       <Image
