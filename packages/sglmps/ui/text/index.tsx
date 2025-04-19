@@ -7,7 +7,7 @@ import {
 import styles from "./style";
 
 export interface TextProps extends RNTextProps {
-  variant?: "heading1" | "body1";
+  variant?: "heading1" | "body1" | "body2";
   color?: ColorValue;
   fontSize?: number;
   fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;

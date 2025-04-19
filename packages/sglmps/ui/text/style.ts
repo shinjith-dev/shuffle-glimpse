@@ -9,6 +9,11 @@ const styles = StyleSheet.create({
   },
   body1: {
     fontSize: THEME.fontSize.md,
+    color: THEME.color.fg,
+  },
+  body2: {
+    fontSize: THEME.fontSize.sm,
+    color: THEME.color["bg-80"],
   },
 });
 

@@ -1,12 +1,25 @@
-import React from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { XStack } from "../layout";
+import Text from "../text";
+import styles from "./style";
 
-interface TableItemProps<T extends { id: string | number }> {
-  header: T;
+export type HeaderItem = {
+  key: string;
+  label: ReactNode;
+};
+
+interface TableHeaderProps {
+  header: HeaderItem[];
 }
 
-export default function TabelHeader<T extends { id: string | number }>({
-  header,
-}: TableItemProps<T>) {
-  return <XStack></XStack>;
+export default function TabelHeader({ header }: TableHeaderProps) {
+  return (
+    <XStack gap={20} style={styles.header}>
+      {header.map((h) => (
+        <Text variant="body2" key={h.key}>
+          {h.label}
+        </Text>
+      ))}
+    </XStack>
+  );
 }

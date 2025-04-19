@@ -1,23 +1,35 @@
-import React from "react";
+"use client";
+import React, { ReactElement } from "react";
 import { FlatList, FlatListProps } from "react-native";
 import TableItem from "./item";
-import TableHeader from "./header";
+import TableHeader, { HeaderItem } from "./header";
+import styles from "./style";
 
-interface TableProps<T extends { id: string | number }>
-  extends Omit<FlatListProps<T>, "data" | "renderItem"> {
-  header: T;
-  data: T[];
+interface TableProps<
+  Header extends HeaderItem[],
+  Keys extends Header[number]["key"],
+  Row extends Record<Keys, any>,
+> extends Omit<
+    FlatListProps<Row & { id: string | number }>,
+    "data" | "renderItem"
+  > {
+  header: Header;
+  data: (Row & { id: string | number })[];
 }
 
-export default function Table<T extends { id: string | number }>({
-  header,
-  data,
-  ...props
-}: TableProps<T>) {
+export default function Table<
+  Header extends HeaderItem[],
+  Keys extends Header[number]["key"],
+  Row extends Record<Keys, any>,
+>({ header, data, ...props }: TableProps<Header, Keys, Row>) {
   return (
     <FlatList
       data={data}
-      renderItem={({ item }) => <TableItem key={item.id} item={item} />}
+      style={styles.table}
+      contentContainerStyle={styles.tableContents}
+      renderItem={({ item }) => (
+        <TableItem key={item.id} item={item} header={header} />
+      )}
       ListHeaderComponent={() => <TableHeader header={header} />}
       {...props}
     />
