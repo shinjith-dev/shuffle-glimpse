@@ -12,5 +12,5 @@ interface GetTokenResponse {
 }
 
 interface RefreshTokenRequest {
-  refresh: string | null;
+  refresh_token: string | null;
 }

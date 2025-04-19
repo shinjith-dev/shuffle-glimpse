@@ -48,7 +48,7 @@ api.interceptors.response.use(
 
       try {
         const refresh = useAuthStore.getState().refreshToken;
-        const response = await auth.refreshToken({ refresh });
+        const response = await auth.refreshToken({ refresh_token: refresh });
 
         const newAccessToken = response.data.accessToken;
         const newRefreshToken = response.data.refreshToken;
