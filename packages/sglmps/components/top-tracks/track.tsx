@@ -29,7 +29,7 @@ const TopTracksTrack: React.FC<Props> = memo(({ track }) => {
           style={styles.trackThumbnail}
         />
       )}
-      <YStack style={{ maxWidth: "90%" }}>
+      <YStack gap={4} style={{ maxWidth: "90%" }}>
         <Text variant="body1" numberOfLines={1}>
           {track.name}
         </Text>

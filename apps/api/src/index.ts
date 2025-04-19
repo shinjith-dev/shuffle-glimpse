@@ -2,6 +2,7 @@ import { storeState, validateState } from './lib';
 
 const FRONTEND_URL = 'http://127.0.0.1:3000';
 const ALLOWED_ORIGINS = [FRONTEND_URL, null];
+const PERMISSION_SCOPE = ['user-top-read'];
 
 export default {
 	async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
@@ -35,8 +36,7 @@ export default {
 		try {
 			if (url.pathname === '/login') {
 				const state = await storeState(env);
-				const scope =
-					'playlist-read-private playlist-read-private playlist-modify-private user-follow-modify user-follow-read user-top-read user-read-recently-played user-library-modify user-library-read user-read-email user-read-private';
+				const scope = PERMISSION_SCOPE.join(' ');
 				const client_id = env.SPOTIFY_CLIENT_ID;
 				const redirect_uri = `${FRONTEND_URL}/callback`;
 

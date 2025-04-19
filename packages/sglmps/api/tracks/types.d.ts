@@ -15,8 +15,8 @@ interface GetTopTracksResponse {
 }
 
 interface TrackItem {
-  album: Album;
-  artists: Artist[];
+  album: TrackAlbum;
+  artists: TrackArtist[];
   available_markets: string[];
   disc_number: number;
   duration_ms: number;
@@ -35,9 +35,9 @@ interface TrackItem {
   uri: string;
 }
 
-interface Album {
+interface TrackAlbum {
   album_type: string;
-  artists: Artist[];
+  artists: TrackArtist[];
   available_markets: string[];
   external_urls: AlbumExternalUrls;
   href: string;
@@ -66,7 +66,7 @@ interface ImageResponse {
   width: number;
 }
 
-interface Artist {
+interface TrackArtist {
   external_urls: ArtistExternalUrls;
   href: string;
   id: string;

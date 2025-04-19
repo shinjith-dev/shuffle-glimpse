@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     minWidth: 24,
     textAlign: "left",
     overflow: "hidden",
-    paddingRight: 20,
+    paddingRight: 28,
   },
   table: {
     width: "100%",
@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   item: {
-    padding: 8,
+    padding: 12,
   },
   itemContent: {
     textAlign: "left",
     overflow: "hidden",
     minWidth: 24,
-    paddingRight: 20,
+    paddingRight: 28,
   },
 });
 

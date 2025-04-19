@@ -8,18 +8,19 @@ import { timeRanges } from "@/constants";
 import { useEffect, useState } from "react";
 import { useTopArtists } from "@/queries";
 import Text from "@/ui/text";
+import TopArtistsArtist from "./artist";
 
 const TopArtistsGlimpse: React.FC = () => {
   const queryClient = useQueryClient();
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
-  const { data: topArtists } = useTopArtists({ limit: 5, timeRange });
+  const { data: topArtists } = useTopArtists({ limit: 7, timeRange });
 
   useEffect(() => {
     timeRanges.forEach((range) => {
       queryClient.prefetchQuery({
-        queryKey: ["top-artists", { limit: 5, page: 1, timeRange: range.key }],
+        queryKey: ["top-artists", { limit: 7, page: 1, timeRange: range.key }],
         queryFn: () =>
-          getTopArtists({ limit: 5, page: 1, timeRange: range.key }),
+          getTopArtists({ limit: 7, page: 1, timeRange: range.key }),
       });
     });
   }, [queryClient]);
@@ -27,7 +28,7 @@ const TopArtistsGlimpse: React.FC = () => {
   return (
     <YStack style={styles.glimpse}>
       <XStack style={styles.glimpseHeader}>
-        <Text variant="heading2">Top artists</Text>
+        <Text variant="heading2">Top Artists</Text>
 
         <XStack gap={4}>
           {timeRanges.map((tp) => (
@@ -44,7 +45,13 @@ const TopArtistsGlimpse: React.FC = () => {
         </XStack>
       </XStack>
 
-      {topArtists && null}
+      {topArtists && (
+        <XStack style={styles.glimpseArtists}>
+          {topArtists.items.map((a) => (
+            <TopArtistsArtist key={a.id} artist={a} />
+          ))}
+        </XStack>
+      )}
     </YStack>
   );
 };

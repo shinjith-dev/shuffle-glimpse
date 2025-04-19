@@ -8,7 +8,7 @@ export const getTopArtists = async ({
   limit = 20,
 }: GetTopArtistsRequest) =>
   await api
-    .get(
+    .get<GetTopArtistsResponse>(
       `/me/top/artists?time_range=${timeRange}&limit=${limit}&offset=${(page - 1) * limit}`,
     )
     .then((res) => res.data);

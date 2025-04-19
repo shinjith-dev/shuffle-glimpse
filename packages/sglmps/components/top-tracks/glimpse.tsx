@@ -17,14 +17,14 @@ import { timeRanges } from "@/constants";
 const TopTracksGlimpse: React.FC = () => {
   const queryClient = useQueryClient();
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
-  const { data: topTracks } = useTopTracks({ limit: 5, timeRange });
+  const { data: topTracks } = useTopTracks({ limit: 7, timeRange });
 
   useEffect(() => {
     timeRanges.forEach((range) => {
       queryClient.prefetchQuery({
-        queryKey: ["top-tracks", { limit: 5, page: 1, timeRange: range.key }],
+        queryKey: ["top-tracks", { limit: 7, page: 1, timeRange: range.key }],
         queryFn: () =>
-          getTopTracks({ limit: 5, page: 1, timeRange: range.key }),
+          getTopTracks({ limit: 7, page: 1, timeRange: range.key }),
       });
     });
   }, [queryClient]);
@@ -32,7 +32,7 @@ const TopTracksGlimpse: React.FC = () => {
   return (
     <YStack style={styles.glimpse}>
       <XStack style={styles.glimpseHeader}>
-        <Text variant="heading2">Top tracks</Text>
+        <Text variant="heading2">Top Tracks</Text>
 
         <XStack gap={4}>
           {timeRanges.map((tp) => (

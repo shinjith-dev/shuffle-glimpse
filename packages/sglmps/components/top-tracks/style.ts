@@ -4,12 +4,13 @@ const styles = StyleSheet.create({
   track: {
     alignItems: "center",
     gap: 12,
-    flex: 1,
-    maxWidth: "100%",
+    flexGrow: 1,
+    flexShrink: 1,
+    maxWidth: "95%",
   },
   trackThumbnail: {
-    width: 40,
-    height: 40,
+    width: 48,
+    height: 48,
     borderRadius: 4,
   },
   glimpse: {

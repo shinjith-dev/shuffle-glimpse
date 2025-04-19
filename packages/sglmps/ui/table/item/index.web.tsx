@@ -11,7 +11,7 @@ interface TableItemProps {
 
 export default function TableItem({ header, item }: TableItemProps) {
   return (
-    <div className="flex w-full items-center p-2">
+    <div className="flex w-full items-center p-3">
       {header.map((h) => {
         const content = getNestedValue(item, h.key);
 
