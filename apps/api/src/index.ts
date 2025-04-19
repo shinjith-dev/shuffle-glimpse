@@ -36,7 +36,7 @@ export default {
 			if (url.pathname === '/login') {
 				const state = await storeState(env);
 				const scope =
-					'user-read-private user-read-email user-read-recently-played user-top-read user-follow-read user-follow-modify playlist-read-private playlist-read-collaborative playlist-modify-public';
+					'playlist-read-private playlist-read-private playlist-modify-private user-follow-modify user-follow-read user-top-read user-read-recently-played user-library-modify user-library-read user-read-email user-read-private';
 				const client_id = env.SPOTIFY_CLIENT_ID;
 				const redirect_uri = `${FRONTEND_URL}/callback`;
 
@@ -91,7 +91,7 @@ export default {
 				const body = {
 					...Object.fromEntries(reqBody),
 					redirect_uri: `${FRONTEND_URL}/callback`,
-					grant_type: 'refresh_code',
+					grant_type: 'refresh_token',
 				};
 
 				const proxyResp = await fetch('https://accounts.spotify.com/api/token', {
