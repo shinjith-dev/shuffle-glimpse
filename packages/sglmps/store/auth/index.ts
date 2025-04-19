@@ -1,12 +1,25 @@
-import { StateCreator } from "zustand";
+import { create } from "zustand";
+import { persist, devtools } from "zustand/middleware";
 
-export interface AuthStore {
-  mode: "dark" | "light";
-  toggle: () => void;
+interface AuthStore {
+  accessToken: string | null;
+  refreshToken: string | null;
+  setTokens: (access: string, refresh: string) => void;
+  clearTokens: () => void;
 }
 
-export const themeStore: StateCreator<AuthStore> = (set) => ({
-  mode: "dark",
-  toggle: () =>
-    set((state) => ({ mode: state.mode === "dark" ? "light" : "dark" })),
-});
+export const useAuthStore = create<AuthStore>()(
+  devtools(
+    persist(
+      (set) => ({
+        accessToken: null,
+        refreshToken: null,
+        setTokens: (access, refresh) =>
+          set({ accessToken: access, refreshToken: refresh }),
+        clearTokens: () => set({ accessToken: null, refreshToken: null }),
+      }),
+      { name: "auth-store" },
+    ),
+    { name: "auth-store" },
+  ),
+);

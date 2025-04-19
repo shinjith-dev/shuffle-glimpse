@@ -18,10 +18,12 @@ const styles = StyleSheet.create({
   glimpse: {
     height: "100%",
     width: "100%",
-    backgroundColor: THEME.color["bg-10"],
     flexDirection: "column",
-    padding: 28,
-    gap: 20,
+    backgroundColor: THEME.color["bg-10"],
+    borderRadius: 8,
+    gap: 28,
+    paddingHorizontal: 28,
+    paddingVertical: 40,
   },
 });
 

@@ -1,12 +1,12 @@
+"use client";
+
+import { useAuthStore } from "@/store";
 import axios from "axios";
 import { auth } from "./auth";
 
 const api = axios.create({
   baseURL: "https://api.spotify.com/v1",
 });
-
-let accessToken = localStorage.getItem("accessToken") || "";
-let refreshToken = localStorage.getItem("refreshToken") || "";
 
 let isRefreshing = false;
 let refreshSubscribers: ((token: string) => void)[] = [];
@@ -21,7 +21,8 @@ function addRefreshSubscriber(callback: (token: string) => void) {
 }
 
 api.interceptors.request.use((config) => {
-  if (accessToken) {
+  const accessToken = useAuthStore.getState().accessToken;
+  if (accessToken && config.headers) {
     config.headers["Authorization"] = `Bearer ${accessToken}`;
   }
   return config;
@@ -46,19 +47,21 @@ api.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const response = await auth.refreshToken({ refresh: refreshToken });
+        const refresh = useAuthStore.getState().refreshToken;
+        const response = await auth.refreshToken({ refresh });
 
-        accessToken = response.data.accessToken;
-        refreshToken = response.data.refreshToken;
+        const newAccessToken = response.data.accessToken;
+        const newRefreshToken = response.data.refreshToken;
 
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        useAuthStore.getState().setTokens(newAccessToken, newRefreshToken);
 
-        onRefreshed(accessToken);
+        onRefreshed(newAccessToken);
         return api(originalRequest);
       } catch (err) {
-        console.error("Refresh token expired");
-        window.location.href = "/login";
+        useAuthStore.getState().clearTokens();
+        if (typeof window !== "undefined") {
+          window.location.href = "/login";
+        }
         return Promise.reject(err);
       } finally {
         isRefreshing = false;

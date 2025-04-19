@@ -1,11 +1,13 @@
-import React, { ReactElement, ReactNode } from "react";
+import { ReactNode } from "react";
 import { XStack } from "../layout";
 import Text from "../text";
 import styles from "./style";
+import { DimensionValue, View } from "react-native";
 
 export type HeaderItem = {
   key: string;
   label: ReactNode;
+  width?: DimensionValue;
 };
 
 interface TableHeaderProps {
@@ -14,12 +16,23 @@ interface TableHeaderProps {
 
 export default function TabelHeader({ header }: TableHeaderProps) {
   return (
-    <XStack gap={20} style={styles.header}>
-      {header.map((h) => (
-        <Text variant="body2" key={h.key}>
-          {h.label}
-        </Text>
-      ))}
+    <XStack style={styles.header}>
+      {header.map((h) =>
+        typeof h.label === "string" ? (
+          <Text
+            key={h.key}
+            variant="body2"
+            numberOfLines={1}
+            style={[styles.headerContent, { width: h.width }]}
+          >
+            {h.label}
+          </Text>
+        ) : (
+          <View key={h.key} style={[styles.headerContent, { width: h.width }]}>
+            {h.label}
+          </View>
+        ),
+      )}
     </XStack>
   );
 }

@@ -5,11 +5,11 @@ const styles = StyleSheet.create({
   sidebar: {
     backgroundColor: THEME.color["bg-10"],
     height: "100%",
-    width: 280,
+    width: 300,
     borderRadius: 8,
-    paddingVertical: 20,
+    paddingVertical: 36,
     gap: 28,
-    paddingHorizontal: 12,
+    paddingHorizontal: 24,
   },
   divider: {
     height: 2,

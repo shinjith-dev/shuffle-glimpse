@@ -1,7 +1,8 @@
 import { XStack } from "@/ui/layout";
 import Text from "@/ui/text";
-import React from "react";
 import { HeaderItem } from "../header";
+import styles from "../style";
+import { getNestedValue } from "@/lib";
 
 interface TableItemProps {
   header: HeaderItem[];
@@ -10,9 +11,11 @@ interface TableItemProps {
 
 export default function TableItem({ header, item }: TableItemProps) {
   return (
-    <XStack gap={20}>
+    <XStack gap={20} style={styles.item}>
       {header.map((h) => (
-        <Text variant="body1">{item[h.key]}</Text>
+        <Text variant="body1" style={styles.itemContent}>
+          {getNestedValue(item, h.key)}
+        </Text>
       ))}
     </XStack>
   );

@@ -1,7 +1,17 @@
+// @ts-check
 const { MoniconPlugin } = require("@monicon/webpack");
 
+/** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.scdn.co",
+      },
+    ],
+  },
   webpack: (config) => {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),

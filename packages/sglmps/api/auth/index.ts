@@ -7,7 +7,7 @@ export const auth = {
       .then((res) => window.location.replace(res.data)),
   getToken: async (payload: GetTokenRequest) =>
     await authApi
-      .post("/get-token", payload, {
+      .post<GetTokenResponse>("/get-token", payload, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
       .then((res) => res.data),
