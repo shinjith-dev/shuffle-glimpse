@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   artist: {
     gap: 12,
     alignItems: "center",
+    maxWidth: 180,
   },
   artistAvatar: {},
 });

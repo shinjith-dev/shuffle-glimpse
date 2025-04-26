@@ -29,7 +29,7 @@ const TopArtistsArtist: React.FC<Props> = memo(({ artist }) => {
           }}
         />
       )}
-      <Text variant="body1" numberOfLines={1}>
+      <Text style={{ textAlign: "center" }} variant="body1" numberOfLines={2}>
         {artist.name}
       </Text>
     </YStack>

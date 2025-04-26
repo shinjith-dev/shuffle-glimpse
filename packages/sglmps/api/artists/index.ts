@@ -6,9 +6,12 @@ export const getTopArtists = async ({
   timeRange = "short_term",
   offset = 0,
   limit = 20,
+  url,
 }: GetTopArtistsRequest) =>
   await api
     .get<GetTopArtistsResponse>(
-      `/me/top/artists?time_range=${timeRange}&limit=${limit}&offset=${offset}`,
+      url
+        ? url
+        : `/me/top/artists?time_range=${timeRange}&limit=${limit}&offset=${offset}`,
     )
     .then((res) => res.data);

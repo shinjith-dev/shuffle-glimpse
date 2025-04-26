@@ -12,7 +12,7 @@ const ProfileGradient = ({ src }: { src: string }) => {
   const dominantColor = palette?.length
     ? findDarkestInRange(
         palette as string[],
-        THEME.color.bg,
+        THEME.color["bg-10"],
         THEME.color["bg-70"],
       )
     : undefined;

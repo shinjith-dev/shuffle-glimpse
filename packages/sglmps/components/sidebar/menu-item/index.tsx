@@ -2,7 +2,7 @@ import usePathname from "@/hooks/usePathname";
 import useRouter from "@/hooks/useRouter";
 import { THEME } from "@/lib";
 import { Icon } from "@/ui/icon";
-import React from "react";
+import React, { memo } from "react";
 
 interface IMenuProps {
   label: string;
@@ -10,16 +10,15 @@ interface IMenuProps {
   icon: string;
 }
 
-const MenuItem: React.FC<IMenuProps> = ({ label, icon, path }) => {
+const MenuItem: React.FC<IMenuProps> = memo(({ label, icon, path }) => {
   const pathname = usePathname();
   const router = useRouter();
 
   return (
     <button
       onClick={() => router.push(path)}
-      className="hover:bg-bg-20 hover:text-fg flex w-full cursor-pointer flex-row items-center gap-2 rounded-md px-3 py-2.5 font-medium transition-all"
+      className={`hover:bg-bg-20/80 hover:text-fg flex w-full cursor-pointer flex-row items-center gap-2 rounded-md px-3 py-2.5 font-medium transition-all ${pathname === path ? "text-fg bg-bg-20/70" : "text-bg-80 bg-transparent"}`}
       style={{
-        color: pathname === path ? THEME.color.fg : THEME.color["bg-70"],
         fontSize: THEME.fontSize.md,
       }}
     >
@@ -27,6 +26,6 @@ const MenuItem: React.FC<IMenuProps> = ({ label, icon, path }) => {
       {label}
     </button>
   );
-};
+});
 
 export default MenuItem;

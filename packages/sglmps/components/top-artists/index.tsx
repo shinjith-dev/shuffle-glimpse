@@ -3,7 +3,7 @@
 import { TextButton, XStack, YStack } from "@/ui";
 import styles from "./style";
 import { timeRanges } from "@/constants";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useTopArtists } from "@/queries";
 import Text from "@/ui/text";
 import TopArtistsArtist from "./artist";
@@ -11,6 +11,7 @@ import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { ScrollView } from "react-native";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import { THEME } from "@/lib";
+import dayjs from "@/lib/dayjs";
 
 const TopArtists: React.FC = () => {
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
@@ -31,6 +32,11 @@ const TopArtists: React.FC = () => {
       ? 50
       : topArtists?.pages?.[0].total
     : "";
+
+  const artists = useMemo(
+    () => topArtists?.pages.map((page) => page.items, []).flat() || [],
+    [topArtists],
+  );
 
   return (
     <YStack style={styles.topContainer}>
@@ -55,9 +61,7 @@ const TopArtists: React.FC = () => {
         contentContainerStyle={styles.glimpseArtists}
       >
         {topArtists ? (
-          topArtists.pages.map((page) =>
-            page.items.map((a) => <TopArtistsArtist key={a.id} artist={a} />),
-          )
+          artists.map((a) => <TopArtistsArtist key={a.id} artist={a} />)
         ) : (
           <ContentLoader
             speed={1}
