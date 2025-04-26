@@ -30,6 +30,7 @@ export default function Table<
         <TableItem key={item.id} item={item} header={header} />
       )}
       ListHeaderComponent={() => <TableHeader header={header} />}
+      stickyHeaderIndices={[0]}
       {...props}
     />
   );

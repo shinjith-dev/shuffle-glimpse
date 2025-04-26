@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   header: {
+    backgroundColor: THEME.color["bg-10"],
     padding: 8,
     borderBottomWidth: 1,
     borderColor: THEME.color["bg-30"],
@@ -10,10 +11,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   headerContent: {
-    minWidth: 24,
+    minWidth: 40,
     textAlign: "left",
     overflow: "hidden",
     paddingRight: 28,
+    flexShrink: 0,
   },
   table: {
     width: "100%",
@@ -30,8 +32,9 @@ const styles = StyleSheet.create({
   itemContent: {
     textAlign: "left",
     overflow: "hidden",
-    minWidth: 24,
-    paddingRight: 28,
+    minWidth: 40,
+    paddingRight: 32,
+    flexShrink: 0,
   },
 });
 

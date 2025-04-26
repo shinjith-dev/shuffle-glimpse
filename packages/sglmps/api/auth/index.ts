@@ -13,7 +13,7 @@ export const auth = {
       .then((res) => res.data),
   refreshToken: async (payload: RefreshTokenRequest) =>
     await authApi
-      .post("/refresh-token", payload, {
+      .post<RefreshTokenResponse>("/refresh-token", payload, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
       .then((res) => res.data),

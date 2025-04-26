@@ -1,7 +1,8 @@
 interface GetTopTracksRequest {
   timeRange?: RequestTimeRange;
   limit?: number; // allowed range 1-50,
-  page?: number;
+  offset?: number;
+  url?: string;
 }
 
 interface GetTopTracksResponse {

@@ -35,17 +35,17 @@ const Sidebar: React.FC = () => {
         <MenuItem
           label="Liked Songs"
           icon="hugeicons:favourite"
-          path="/top-tracks"
+          path="/liked"
         />
         <MenuItem
           label="Playlists"
           icon="hugeicons:playlist-01"
-          path="/top-tracks"
+          path="/playlists"
         />
         <MenuItem
           label="Recent Played"
           icon="hugeicons:headset"
-          path="/top-tracks"
+          path="/recently-played"
         />
         <MenuItem
           label="Saved"

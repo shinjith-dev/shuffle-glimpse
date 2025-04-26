@@ -88,13 +88,14 @@ export const TextButton: React.FC<Partial<TextButtonProps>> = ({
 }) => {
   return (
     <button
+      {...props}
       className={twMerge(textButtonVariants({ color }))}
       style={{
         padding: `4px 6px`,
         borderRadius: THEME.radius[size],
         fontSize: THEME.fontSize[size],
+        ...props.style,
       }}
-      {...props}
     >
       {children}
     </button>

@@ -2,43 +2,40 @@
 
 import { TextButton, XStack, YStack } from "@/ui";
 import styles from "./style";
-import { useQueryClient } from "@tanstack/react-query";
-import { getTopArtists } from "@/api";
 import { timeRanges } from "@/constants";
 import { Fragment, useEffect, useState } from "react";
-import { useTopArtists } from "@/queries";
+import { useTopArtistsInfinitely } from "@/queries";
 import Text from "@/ui/text";
 import TopArtistsArtist from "./artist";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { ScrollView, View } from "react-native";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import { THEME } from "@/lib";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { View } from "react-native";
-import useRouter from "@/hooks/useRouter";
 
-const TopArtistsGlimpse: React.FC = () => {
-  const queryClient = useQueryClient();
+const TopArtists: React.FC = () => {
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
-  const { data: topArtists } = useTopArtists({ limit: 7, timeRange });
+  const {
+    data: topArtists,
+    isLoading,
+    hasNextPage,
+    fetchNextPage,
+  } = useTopArtistsInfinitely({ timeRange });
   const { width } = useWindowDimensions();
-  const router = useRouter();
 
   useEffect(() => {
-    timeRanges.forEach((range) => {
-      queryClient.prefetchQuery({
-        queryKey: [
-          "top-artists",
-          { limit: 7, offeset: 0, timeRange: range.key },
-        ],
-        queryFn: () =>
-          getTopArtists({ limit: 7, offset: 0, timeRange: range.key }),
-      });
-    });
-  }, [queryClient]);
+    if (hasNextPage) fetchNextPage();
+  }, [topArtists]);
+
+  const limitedTotal = topArtists?.pages?.[0].total
+    ? topArtists?.pages?.[0].total > 50
+      ? 50
+      : topArtists?.pages?.[0].total
+    : "";
 
   return (
-    <YStack style={styles.glimpse}>
+    <YStack style={styles.topContainer}>
       <XStack style={styles.glimpseHeader}>
-        <Text variant="heading2">Top Artists</Text>
+        <Text variant="heading2">Your Top {limitedTotal} Artists</Text>
 
         <XStack gap={4}>
           {timeRanges.map((tp) => (
@@ -47,27 +44,21 @@ const TopArtistsGlimpse: React.FC = () => {
               size="sm"
               onClick={() => setTimeRange(tp.key)}
               color={tp.key === timeRange ? "brand" : "primary"}
-              disabled={tp.key === timeRange}
+              disabled={isLoading || tp.key === timeRange}
             >
               {tp.label}
             </TextButton>
           ))}
-
-          <TextButton
-            style={{ marginLeft: 12 }}
-            onClick={() => router.push("/top-artists")}
-            color="primary"
-          >
-            View all
-          </TextButton>
         </XStack>
       </XStack>
-
-      <View style={styles.glimpseArtists}>
+      <ScrollView
+        style={styles.topContent}
+        contentContainerStyle={styles.glimpseArtists}
+      >
         {topArtists ? (
-          topArtists.items.map((a) => (
-            <TopArtistsArtist key={a.id} artist={a} />
-          ))
+          topArtists.pages.map((page, pageIndex) =>
+            page.items.map((a) => <TopArtistsArtist key={a.id} artist={a} />),
+          )
         ) : (
           <ContentLoader
             speed={1.5}
@@ -92,9 +83,9 @@ const TopArtistsGlimpse: React.FC = () => {
             ))}
           </ContentLoader>
         )}
-      </View>
+      </ScrollView>
     </YStack>
   );
 };
 
-export default TopArtistsGlimpse;
+export default TopArtists;

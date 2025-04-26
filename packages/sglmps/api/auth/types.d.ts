@@ -14,3 +14,10 @@ interface GetTokenResponse {
 interface RefreshTokenRequest {
   refresh_token: string | null;
 }
+
+interface RefreshTokenResponse {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  scope: string;
+}
