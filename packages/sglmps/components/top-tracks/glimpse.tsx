@@ -31,14 +31,14 @@ const TopTracksGlimpse: React.FC = () => {
     enabled: !!topTracks,
     trackIds: topTracks?.items.map((t) => t.id) || [],
   });
-  const { check: isSaved } = useIsSaved();
+  const { tracks: savedDep, check: isSaved } = useIsSaved();
 
   const headers = useMemo<HeaderItem[]>(
     () => [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: "45%" },
+      { key: "name", label: "Name", width: "50%" },
       { key: "album.name", label: "Album", width: "30%" },
-      { key: "saved", label: "", width: "10%" },
+      { key: "saved", label: "", width: "5%" },
       {
         key: "duration",
         label: (
@@ -65,7 +65,7 @@ const TopTracksGlimpse: React.FC = () => {
         name: <TrackListItem track={t} />,
         saved: isSaved(t.id) ? <HeartPop /> : null,
       })) || [],
-    [topTracks],
+    [topTracks, savedDep],
   );
 
   useEffect(() => {

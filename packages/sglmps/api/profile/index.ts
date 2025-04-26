@@ -19,3 +19,14 @@ export const getSaved = async ({
       url ? url : `/me/tracks?limit=${limit}&offset=${offset}`,
     )
     .then((res) => res.data);
+
+export const getRecentlyPlayed = async ({
+  limit = 20,
+  offset = 0,
+  url,
+}: GetRecentlyPlayedRequest) =>
+  await api
+    .get<GetRecentlyPlayedResponse>(
+      url ? url : `/me/player/recently-played?limit=${limit}&offset=${offset}`,
+    )
+    .then((res) => res.data);

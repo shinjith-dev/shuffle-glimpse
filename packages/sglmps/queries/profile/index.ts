@@ -1,4 +1,4 @@
-import { checkIsSavedTrack, getSaved } from "@/api/profile";
+import { checkIsSavedTrack, getRecentlyPlayed, getSaved } from "@/api/profile";
 import { useIsSaved } from "@/store/is-saved";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
@@ -28,4 +28,15 @@ export const useSaved = ({ limit = 20, offset = 0 }: GetSavedRequest) =>
     initialPageParam: `/me/tracks?limit=${limit}&offset=${offset}`,
     getNextPageParam: (lastPage) => lastPage.next || undefined,
     getPreviousPageParam: (firstPage) => firstPage.previous || undefined,
+  });
+
+export const useRecentlyPlayed = ({
+  limit = 20,
+  offset = 0,
+}: GetRecentlyPlayedRequest) =>
+  useInfiniteQuery({
+    queryKey: ["recently-played"],
+    queryFn: ({ pageParam }) => getRecentlyPlayed({ url: pageParam, limit }),
+    initialPageParam: `/me/player/recently-played?limit=${limit}&offset=${offset}`,
+    getNextPageParam: (lastPage) => lastPage.next || undefined,
   });

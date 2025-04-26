@@ -33,7 +33,7 @@ const TopTracks: React.FC = () => {
         (t) => t.id,
       ) || [],
   });
-  const { check: isSaved } = useIsSaved();
+  const { tracks: savedDep, check: isSaved } = useIsSaved();
   const { width } = useWindowDimensions();
 
   const limitedTotal = useMemo(
@@ -49,9 +49,9 @@ const TopTracks: React.FC = () => {
   const headers = useMemo<HeaderItem[]>(
     () => [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: "45%" },
+      { key: "name", label: "Name", width: "50%" },
       { key: "album.name", label: "Album", width: "30%" },
-      { key: "saved", label: "", width: "10%" },
+      { key: "saved", label: "", width: "5%" },
       {
         key: "duration",
         label: (
@@ -84,7 +84,7 @@ const TopTracks: React.FC = () => {
           [],
         )
         .flat() || [],
-    [topTracks],
+    [topTracks, savedDep],
   );
 
   return (

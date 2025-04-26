@@ -12,11 +12,21 @@ import styles from "./style";
 import TableHeader, { HeaderItem } from "@/ui/table/header";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { useSaved } from "@/queries/profile";
+import { useIsSavedTrack, useRecentlyPlayed } from "@/queries/profile";
 import TrackListItem from "../track/list-item";
+import { useIsSaved } from "@/store/is-saved";
+import HeartPop from "../track/heart-pop";
 
-const SavedTracks: React.FC = () => {
-  const { data: topTracks, hasNextPage, fetchNextPage } = useSaved({});
+const RecentlyPlayed: React.FC = () => {
+  const { data: recent, hasNextPage, fetchNextPage } = useRecentlyPlayed({});
+  useIsSavedTrack({
+    enabled: !!recent,
+    trackIds:
+      recent?.pages[recent?.pages.length - 1 || 0].items.map(
+        (t) => t.track.id,
+      ) || [],
+  });
+  const { tracks: savedDep, check: isSaved } = useIsSaved();
   const { width } = useWindowDimensions();
 
   const headers = useMemo<HeaderItem[]>(
@@ -24,7 +34,8 @@ const SavedTracks: React.FC = () => {
       { key: "sino", label: "#" },
       { key: "name", label: "Name", width: "40%" },
       { key: "album.name", label: "Album", width: "30%" },
-      { key: "addedOn", label: "Added On", width: "15%" },
+      { key: "playedAt", label: "Played At", width: "15%" },
+      { key: "saved", label: "" },
       {
         key: "duration",
         label: (
@@ -42,7 +53,7 @@ const SavedTracks: React.FC = () => {
 
   const tracks = useMemo(
     () =>
-      topTracks?.pages
+      recent?.pages
         .map(
           (page, pageIndex) =>
             page.items.map((item, index) => {
@@ -54,23 +65,24 @@ const SavedTracks: React.FC = () => {
                 ),
                 sino: pageIndex * 20 + index + 1,
                 name: <TrackListItem track={t} />,
-                addedOn: formatToDisplay(item.added_at),
+                playedAt: formatToDisplay(item.played_at),
+                saved: isSaved(t.id) ? <HeartPop /> : null,
               };
             }),
           [],
         )
         .flat() || [],
-    [topTracks],
+    [recent, savedDep],
   );
 
   return (
     <YStack style={styles.saved}>
       <XStack style={styles.header}>
-        <Text variant="heading2">Liked Songs</Text>
+        <Text variant="heading2">Recently Played</Text>
       </XStack>
 
       <View style={styles.contents}>
-        {topTracks ? (
+        {recent ? (
           <Table
             header={headers}
             data={tracks}
@@ -110,4 +122,4 @@ const SavedTracks: React.FC = () => {
   );
 };
 
-export default SavedTracks;
+export default RecentlyPlayed;

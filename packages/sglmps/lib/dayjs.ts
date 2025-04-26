@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import objectSupport from "dayjs/plugin/objectSupport";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { toSentenceCase } from "./utils";
 
 dayjs.extend(relativeTime);
 dayjs.extend(objectSupport);
@@ -10,7 +11,7 @@ export function formatToDisplay(date: Date | string) {
   const thirtyDaysAgo = dayjs().subtract(30, "days");
   return input.isBefore(thirtyDaysAgo)
     ? dayjs(date).format("MMM DD, YYYY")
-    : dayjs(date).fromNow();
+    : toSentenceCase(dayjs(date).fromNow());
 }
 
 export default dayjs;

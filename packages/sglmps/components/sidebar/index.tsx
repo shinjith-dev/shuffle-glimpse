@@ -37,11 +37,11 @@ const Sidebar: React.FC = () => {
           icon="hugeicons:favourite"
           path="/saved-tracks"
         />
-        <MenuItem
+        {/*  <MenuItem
           label="Playlists"
           icon="hugeicons:playlist-01"
           path="/playlists"
-        />
+        />*/}
         <MenuItem
           label="Recent Played"
           icon="hugeicons:headset"
