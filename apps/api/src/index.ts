@@ -2,7 +2,7 @@ import { storeState, validateState } from './lib';
 
 const FRONTEND_URL = 'http://127.0.0.1:3000';
 const ALLOWED_ORIGINS = [FRONTEND_URL, null];
-const PERMISSION_SCOPE = ['user-top-read'];
+const PERMISSION_SCOPE = ['user-top-read', 'user-library-read'];
 
 export default {
 	async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
