@@ -6,7 +6,7 @@ import Text from "@/ui/text";
 import React, { Fragment, useEffect, useState } from "react";
 import TopTracksTrack from "./track";
 import { View } from "react-native";
-import { Icon, TextButton } from "@/ui";
+import { Icon, OutlinedButton, TextButton } from "@/ui";
 import { THEME } from "@/lib";
 import dayjs from "@/lib/dayjs";
 import styles from "./style";
@@ -40,26 +40,27 @@ const TopTracksGlimpse: React.FC = () => {
       <XStack style={styles.glimpseHeader}>
         <Text variant="heading2">Top Songs</Text>
 
-        <XStack gap={4}>
+        <XStack gap={4} alignItems="center">
           {timeRanges.map((tp) => (
             <TextButton
-              key={tp.key}
               size="sm"
+              key={tp.key}
               onClick={() => setTimeRange(tp.key)}
               color={tp.key === timeRange ? "brand" : "primary"}
-              disabled={isLoading || tp.key === timeRange}
+              disabled={tp.key === timeRange}
             >
               {tp.label}
             </TextButton>
           ))}
 
-          <TextButton
-            style={{ marginLeft: 12 }}
-            onClick={() => router.push("/top-tracks")}
+          <OutlinedButton
+            size="sm"
             color="primary"
+            style={{ marginLeft: 12 }}
+            onClick={() => router.push("/top-artists")}
           >
-            View all
-          </TextButton>
+            View All
+          </OutlinedButton>
         </XStack>
       </XStack>
 
@@ -114,7 +115,7 @@ const TopTracksGlimpse: React.FC = () => {
           />
 
           <ContentLoader
-            speed={1.5}
+            speed={1}
             width={width - 416}
             height={504}
             viewBox={`0 0 ${width - 416} 504`}

@@ -23,6 +23,41 @@ export const buttonVariants = cva(
   },
 );
 
+export type OutlinedButtonVariantProps = VariantProps<
+  typeof outlinedButtonVariants
+>;
+export const outlinedButtonVariants = cva(
+  [
+    "flex",
+    "items-center",
+    "transition-all",
+    "justify-center",
+    "cursor-pointer",
+    "font-medium",
+    "gap-1.5",
+    "border",
+  ],
+  {
+    variants: {
+      color: {
+        brand: [
+          "border-brand",
+          "text-brand",
+          "hover:bg-brand",
+          "hover:text-bg",
+        ],
+        primary: ["border-white", "text-fg", "hover:bg-white", "hover:text-bg"],
+        secondary: [
+          "border-bg-80",
+          "text-bg-80",
+          "hover:bg-bg-80",
+          "hover:text-bg",
+        ],
+      },
+    },
+  },
+);
+
 export type TextButtonVariantProps = VariantProps<typeof textButtonVariants>;
 export const textButtonVariants = cva(
   [

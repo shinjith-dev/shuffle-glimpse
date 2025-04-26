@@ -40,7 +40,6 @@ const TopTracks: React.FC = () => {
           {timeRanges.map((tp) => (
             <TextButton
               key={tp.key}
-              size="sm"
               onClick={() => setTimeRange(tp.key)}
               color={tp.key === timeRange ? "brand" : "primary"}
               disabled={isLoading || tp.key === timeRange}
@@ -109,7 +108,7 @@ const TopTracks: React.FC = () => {
             />
 
             <ContentLoader
-              speed={1.5}
+              speed={1}
               width={width - 416}
               height={504}
               viewBox={`0 0 ${width - 416} 504`}

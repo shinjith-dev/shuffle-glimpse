@@ -6,9 +6,11 @@ import { twMerge } from "tailwind-merge";
 import {
   ButtonVariantProps,
   IconButtonVariantProps,
+  OutlinedButtonVariantProps,
   TextButtonVariantProps,
   buttonVariants,
   iconButtonVariants,
+  outlinedButtonVariants,
   textButtonVariants,
 } from "./style";
 
@@ -30,14 +32,15 @@ export const Button: React.FC<Partial<ButtonProps>> = ({
 }) => {
   return (
     <button
-      className={twMerge(buttonVariants({ color }))}
-      style={{
-        height: THEME.spacing[size] * 14,
-        padding: `0 ${THEME.spacing[size] * 8}px`,
-        borderRadius: rounded ? THEME.spacing[size] * 10 : THEME.radius[size],
-        fontSize: THEME.fontSize[size],
-      }}
       {...props}
+      className={twMerge(buttonVariants({ color }), props?.className)}
+      style={{
+        height: `${THEME.spacing[size] * 14}px`,
+        padding: `0 ${THEME.spacing[size] * 8}px`,
+        borderRadius: `${rounded ? THEME.spacing[size] * 10 : THEME.radius[size]}px`,
+        fontSize: `${THEME.fontSize[size]}px`,
+        ...props?.style,
+      }}
     >
       {startIcon}
       {children}
@@ -45,30 +48,35 @@ export const Button: React.FC<Partial<ButtonProps>> = ({
   );
 };
 
-export type OutlinedButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  size: TSpacing;
-  children: string;
-  rounded: boolean;
-};
+export type OutlinedButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+  OutlinedButtonVariantProps & {
+    size: TSpacing;
+    children: string;
+    rounded: boolean;
+    startIcon?: ReactElement;
+  };
 
 export const OutlinedButton: React.FC<Partial<OutlinedButtonProps>> = ({
   size = "md",
   color = "brand",
   rounded = true,
+  startIcon,
   children,
   ...props
 }) => {
   return (
     <button
-      className="border-bg-70 cursor-pointer border text-white transition-all hover:scale-103 hover:border-white disabled:hover:scale-100"
-      style={{
-        height: THEME.spacing[size] * 14,
-        padding: `0 ${THEME.spacing[size] * 8}px`,
-        borderRadius: rounded ? THEME.spacing[size] * 10 : THEME.radius[size],
-        fontSize: THEME.fontSize[size],
-      }}
       {...props}
+      className={twMerge(outlinedButtonVariants({ color }), props?.className)}
+      style={{
+        height: `${THEME.spacing[size] * 14}px`,
+        padding: `0 ${THEME.spacing[size] * 8}px`,
+        borderRadius: `${rounded ? THEME.spacing[size] * 10 : THEME.radius[size]}px`,
+        fontSize: `${THEME.fontSize[size]}px`,
+        ...props?.style,
+      }}
     >
+      {startIcon}
       {children}
     </button>
   );
@@ -121,13 +129,17 @@ export const IconButton: React.FC<Partial<IconButtonProps>> = ({
 }) => {
   return (
     <button
-      className={twMerge(iconButtonVariants({ color, variant }))}
+      {...props}
+      className={twMerge(
+        iconButtonVariants({ color, variant }),
+        props?.className,
+      )}
       style={{
         height: THEME.spacing[size] * 14,
         width: THEME.spacing[size] * 14,
         borderRadius: THEME.spacing[size] * 10,
+        ...props?.style,
       }}
-      {...props}
     >
       <Icon name={icon} />
     </button>

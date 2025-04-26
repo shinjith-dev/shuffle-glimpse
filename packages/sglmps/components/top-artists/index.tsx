@@ -41,7 +41,6 @@ const TopArtists: React.FC = () => {
           {timeRanges.map((tp) => (
             <TextButton
               key={tp.key}
-              size="sm"
               onClick={() => setTimeRange(tp.key)}
               color={tp.key === timeRange ? "brand" : "primary"}
               disabled={isLoading || tp.key === timeRange}
@@ -61,7 +60,7 @@ const TopArtists: React.FC = () => {
           )
         ) : (
           <ContentLoader
-            speed={1.5}
+            speed={1}
             width={width - 416}
             height={248}
             viewBox={`0 0 ${width - 416} 248`}

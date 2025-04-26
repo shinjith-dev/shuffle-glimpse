@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
   },
   glimpseHeader: {
     justifyContent: "space-between",
+    alignItems: "center",
     width: "100%",
   },
   glimpseArtists: {

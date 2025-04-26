@@ -2,8 +2,8 @@ import theme from "../../theme.json";
 
 export const THEME = {
   spacing: {
-    xs: 1,
-    sm: 2,
+    xs: 2,
+    sm: 2.5,
     md: 3,
     lg: 3.5,
     xl: 4,

@@ -1,6 +1,6 @@
 "use client";
 
-import { TextButton, XStack, YStack } from "@/ui";
+import { Button, OutlinedButton, TextButton, XStack, YStack } from "@/ui";
 import styles from "./style";
 import { useQueryClient } from "@tanstack/react-query";
 import { getTopArtists } from "@/api";
@@ -40,11 +40,11 @@ const TopArtistsGlimpse: React.FC = () => {
       <XStack style={styles.glimpseHeader}>
         <Text variant="heading2">Top Artists</Text>
 
-        <XStack gap={4}>
+        <XStack gap={4} alignItems="center">
           {timeRanges.map((tp) => (
             <TextButton
-              key={tp.key}
               size="sm"
+              key={tp.key}
               onClick={() => setTimeRange(tp.key)}
               color={tp.key === timeRange ? "brand" : "primary"}
               disabled={tp.key === timeRange}
@@ -53,13 +53,14 @@ const TopArtistsGlimpse: React.FC = () => {
             </TextButton>
           ))}
 
-          <TextButton
+          <OutlinedButton
+            size="sm"
+            color="primary"
             style={{ marginLeft: 12 }}
             onClick={() => router.push("/top-artists")}
-            color="primary"
           >
-            View all
-          </TextButton>
+            View All
+          </OutlinedButton>
         </XStack>
       </XStack>
 
@@ -70,7 +71,7 @@ const TopArtistsGlimpse: React.FC = () => {
           ))
         ) : (
           <ContentLoader
-            speed={1.5}
+            speed={1}
             width={width - 416}
             height={248}
             viewBox={`0 0 ${width - 416} 248`}
