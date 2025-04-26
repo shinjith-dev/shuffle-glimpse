@@ -3,17 +3,20 @@ import { useTopTracksInfinitely } from "@/queries";
 import { XStack, YStack } from "@/ui/layout";
 import Table from "@/ui/table";
 import Text from "@/ui/text";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useMemo, useState } from "react";
 import TopTracksTrack from "./track";
-import { ScrollView, View } from "react-native";
+import { View } from "react-native";
 import { Icon, TextButton } from "@/ui";
 import { THEME } from "@/lib";
 import dayjs from "@/lib/dayjs";
 import styles from "./style";
 import { timeRanges } from "@/constants";
-import TableHeader from "@/ui/table/header";
+import TableHeader, { HeaderItem } from "@/ui/table/header";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import { useIsSavedTrack } from "@/queries/profile";
+import { useIsSaved } from "@/store/is-saved";
+import HeartPop from "./heart-pop";
 
 const TopTracks: React.FC = () => {
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
@@ -23,13 +26,66 @@ const TopTracks: React.FC = () => {
     hasNextPage,
     fetchNextPage,
   } = useTopTracksInfinitely({ timeRange });
+  useIsSavedTrack({
+    enabled: !!topTracks,
+    trackIds:
+      topTracks?.pages[topTracks?.pages.length - 1 || 0].items.map(
+        (t) => t.id,
+      ) || [],
+  });
+  const { check: isSaved } = useIsSaved();
   const { width } = useWindowDimensions();
 
-  const limitedTotal = topTracks?.pages?.[0].total
-    ? topTracks?.pages?.[0].total > 100
-      ? 100
-      : topTracks?.pages?.[0].total
-    : "Songs";
+  const limitedTotal = useMemo(
+    () =>
+      topTracks?.pages?.[0].total
+        ? topTracks?.pages?.[0].total > 100
+          ? 100
+          : topTracks?.pages?.[0].total
+        : "Songs",
+    [topTracks],
+  );
+
+  const headers = useMemo<HeaderItem[]>(
+    () => [
+      { key: "sino", label: "#" },
+      { key: "name", label: "Name", width: "45%" },
+      { key: "album.name", label: "Album", width: "30%" },
+      { key: "saved", label: "", width: "10%" },
+      {
+        key: "duration",
+        label: (
+          <Icon
+            name="hugeicons:time-quarter-02"
+            size={16}
+            color={THEME.color["bg-80"]}
+          />
+        ),
+        width: "10%",
+      },
+    ],
+    [],
+  );
+
+  const tracks = useMemo(
+    () =>
+      topTracks?.pages
+        .map(
+          (page, pageIndex) =>
+            page.items.map((t, index) => ({
+              ...t,
+              duration: dayjs({ milliseconds: t.duration_ms }).format(
+                t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
+              ),
+              sino: pageIndex * 20 + index + 1,
+              name: <TopTracksTrack track={t} />,
+              saved: isSaved(t.id) ? <HeartPop /> : null,
+            })),
+          [],
+        )
+        .flat() || [],
+    [topTracks],
+  );
 
   return (
     <YStack style={styles.topContainer}>
@@ -53,59 +109,14 @@ const TopTracks: React.FC = () => {
       <View style={styles.topContent}>
         {topTracks ? (
           <Table
-            header={[
-              { key: "sino", label: "#" },
-              { key: "name", label: "Name", width: "50%" },
-              { key: "album.name", label: "Album", width: "35%" },
-              {
-                key: "duration",
-                label: (
-                  <Icon
-                    name="hugeicons:time-quarter-02"
-                    size={16}
-                    color={THEME.color["bg-80"]}
-                  />
-                ),
-                width: "10%",
-              },
-            ]}
-            data={topTracks.pages
-              .map(
-                (page, pageIndex) =>
-                  page.items.map((t, index) => ({
-                    ...t,
-                    duration: dayjs({ milliseconds: t.duration_ms }).format(
-                      t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
-                    ),
-                    sino: pageIndex * 20 + index + 1,
-                    name: <TopTracksTrack track={t} />,
-                  })),
-                [],
-              )
-              .flat()}
+            header={headers}
+            data={tracks}
             onEndReached={() => hasNextPage && fetchNextPage()}
             onEndReachedThreshold={1}
           />
         ) : (
           <Fragment>
-            <TableHeader
-              header={[
-                { key: "sino", label: "#", width: "10%" },
-                { key: "name", label: "Name", width: "50%" },
-                { key: "album.name", label: "Album", width: "30%" },
-                {
-                  key: "duration",
-                  label: (
-                    <Icon
-                      name="hugeicons:time-quarter-02"
-                      size={16}
-                      color={THEME.color["bg-80"]}
-                    />
-                  ),
-                  width: "10%",
-                },
-              ]}
-            />
+            <TableHeader header={headers} />
 
             <ContentLoader
               speed={1}

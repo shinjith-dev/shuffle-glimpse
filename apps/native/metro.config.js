@@ -21,6 +21,7 @@ config.resolver.disableHierarchicalLookup = true;
 
 const configWithMonicon = withMonicon(config, {
   collections: ["hugeicons"],
+  icons: ["solar:heart-angle-bold"],
 });
 
-module.exports = config;
+module.exports = configWithMonicon(config);

@@ -17,6 +17,8 @@
     "@tanstack/react-query-devtools": "^5.74.4",
     "axios": "^1.8.4",
     "dayjs": "^1.11.13",
+    "immer": "^10.1.1",
+    "motion": "^12.9.2",
     "react": "18.2.0",
     "react-content-loader": "7.0.2",
     "react-native": "0.74.5",

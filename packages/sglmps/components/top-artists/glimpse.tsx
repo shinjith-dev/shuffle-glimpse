@@ -18,7 +18,7 @@ import useRouter from "@/hooks/useRouter";
 const TopArtistsGlimpse: React.FC = () => {
   const queryClient = useQueryClient();
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
-  const { data: topArtists } = useTopArtists({ limit: 7, timeRange });
+  const { data: topArtists } = useTopArtists({ limit: 6, timeRange });
   const { width } = useWindowDimensions();
   const router = useRouter();
 
@@ -27,10 +27,10 @@ const TopArtistsGlimpse: React.FC = () => {
       queryClient.prefetchQuery({
         queryKey: [
           "top-artists",
-          { limit: 7, offeset: 0, timeRange: range.key },
+          { limit: 6, offeset: 0, timeRange: range.key },
         ],
         queryFn: () =>
-          getTopArtists({ limit: 7, offset: 0, timeRange: range.key }),
+          getTopArtists({ limit: 6, offset: 0, timeRange: range.key }),
       });
     });
   }, [queryClient]);

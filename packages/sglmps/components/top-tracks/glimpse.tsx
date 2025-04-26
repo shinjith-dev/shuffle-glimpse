@@ -3,7 +3,7 @@ import { useTopTracks } from "@/queries";
 import { XStack, YStack } from "@/ui/layout";
 import Table from "@/ui/table";
 import Text from "@/ui/text";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import TopTracksTrack from "./track";
 import { View } from "react-native";
 import { Icon, OutlinedButton, TextButton } from "@/ui";
@@ -13,24 +13,67 @@ import styles from "./style";
 import { useQueryClient } from "@tanstack/react-query";
 import { getTopTracks } from "@/api";
 import { timeRanges } from "@/constants";
-import TableHeader from "@/ui/table/header";
+import TableHeader, { HeaderItem } from "@/ui/table/header";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import useRouter from "@/hooks/useRouter";
+import { useIsSavedTrack } from "@/queries/profile";
+import { useIsSaved } from "@/store/is-saved";
+import HeartPop from "./heart-pop";
 
 const TopTracksGlimpse: React.FC = () => {
   const queryClient = useQueryClient();
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
-  const { data: topTracks, isLoading } = useTopTracks({ limit: 7, timeRange });
+  const { data: topTracks } = useTopTracks({ limit: 5, timeRange });
   const { width } = useWindowDimensions();
   const router = useRouter();
+  useIsSavedTrack({
+    enabled: !!topTracks,
+    trackIds: topTracks?.items.map((t) => t.id) || [],
+  });
+  const { check: isSaved } = useIsSaved();
+
+  const headers = useMemo<HeaderItem[]>(
+    () => [
+      { key: "sino", label: "#" },
+      { key: "name", label: "Name", width: "45%" },
+      { key: "album.name", label: "Album", width: "30%" },
+      { key: "saved", label: "", width: "10%" },
+      {
+        key: "duration",
+        label: (
+          <Icon
+            name="hugeicons:time-quarter-02"
+            size={16}
+            color={THEME.color["bg-80"]}
+          />
+        ),
+        width: "10%",
+      },
+    ],
+    [],
+  );
+
+  const tracks = useMemo(
+    () =>
+      topTracks?.items.map((t, index) => ({
+        ...t,
+        duration: dayjs({ milliseconds: t.duration_ms }).format(
+          t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
+        ),
+        sino: index + 1,
+        name: <TopTracksTrack track={t} />,
+        saved: isSaved(t.id) ? <HeartPop /> : null,
+      })) || [],
+    [topTracks],
+  );
 
   useEffect(() => {
     timeRanges.forEach((range) => {
       queryClient.prefetchQuery({
-        queryKey: ["top-tracks", { limit: 7, offset: 0, timeRange: range.key }],
+        queryKey: ["top-tracks", { limit: 5, offset: 0, timeRange: range.key }],
         queryFn: () =>
-          getTopTracks({ limit: 7, offset: 0, timeRange: range.key }),
+          getTopTracks({ limit: 5, offset: 0, timeRange: range.key }),
       });
     });
   }, [queryClient]);
@@ -57,7 +100,7 @@ const TopTracksGlimpse: React.FC = () => {
             size="sm"
             color="primary"
             style={{ marginLeft: 12 }}
-            onClick={() => router.push("/top-artists")}
+            onClick={() => router.push("/top-tracks")}
           >
             View All
           </OutlinedButton>
@@ -66,53 +109,11 @@ const TopTracksGlimpse: React.FC = () => {
 
       {topTracks ? (
         <View style={styles.glimpseTable}>
-          <Table
-            header={[
-              { key: "sino", label: "#" },
-              { key: "name", label: "Name", width: "50%" },
-              { key: "album.name", label: "Album", width: "35%" },
-              {
-                key: "duration",
-                label: (
-                  <Icon
-                    name="hugeicons:time-quarter-02"
-                    size={16}
-                    color={THEME.color["bg-80"]}
-                  />
-                ),
-                width: "10%",
-              },
-            ]}
-            data={topTracks?.items.map((t, index) => ({
-              ...t,
-              duration: dayjs({ milliseconds: t.duration_ms }).format(
-                t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
-              ),
-              sino: index + 1,
-              name: <TopTracksTrack track={t} />,
-            }))}
-          />
+          <Table header={headers} data={tracks} />
         </View>
       ) : (
         <View style={styles.glimpseTable}>
-          <TableHeader
-            header={[
-              { key: "sino", label: "#" },
-              { key: "name", label: "Name", width: "50%" },
-              { key: "album.name", label: "Album", width: "35%" },
-              {
-                key: "duration",
-                label: (
-                  <Icon
-                    name="hugeicons:time-quarter-02"
-                    size={16}
-                    color={THEME.color["bg-80"]}
-                  />
-                ),
-                width: "10%",
-              },
-            ]}
-          />
+          <TableHeader header={headers} />
 
           <ContentLoader
             speed={1}

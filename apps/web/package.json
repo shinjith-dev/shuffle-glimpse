@@ -17,6 +17,8 @@
     "axios": "^1.8.4",
     "cva": "npm:class-variance-authority",
     "dayjs": "^1.11.13",
+    "immer": "^10.1.1",
+    "motion": "^12.9.2",
     "next": "^14.0.4",
     "postcss": "^8.5.3",
     "react": "18.2.0",

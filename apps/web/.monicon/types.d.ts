@@ -3,6 +3,7 @@ import "@monicon/icon-loader";
 
 declare module "@monicon/icon-loader" {
   export type MoniconIconName =
+    | "solar:heart-angle-bold"
     | "hugeicons:abacus"
     | "hugeicons:absolute"
     | "hugeicons:acceleration"

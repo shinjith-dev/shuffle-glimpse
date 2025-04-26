@@ -1,13 +1,6 @@
 import { create } from "zustand";
 import { persist, devtools } from "zustand/middleware";
 
-interface AuthStore {
-  accessToken: string | null;
-  refreshToken: string | null;
-  setTokens: (access: string, refresh?: string) => void;
-  clearTokens: () => void;
-}
-
 export const useAuthStore = create<AuthStore>()(
   devtools(
     persist(

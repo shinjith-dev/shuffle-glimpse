@@ -1,0 +1,3 @@
+interface CheckIsSavedTrackRequest {
+  trackIds: string[];
+}

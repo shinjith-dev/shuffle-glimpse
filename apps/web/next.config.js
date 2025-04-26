@@ -30,6 +30,7 @@ module.exports = {
     config.plugins.push(
       new MoniconPlugin({
         collections: ["hugeicons"],
+        icons: ["solar:heart-angle-bold"],
       }),
     );
 
