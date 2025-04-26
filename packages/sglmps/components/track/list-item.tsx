@@ -7,7 +7,7 @@ import { View } from "react-native";
 import { THEME } from "@/lib";
 
 interface Props {
-  track: TrackItem;
+  track: PlaylistTracks;
 }
 
 const TrackListItem: React.FC<Props> = memo(({ track }) => {

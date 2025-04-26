@@ -1,4 +1,5 @@
 export * from "./dsa";
+export * from "./color";
 
 export const toSentenceCase = (str: string | undefined | null): string => {
   if (!str) return "";

@@ -3,17 +3,17 @@
 import { getTopArtists } from "@/api";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
-export const useTopArtists = ({
+export const useTopArtistsGlimpse = ({
   timeRange = "short_term",
   offset = 0,
   limit = 20,
 }: GetTopTracksRequest) =>
   useQuery({
-    queryKey: ["top-artists", { limit, timeRange, offset }],
+    queryKey: ["top-artists", "glimpse", { limit, timeRange, offset }],
     queryFn: () => getTopArtists({ limit, timeRange, offset }),
   });
 
-export const useTopArtistsInfinitely = ({
+export const useTopArtists = ({
   timeRange = "short_term",
   limit = 10,
 }: GetTopTracksRequest) =>

@@ -2,15 +2,21 @@ import { storeState, validateState } from './lib';
 
 const FRONTEND_URL = 'http://127.0.0.1:3000';
 const ALLOWED_ORIGINS = [FRONTEND_URL, null];
-const PERMISSION_SCOPE = ['user-top-read', 'user-library-read', 'user-read-recently-played', 'user-read-private', 'user-read-email'];
+const PERMISSION_SCOPE = [
+	'user-top-read',
+	'user-library-read',
+	'user-read-recently-played',
+	'user-read-private',
+	'user-read-email',
+	'playlist-read-private',
+];
 
 export default {
 	async fetch(request: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
 		const origin = request.headers.get('Origin');
 
 		const corsHeaders = {
-			// origin is null on dev mode
-			'Access-Control-Allow-Origin': '*', //origin && ALLOWED_ORIGINS.includes(origin) ? origin : 'null',
+			'Access-Control-Allow-Origin': origin && ALLOWED_ORIGINS.includes(origin) ? origin : 'null',
 			'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
 			'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 		};

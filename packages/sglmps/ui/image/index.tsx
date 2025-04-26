@@ -1,6 +1,6 @@
 "use client";
 import NextImage from "next/image";
-import React from "react";
+import React, { forwardRef, Ref } from "react";
 
 export interface ImageProps {
   src: string;
@@ -15,36 +15,42 @@ export interface ImageProps {
   className?: string;
 }
 
-const Image: React.FC<ImageProps> = ({
-  src,
-  alt,
-  width,
-  height,
-  style,
-  priority,
-  quality,
-  objectFit = "contain",
-  draggable = true,
-  className,
-}) => {
-  const fill = objectFit === "cover" && !width && !style.width;
-  return (
-    <NextImage
-      src={src}
-      alt={alt}
-      width={fill ? undefined : width}
-      height={fill ? undefined : height}
-      style={{
-        ...style,
-        objectFit,
-      }}
-      fill={fill}
-      priority={priority}
-      quality={quality}
-      draggable={draggable}
-      className={className}
-    />
-  );
-};
+const Image = forwardRef(
+  (
+    {
+      src,
+      alt,
+      width,
+      height,
+      style,
+      priority,
+      quality,
+      objectFit = "contain",
+      draggable = true,
+      className,
+    }: ImageProps,
+    ref: Ref<HTMLImageElement>,
+  ) => {
+    const fill = objectFit === "cover" && !width && !style.width;
+    return (
+      <NextImage
+        ref={ref}
+        src={src}
+        alt={alt}
+        width={fill ? undefined : width}
+        height={fill ? undefined : height}
+        style={{
+          ...style,
+          objectFit,
+        }}
+        fill={fill}
+        priority={priority}
+        quality={quality}
+        draggable={draggable}
+        className={className}
+      />
+    );
+  },
+);
 
 export default Image;

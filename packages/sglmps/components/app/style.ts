@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     height: "100%",
+    position: "relative",
   },
   glimpseCont: {
     height: "100%",
@@ -25,13 +26,21 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   glimpse: {
-    height: "100%",
-    maxWidth: "100%",
+    flexGrow: 1,
     width: "100%",
     flexDirection: "column",
     gap: 40,
-    paddingHorizontal: 28,
-    paddingVertical: 28,
+    padding: 32,
+    position: "relative",
+  },
+  gradient: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
 

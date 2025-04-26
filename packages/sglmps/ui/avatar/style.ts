@@ -28,6 +28,7 @@ export const AvatarSizes = {
   "6xl": 140,
   "7xl": 160,
   "8xl": 180,
+  "9xl": 200,
 };
 
 export default styles;

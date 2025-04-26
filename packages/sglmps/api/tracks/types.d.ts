@@ -6,7 +6,7 @@ interface GetTopTracksRequest {
 }
 
 interface GetTopTracksResponse {
-  items: TrackItem[];
+  items: PlaylistTracks[];
   total: number;
   limit: number;
   offset: number;
@@ -15,7 +15,7 @@ interface GetTopTracksResponse {
   previous: any;
 }
 
-interface TrackItem {
+interface PlaylistTracks {
   album: TrackAlbum;
   artists: TrackArtist[];
   available_markets: string[];
@@ -53,7 +53,7 @@ interface TrackAlbum {
   uri: string;
 }
 
-interface ExternalUrls {
+interface PlaylistUrls {
   spotify: string;
 }
 

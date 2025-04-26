@@ -21,6 +21,17 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
   },
+  glimpse: {
+    width: "100%",
+    maxHeight: "100%",
+    overflow: "hidden",
+    gap: 20,
+  },
+  glimpseTable: { flexGrow: 1, width: "100%", paddingBottom: 20 },
+  glimpseHeader: {
+    justifyContent: "space-between",
+    width: "100%",
+  },
 });
 
 export default styles;

@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     maxWidth: "100%",
     overflow: "hidden",
     gap: 20,
+    marginBottom: 12,
   },
   glimpseHeader: {
     justifyContent: "space-between",

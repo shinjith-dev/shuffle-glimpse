@@ -3,6 +3,7 @@ import { THEME } from "../../lib/config";
 import styles, { AvatarSizes } from "./style";
 import Image, { ImageProps } from "../image";
 import Text from "../text";
+import { forwardRef, Ref } from "react";
 
 export interface IAvatarProps {
   src?: string;
@@ -14,33 +15,46 @@ export interface IAvatarProps {
   avatarProps?: Omit<ImageProps, "src" | "alt">;
 }
 
-export function Avatar({
-  src,
-  alt = "Avatar",
-  size = "md",
-  border = false,
-  borderColor = THEME.color.brand,
-  avatarProps,
-  style,
-}: IAvatarProps) {
-  return (
-    <View
-      style={[
-        styles.container,
-        {
-          borderColor,
-          height: AvatarSizes[size],
-          width: AvatarSizes[size],
-        },
-        border && styles.bordered,
-        style,
-      ]}
-    >
-      {src ? (
-        <Image src={src} alt={alt} objectFit="cover" {...avatarProps} />
-      ) : (
-        <Text fontSize={AvatarSizes[size] - 8}>{alt}</Text>
-      )}
-    </View>
-  );
-}
+export const Avatar = forwardRef(
+  (
+    {
+      src,
+      alt = "Avatar",
+      size = "md",
+      border = false,
+      borderColor = THEME.color.brand,
+      avatarProps,
+      style,
+    }: IAvatarProps,
+    ref: Ref<HTMLImageElement>,
+  ) => {
+    return (
+      <View
+        style={[
+          styles.container,
+          {
+            borderColor,
+            height: AvatarSizes[size],
+            width: AvatarSizes[size],
+          },
+          border && styles.bordered,
+          style,
+        ]}
+      >
+        {src ? (
+          <Image
+            ref={ref}
+            height={AvatarSizes[size]}
+            width={AvatarSizes[size]}
+            src={src}
+            alt={alt}
+            objectFit="cover"
+            {...avatarProps}
+          />
+        ) : (
+          <Text fontSize={AvatarSizes[size] - 8}>{alt}</Text>
+        )}
+      </View>
+    );
+  },
+);

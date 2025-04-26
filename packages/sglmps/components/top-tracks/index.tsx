@@ -1,5 +1,5 @@
 "use client";
-import { useTopTracksInfinitely } from "@/queries";
+import { useTopTracks } from "@/queries";
 import { XStack, YStack } from "@/ui/layout";
 import Table from "@/ui/table";
 import Text from "@/ui/text";
@@ -25,7 +25,7 @@ const TopTracks: React.FC = () => {
     isLoading,
     hasNextPage,
     fetchNextPage,
-  } = useTopTracksInfinitely({ timeRange });
+  } = useTopTracks({ timeRange });
   useIsSavedTrack({
     enabled: !!topTracks,
     trackIds:
@@ -50,7 +50,7 @@ const TopTracks: React.FC = () => {
     () => [
       { key: "sino", label: "#" },
       { key: "name", label: "Name", width: "50%" },
-      { key: "album.name", label: "Album", width: "30%" },
+      { key: "album.name", label: "Album", width: "35%" },
       { key: "saved", label: "", width: "5%" },
       {
         key: "duration",

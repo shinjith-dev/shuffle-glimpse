@@ -1,6 +1,18 @@
-import { checkIsSavedTrack, getRecentlyPlayed, getSaved } from "@/api/profile";
+import {
+  checkIsSavedTrack,
+  getPlaylists,
+  getProfle,
+  getRecentlyPlayed,
+  getSaved,
+} from "@/api/profile";
 import { useIsSaved } from "@/store/is-saved";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+
+export const useProfile = () =>
+  useQuery({
+    queryKey: ["profile"],
+    queryFn: getProfle,
+  });
 
 export const useIsSavedTrack = ({
   trackIds = [],
@@ -30,13 +42,28 @@ export const useSaved = ({ limit = 20, offset = 0 }: GetSavedRequest) =>
     getPreviousPageParam: (firstPage) => firstPage.previous || undefined,
   });
 
+export const useRecentlyPlayedGlimpse = ({
+  offset = 0,
+  limit = 20,
+}: GetRecentlyPlayedRequest) =>
+  useQuery({
+    queryKey: ["top-tracks", "glimpse", { limit, offset }],
+    queryFn: () => getRecentlyPlayed({ limit, offset }),
+  });
+
 export const useRecentlyPlayed = ({
   limit = 20,
   offset = 0,
 }: GetRecentlyPlayedRequest) =>
   useInfiniteQuery({
-    queryKey: ["recently-played"],
+    queryKey: ["recently-played", "all"],
     queryFn: ({ pageParam }) => getRecentlyPlayed({ url: pageParam, limit }),
     initialPageParam: `/me/player/recently-played?limit=${limit}&offset=${offset}`,
     getNextPageParam: (lastPage) => lastPage.next || undefined,
+  });
+
+export const usePlaylistsGlimpse = () =>
+  useQuery({
+    queryKey: ["playlists", "glimpse"],
+    queryFn: () => getPlaylists(),
   });

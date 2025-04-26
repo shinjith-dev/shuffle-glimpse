@@ -4,11 +4,11 @@ import { TextButton, XStack, YStack } from "@/ui";
 import styles from "./style";
 import { timeRanges } from "@/constants";
 import { Fragment, useEffect, useState } from "react";
-import { useTopArtistsInfinitely } from "@/queries";
+import { useTopArtists } from "@/queries";
 import Text from "@/ui/text";
 import TopArtistsArtist from "./artist";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { ScrollView, View } from "react-native";
+import { ScrollView } from "react-native";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import { THEME } from "@/lib";
 
@@ -19,7 +19,7 @@ const TopArtists: React.FC = () => {
     isLoading,
     hasNextPage,
     fetchNextPage,
-  } = useTopArtistsInfinitely({ timeRange });
+  } = useTopArtists({ timeRange });
   const { width } = useWindowDimensions();
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const TopArtists: React.FC = () => {
         contentContainerStyle={styles.glimpseArtists}
       >
         {topArtists ? (
-          topArtists.pages.map((page, pageIndex) =>
+          topArtists.pages.map((page) =>
             page.items.map((a) => <TopArtistsArtist key={a.id} artist={a} />),
           )
         ) : (

@@ -2,6 +2,9 @@
 
 import api from "../instance";
 
+export const getProfle = async () =>
+  await api.get<Profile>("/me").then((res) => res.data);
+
 export const checkIsSavedTrack = async ({
   trackIds = [],
 }: CheckIsSavedTrackRequest) =>
@@ -30,3 +33,6 @@ export const getRecentlyPlayed = async ({
       url ? url : `/me/player/recently-played?limit=${limit}&offset=${offset}`,
     )
     .then((res) => res.data);
+
+export const getPlaylists = async () =>
+  await api.get<GetPlaylistsResponse>("/me/playlists").then((res) => res.data);

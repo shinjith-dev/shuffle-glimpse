@@ -3,17 +3,17 @@
 import { getTopTracks } from "@/api";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
-export const useTopTracks = ({
+export const useTopTracksGlimpse = ({
   timeRange = "short_term",
   offset = 0,
   limit = 20,
 }: GetTopTracksRequest) =>
   useQuery({
-    queryKey: ["top-tracks", { limit, timeRange, offset }],
+    queryKey: ["top-tracks", "glimpse", { limit, timeRange, offset }],
     queryFn: () => getTopTracks({ limit, timeRange, offset }),
   });
 
-export const useTopTracksInfinitely = ({
+export const useTopTracks = ({
   timeRange = "short_term",
   limit = 20,
 }: GetTopTracksRequest) =>

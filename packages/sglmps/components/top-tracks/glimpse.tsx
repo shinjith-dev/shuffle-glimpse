@@ -1,5 +1,5 @@
 "use client";
-import { useTopTracks } from "@/queries";
+import { useTopTracksGlimpse } from "@/queries";
 import { XStack, YStack } from "@/ui/layout";
 import Table from "@/ui/table";
 import Text from "@/ui/text";
@@ -24,7 +24,7 @@ import HeartPop from "../track/heart-pop";
 const TopTracksGlimpse: React.FC = () => {
   const queryClient = useQueryClient();
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
-  const { data: topTracks } = useTopTracks({ limit: 5, timeRange });
+  const { data: topTracks } = useTopTracksGlimpse({ limit: 5, timeRange });
   const { width } = useWindowDimensions();
   const router = useRouter();
   useIsSavedTrack({
@@ -37,7 +37,7 @@ const TopTracksGlimpse: React.FC = () => {
     () => [
       { key: "sino", label: "#" },
       { key: "name", label: "Name", width: "50%" },
-      { key: "album.name", label: "Album", width: "30%" },
+      { key: "album.name", label: "Album", width: "35%" },
       { key: "saved", label: "", width: "5%" },
       {
         key: "duration",
@@ -107,38 +107,38 @@ const TopTracksGlimpse: React.FC = () => {
         </XStack>
       </XStack>
 
-      {topTracks ? (
-        <View style={styles.glimpseTable}>
-          <Table header={headers} data={tracks} />
-        </View>
-      ) : (
-        <View style={styles.glimpseTable}>
-          <TableHeader header={headers} />
+      <View style={styles.glimpseTable}>
+        {topTracks ? (
+          <Table hideHeader header={headers} data={tracks} />
+        ) : (
+          <Fragment>
+            <TableHeader header={headers} />
 
-          <ContentLoader
-            speed={1}
-            width={width - 416}
-            height={504}
-            viewBox={`0 0 ${width - 416} 504`}
-            backgroundColor={THEME.color["bg-10"]}
-            foregroundColor={THEME.color["bg-30"]}
-          >
-            {[...new Array(7)].map((_, index) => (
-              <Fragment key={`top-tracks-skeleton-${index}`}>
-                <Circle cx="68" cy={36 * (index + 1) + 36 * index} r="24" />
-                <Rect
-                  x="100"
-                  y={12 * (index + 1) + 60 * index}
-                  rx="8"
-                  ry="8"
-                  width={width - 516}
-                  height="48"
-                />
-              </Fragment>
-            ))}
-          </ContentLoader>
-        </View>
-      )}
+            <ContentLoader
+              speed={1}
+              width={width - 416}
+              height={504}
+              viewBox={`0 0 ${width - 416} 504`}
+              backgroundColor={THEME.color["bg-10"]}
+              foregroundColor={THEME.color["bg-30"]}
+            >
+              {[...new Array(5)].map((_, index) => (
+                <Fragment key={`top-tracks-skeleton-${index}`}>
+                  <Circle cx="68" cy={36 * (index + 1) + 36 * index} r="24" />
+                  <Rect
+                    x="100"
+                    y={12 * (index + 1) + 60 * index}
+                    rx="8"
+                    ry="8"
+                    width={width - 516}
+                    height="48"
+                  />
+                </Fragment>
+              ))}
+            </ContentLoader>
+          </Fragment>
+        )}
+      </View>
     </YStack>
   );
 };

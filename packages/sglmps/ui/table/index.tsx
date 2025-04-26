@@ -14,13 +14,19 @@ interface TableProps<
   > {
   header: Header;
   data: (Row & { id: string | number })[];
+  hideHeader?: boolean;
 }
 
 export default function Table<
   Header extends HeaderItem[],
   Keys extends Header[number]["key"],
   Row extends Record<Keys, any>,
->({ header, data, ...props }: TableProps<Header, Keys, Row>) {
+>({
+  header,
+  data,
+  hideHeader = false,
+  ...props
+}: TableProps<Header, Keys, Row>) {
   return (
     <FlatList
       data={data}
@@ -29,8 +35,10 @@ export default function Table<
       renderItem={({ item }) => (
         <TableItem key={item.id} item={item} header={header} />
       )}
-      ListHeaderComponent={() => <TableHeader header={header} />}
-      stickyHeaderIndices={[0]}
+      ListHeaderComponent={() =>
+        hideHeader ? null : <TableHeader header={header} />
+      }
+      stickyHeaderIndices={hideHeader ? undefined : [0]}
       {...props}
     />
   );
