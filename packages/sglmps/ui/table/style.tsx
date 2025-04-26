@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
   item: {
     padding: 12,
   },
+  itemHovered: {
+    padding: 12,
+    backgroundColor: THEME.color["bg-20"],
+  },
   itemContent: {
     textAlign: "left",
     overflow: "hidden",

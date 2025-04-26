@@ -8,6 +8,8 @@ import styles from "./style";
 import ProfileGradient from "./gradient";
 import Text from "@/ui/text";
 import { Platform } from "react-native";
+import Image from "@/ui/image";
+import LinearGradient from "react-native-linear-gradient";
 
 const ProfileGlimpse: React.FC = memo(() => {
   const { data: profile } = useProfile();
@@ -27,6 +29,13 @@ const ProfileGlimpse: React.FC = memo(() => {
   return (
     <YStack style={styles.container}>
       <ProfileGradient src={image.url} />
+      <LinearGradient
+        style={styles.gradient}
+        colors={[THEME.color.bg, "transparent", "transparent"]}
+        locations={[0, 0.3, 1]}
+        start={{ x: 0.9, y: 0 }}
+        end={{ x: 0, y: 0.9 }}
+      />
 
       <XStack style={styles.contentRow}>
         <Avatar
@@ -59,9 +68,24 @@ const ProfileGlimpse: React.FC = memo(() => {
             {description}
           </Text>
         </YStack>
-        <OutlinedButton color="primary" size="sm">
-          Logout
-        </OutlinedButton>
+        <YStack
+          alignItems="flex-end"
+          justifyContent="space-between"
+          style={{ height: "100%" }}
+        >
+          <Image
+            width={128}
+            height={128}
+            alt="logo"
+            src={require("@/assets/images/spotify.svg")}
+            style={{ height: 44, width: 44 }}
+            objectFit="contain"
+          />
+
+          <OutlinedButton color="primary" size="sm">
+            Logout
+          </OutlinedButton>
+        </YStack>
       </XStack>
     </YStack>
   );

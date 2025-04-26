@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     padding: 20,
     gap: 20,
+    position: "relative",
   },
   layoutContent: {
     flexGrow: 1,

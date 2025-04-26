@@ -37,6 +37,9 @@ body {
   font-family: "Poppins", sans-serif, "Helvetica Neue", "Helvetica", "Arial";
   height: 100svh;
   width: 100vw;
+  max-height: 100svh;
+  max-width: 100vw;
+  overflow: hidden;
 }
 
 * {

@@ -1,11 +1,8 @@
 "use client";
 
-import { OutlinedButton, TextButton, XStack, YStack } from "@/ui";
+import { TextButton, XStack, YStack } from "@/ui";
 import styles from "./style";
-import { useQueryClient } from "@tanstack/react-query";
-import { getTopArtists } from "@/api";
-import { timeRanges } from "@/constants";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { useTopArtistsGlimpse } from "@/queries";
 import Text from "@/ui/text";
 import TopArtistsArtist from "./artist";
@@ -16,60 +13,22 @@ import { View } from "react-native";
 import useRouter from "@/hooks/useRouter";
 
 const TopArtistsGlimpse: React.FC = () => {
-  const queryClient = useQueryClient();
-  const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
   const { width } = useWindowDimensions();
   const ARTIST_COUNT = Math.max(Math.floor((width - 416) / 208), 1);
   const { data: topArtists } = useTopArtistsGlimpse({
     limit: ARTIST_COUNT,
-    timeRange,
+    timeRange: "long_term",
   });
   const router = useRouter();
-
-  useEffect(() => {
-    timeRanges.forEach((range) => {
-      queryClient.prefetchQuery({
-        queryKey: [
-          "top-artists",
-          { limit: ARTIST_COUNT, offeset: 0, timeRange: range.key },
-        ],
-        queryFn: () =>
-          getTopArtists({
-            limit: ARTIST_COUNT,
-            offset: 0,
-            timeRange: range.key,
-          }),
-      });
-    });
-  }, [queryClient]);
 
   return (
     <YStack style={styles.glimpse}>
       <XStack style={styles.glimpseHeader}>
-        <Text variant="heading2">Top Artists</Text>
+        <Text variant="heading4">Top Artists this Year</Text>
 
-        <XStack gap={4} alignItems="center">
-          {timeRanges.map((tp) => (
-            <TextButton
-              size="sm"
-              key={tp.key}
-              onClick={() => setTimeRange(tp.key)}
-              color={tp.key === timeRange ? "brand" : "primary"}
-              disabled={tp.key === timeRange}
-            >
-              {tp.label}
-            </TextButton>
-          ))}
-
-          <OutlinedButton
-            size="sm"
-            color="primary"
-            style={{ marginLeft: 12 }}
-            onClick={() => router.push("/top-artists")}
-          >
-            View All
-          </OutlinedButton>
-        </XStack>
+        <TextButton color="primary" onClick={() => router.push("/top-artists")}>
+          View all
+        </TextButton>
       </XStack>
 
       <View style={styles.glimpseArtists}>

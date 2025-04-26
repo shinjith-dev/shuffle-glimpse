@@ -35,7 +35,7 @@ const TopArtists: React.FC = () => {
   return (
     <YStack style={styles.topContainer}>
       <XStack style={styles.glimpseHeader}>
-        <Text variant="heading2">Your Top {limitedTotal} Artists</Text>
+        <Text variant="heading3">Your Top {limitedTotal} Artists</Text>
 
         <XStack gap={4}>
           {timeRanges.map((tp) => (

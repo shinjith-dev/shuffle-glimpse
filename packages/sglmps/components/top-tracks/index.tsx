@@ -17,6 +17,7 @@ import { useIsSavedTrack } from "@/queries/profile";
 import { useIsSaved } from "@/store/is-saved";
 import TrackListItem from "../track/list-item";
 import HeartPop from "../track/heart-pop";
+import useRouter from "@/hooks/useRouter";
 
 const TopTracks: React.FC = () => {
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
@@ -35,6 +36,7 @@ const TopTracks: React.FC = () => {
   });
   const { tracks: savedDep, check: isSaved } = useIsSaved();
   const { width } = useWindowDimensions();
+  const router = useRouter();
 
   const limitedTotal = useMemo(
     () =>
@@ -90,7 +92,7 @@ const TopTracks: React.FC = () => {
   return (
     <YStack style={styles.topContainer}>
       <XStack style={styles.glimpseHeader}>
-        <Text variant="heading2">Your Top {limitedTotal}</Text>
+        <Text variant="heading3">Your Top {limitedTotal}</Text>
 
         <XStack gap={4}>
           {timeRanges.map((tp) => (
@@ -111,6 +113,7 @@ const TopTracks: React.FC = () => {
           <Table
             header={headers}
             data={tracks}
+            onRowClick={(id) => router.push(`/track/${id}`)}
             onEndReached={() => hasNextPage && fetchNextPage()}
             onEndReachedThreshold={1}
           />

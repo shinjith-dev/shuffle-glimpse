@@ -14,10 +14,12 @@ import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { useSaved } from "@/queries/profile";
 import TrackListItem from "../track/list-item";
+import useRouter from "@/hooks/useRouter";
 
 const SavedTracks: React.FC = () => {
   const { data: topTracks, hasNextPage, fetchNextPage } = useSaved({});
   const { width } = useWindowDimensions();
+  const router = useRouter();
 
   const headers = useMemo<HeaderItem[]>(
     () => [
@@ -66,7 +68,7 @@ const SavedTracks: React.FC = () => {
   return (
     <YStack style={styles.saved}>
       <XStack style={styles.header}>
-        <Text variant="heading2">Liked Songs</Text>
+        <Text variant="heading3">Liked Songs</Text>
       </XStack>
 
       <View style={styles.contents}>
@@ -74,6 +76,7 @@ const SavedTracks: React.FC = () => {
           <Table
             header={headers}
             data={tracks}
+            onRowClick={(id) => router.push(`/track/${id}`)}
             onEndReached={() => hasNextPage && fetchNextPage()}
             onEndReachedThreshold={1}
           />

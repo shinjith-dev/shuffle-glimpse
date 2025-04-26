@@ -4,7 +4,7 @@ import Table from "@/ui/table";
 import Text from "@/ui/text";
 import React, { Fragment, useMemo } from "react";
 import { View } from "react-native";
-import { Icon, OutlinedButton } from "@/ui";
+import { Icon, TextButton } from "@/ui";
 import { THEME } from "@/lib";
 import dayjs, { formatToDisplay } from "@/lib/dayjs";
 import styles from "./style";
@@ -65,16 +65,14 @@ const RecentlyPlayedGlimpse: React.FC = () => {
   return (
     <YStack style={styles.glimpse}>
       <XStack style={styles.glimpseHeader}>
-        <Text variant="heading2">Recently Played</Text>
+        <Text variant="heading4">Recently Played</Text>
 
-        <OutlinedButton
-          size="sm"
+        <TextButton
           color="primary"
-          style={{ marginLeft: 12 }}
-          onClick={() => router.push("/top-tracks")}
+          onClick={() => router.push("/recently-played")}
         >
           View All
-        </OutlinedButton>
+        </TextButton>
       </XStack>
 
       <View style={styles.glimpseTable}>

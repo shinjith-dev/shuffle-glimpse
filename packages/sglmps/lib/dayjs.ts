@@ -1,3 +1,5 @@
+"use client";
+
 import dayjs from "dayjs";
 import objectSupport from "dayjs/plugin/objectSupport";
 import relativeTime from "dayjs/plugin/relativeTime";

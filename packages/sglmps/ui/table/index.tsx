@@ -15,6 +15,8 @@ interface TableProps<
   header: Header;
   data: (Row & { id: string | number })[];
   hideHeader?: boolean;
+  hover?: boolean;
+  onRowClick?: (rowId: string) => void;
 }
 
 export default function Table<
@@ -25,6 +27,8 @@ export default function Table<
   header,
   data,
   hideHeader = false,
+  hover = true,
+  onRowClick,
   ...props
 }: TableProps<Header, Keys, Row>) {
   return (
@@ -33,7 +37,13 @@ export default function Table<
       style={styles.table}
       contentContainerStyle={styles.tableContents}
       renderItem={({ item }) => (
-        <TableItem key={item.id} item={item} header={header} />
+        <TableItem
+          hover={hover}
+          key={item.id}
+          item={item}
+          header={header}
+          onClick={onRowClick ? () => onRowClick(item.id) : undefined}
+        />
       )}
       ListHeaderComponent={() =>
         hideHeader ? null : <TableHeader header={header} />

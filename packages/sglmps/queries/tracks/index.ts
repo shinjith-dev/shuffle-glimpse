@@ -1,6 +1,6 @@
 "use client";
 
-import { getTopTracks } from "@/api";
+import { getTopTracks, getTrack } from "@/api";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export const useTopTracksGlimpse = ({
@@ -24,4 +24,10 @@ export const useTopTracks = ({
     getNextPageParam: (lastPage, pages) =>
       pages.length < 5 && lastPage?.next ? lastPage.next : undefined,
     getPreviousPageParam: (firstPage) => firstPage.previous || undefined,
+  });
+
+export const useTrack = ({ trackId }: GetTrackRequest) =>
+  useQuery({
+    queryKey: ["track", trackId],
+    queryFn: () => getTrack({ trackId }),
   });

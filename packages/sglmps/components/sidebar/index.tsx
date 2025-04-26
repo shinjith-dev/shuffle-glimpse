@@ -3,7 +3,7 @@ import React from "react";
 import { View } from "react-native";
 import styles from "./style";
 import Image from "../../ui/image";
-import { YStack } from "@/ui/layout";
+import { XStack, YStack } from "@/ui/layout";
 import MenuItem from "./menu-item";
 
 const Sidebar: React.FC = () => {
@@ -17,7 +17,7 @@ const Sidebar: React.FC = () => {
         style={{ height: 60, width: 150, margin: "0 4px" }}
         objectFit="contain"
       />
-      <YStack>
+      <YStack style={{ flexGrow: 1 }}>
         <MenuItem label="Glimpse" icon="hugeicons:home-11" path="/" />
         <MenuItem
           label="Top Artists"
@@ -53,6 +53,17 @@ const Sidebar: React.FC = () => {
           path="/saved"
         />*/}
       </YStack>
+
+      <XStack justifyContent="center">
+        <Image
+          width={400}
+          height={112}
+          alt="logo"
+          src={require("@/assets/images/text-spotify-white.svg")}
+          style={{ height: 56, width: 140, margin: "0 4px" }}
+          objectFit="contain"
+        />
+      </XStack>
     </View>
   );
 };

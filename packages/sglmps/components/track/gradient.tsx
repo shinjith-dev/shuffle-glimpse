@@ -3,7 +3,7 @@ import styles from "./style";
 import { findDarkestInRange, THEME } from "@/lib";
 import useColorThief from "use-color-thief";
 
-const ProfileGradient = ({ src }: { src: string }) => {
+const TrackGradient = ({ src }: { src: string }) => {
   const { palette } = useColorThief(src, {
     format: "hex",
     colorCount: 10,
@@ -13,7 +13,7 @@ const ProfileGradient = ({ src }: { src: string }) => {
     ? findDarkestInRange(
         palette as string[],
         THEME.color.bg,
-        THEME.color["bg-70"],
+        THEME.color["bg-50"],
       )
     : undefined;
   return (
@@ -24,10 +24,10 @@ const ProfileGradient = ({ src }: { src: string }) => {
         THEME.color.bg,
       ]}
       // locations={[]}
-      start={{ x: 0.3, y: 0 }}
-      end={{ x: 0.7, y: 1 }}
+      start={{ x: 0, y: 0.2 }}
+      end={{ x: 1, y: 0 }}
     />
   );
 };
 
-export default ProfileGradient;
+export default TrackGradient;

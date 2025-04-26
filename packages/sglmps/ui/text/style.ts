@@ -8,7 +8,17 @@ const styles = StyleSheet.create({
     fontWeight: 600,
   },
   heading2: {
+    fontSize: THEME.fontSize["4xl"],
+    color: THEME.color.fg,
+    fontWeight: 600,
+  },
+  heading3: {
     fontSize: THEME.fontSize["3xl"],
+    color: THEME.color.fg,
+    fontWeight: 600,
+  },
+  heading4: {
+    fontSize: THEME.fontSize["2xl"],
     color: THEME.color.fg,
     fontWeight: 600,
   },

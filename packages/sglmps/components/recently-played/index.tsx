@@ -16,6 +16,7 @@ import { useIsSavedTrack, useRecentlyPlayed } from "@/queries/profile";
 import TrackListItem from "../track/list-item";
 import { useIsSaved } from "@/store/is-saved";
 import HeartPop from "../track/heart-pop";
+import useRouter from "@/hooks/useRouter";
 
 const RecentlyPlayed: React.FC = () => {
   const { data: recent, hasNextPage, fetchNextPage } = useRecentlyPlayed({});
@@ -28,6 +29,7 @@ const RecentlyPlayed: React.FC = () => {
   });
   const { tracks: savedDep, check: isSaved } = useIsSaved();
   const { width } = useWindowDimensions();
+  const router = useRouter();
 
   const headers = useMemo<HeaderItem[]>(
     () => [
@@ -78,7 +80,7 @@ const RecentlyPlayed: React.FC = () => {
   return (
     <YStack style={styles.saved}>
       <XStack style={styles.header}>
-        <Text variant="heading2">Recently Played</Text>
+        <Text variant="heading3">Recently Played</Text>
       </XStack>
 
       <View style={styles.contents}>
@@ -86,6 +88,7 @@ const RecentlyPlayed: React.FC = () => {
           <Table
             header={headers}
             data={tracks}
+            onRowClick={(id) => router.push(`/track/${id}`)}
             onEndReached={() => hasNextPage && fetchNextPage()}
             onEndReachedThreshold={1}
           />

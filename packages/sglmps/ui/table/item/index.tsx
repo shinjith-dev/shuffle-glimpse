@@ -7,6 +7,8 @@ import { getNestedValue } from "@/lib";
 interface TableItemProps {
   header: HeaderItem[];
   item: Record<string, any> & { id: string | number };
+  hover: boolean;
+  onClick?: () => void;
 }
 
 export default function TableItem({ header, item }: TableItemProps) {

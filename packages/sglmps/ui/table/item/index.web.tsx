@@ -7,11 +7,21 @@ import { View } from "react-native";
 interface TableItemProps {
   header: HeaderItem[];
   item: Record<string, any> & { id: string | number };
+  hover: boolean;
+  onClick?: () => void;
 }
 
-export default function TableItem({ header, item }: TableItemProps) {
+export default function TableItem({
+  header,
+  item,
+  hover,
+  onClick,
+}: TableItemProps) {
   return (
-    <div className="flex w-full items-center p-3">
+    <div
+      onClick={onClick}
+      className={`flex w-full items-center rounded-md p-3 ${hover && "hover:bg-bg-30/20"} ${onClick && "cursor-pointer"}`}
+    >
       {header.map((h) => {
         const content = getNestedValue(item, h.key);
 

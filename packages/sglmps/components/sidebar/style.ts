@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     gap: 28,
     padding: 24,
+    zIndex: 10,
   },
   divider: {
     height: 2,

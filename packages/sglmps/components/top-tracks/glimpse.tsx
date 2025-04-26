@@ -3,15 +3,12 @@ import { useTopTracksGlimpse } from "@/queries";
 import { XStack, YStack } from "@/ui/layout";
 import Table from "@/ui/table";
 import Text from "@/ui/text";
-import React, { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useMemo } from "react";
 import { View } from "react-native";
-import { Icon, OutlinedButton, TextButton } from "@/ui";
+import { Icon, TextButton } from "@/ui";
 import { THEME } from "@/lib";
 import dayjs from "@/lib/dayjs";
 import styles from "./style";
-import { useQueryClient } from "@tanstack/react-query";
-import { getTopTracks } from "@/api";
-import { timeRanges } from "@/constants";
 import TableHeader, { HeaderItem } from "@/ui/table/header";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
@@ -22,9 +19,10 @@ import TrackListItem from "../track/list-item";
 import HeartPop from "../track/heart-pop";
 
 const TopTracksGlimpse: React.FC = () => {
-  const queryClient = useQueryClient();
-  const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
-  const { data: topTracks } = useTopTracksGlimpse({ limit: 5, timeRange });
+  const { data: topTracks } = useTopTracksGlimpse({
+    limit: 5,
+    timeRange: "long_term",
+  });
   const { width } = useWindowDimensions();
   const router = useRouter();
   useIsSavedTrack({
@@ -68,48 +66,24 @@ const TopTracksGlimpse: React.FC = () => {
     [topTracks, savedDep],
   );
 
-  useEffect(() => {
-    timeRanges.forEach((range) => {
-      queryClient.prefetchQuery({
-        queryKey: ["top-tracks", { limit: 5, offset: 0, timeRange: range.key }],
-        queryFn: () =>
-          getTopTracks({ limit: 5, offset: 0, timeRange: range.key }),
-      });
-    });
-  }, [queryClient]);
-
   return (
     <YStack style={styles.glimpse}>
       <XStack style={styles.glimpseHeader}>
-        <Text variant="heading2">Top Songs</Text>
+        <Text variant="heading4">Top Songs this Year</Text>
 
-        <XStack gap={4} alignItems="center">
-          {timeRanges.map((tp) => (
-            <TextButton
-              size="sm"
-              key={tp.key}
-              onClick={() => setTimeRange(tp.key)}
-              color={tp.key === timeRange ? "brand" : "primary"}
-              disabled={tp.key === timeRange}
-            >
-              {tp.label}
-            </TextButton>
-          ))}
-
-          <OutlinedButton
-            size="sm"
-            color="primary"
-            style={{ marginLeft: 12 }}
-            onClick={() => router.push("/top-tracks")}
-          >
-            View All
-          </OutlinedButton>
-        </XStack>
+        <TextButton color="primary" onClick={() => router.push("/top-tracks")}>
+          View all
+        </TextButton>
       </XStack>
 
       <View style={styles.glimpseTable}>
         {topTracks ? (
-          <Table hideHeader header={headers} data={tracks} />
+          <Table
+            hideHeader
+            header={headers}
+            data={tracks}
+            onRowClick={(id) => router.push(`/track/${id}`)}
+          />
         ) : (
           <Fragment>
             <TableHeader header={headers} />
