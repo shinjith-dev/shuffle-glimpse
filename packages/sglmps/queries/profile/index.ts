@@ -1,6 +1,6 @@
-import { checkIsSavedTrack } from "@/api/profile";
+import { checkIsSavedTrack, getSaved } from "@/api/profile";
 import { useIsSaved } from "@/store/is-saved";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export const useIsSavedTrack = ({
   trackIds = [],
@@ -20,3 +20,12 @@ export const useIsSavedTrack = ({
   )
     upsertTracks(trackIds, statuses);
 };
+
+export const useSaved = ({ limit = 20, offset = 0 }: GetSavedRequest) =>
+  useInfiniteQuery({
+    queryKey: ["saved-tracks"],
+    queryFn: ({ pageParam }) => getSaved({ url: pageParam, limit }),
+    initialPageParam: `/me/tracks?limit=${limit}&offset=${offset}`,
+    getNextPageParam: (lastPage) => lastPage.next || undefined,
+    getPreviousPageParam: (firstPage) => firstPage.previous || undefined,
+  });

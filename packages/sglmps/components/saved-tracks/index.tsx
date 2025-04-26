@@ -1,57 +1,30 @@
 "use client";
-import { useTopTracksInfinitely } from "@/queries";
+
 import { XStack, YStack } from "@/ui/layout";
 import Table from "@/ui/table";
 import Text from "@/ui/text";
-import React, { Fragment, useMemo, useState } from "react";
+import React, { Fragment, useMemo } from "react";
 import { View } from "react-native";
-import { Icon, TextButton } from "@/ui";
+import { Icon } from "@/ui";
 import { THEME } from "@/lib";
-import dayjs from "@/lib/dayjs";
+import dayjs, { formatToDisplay } from "@/lib/dayjs";
 import styles from "./style";
-import { timeRanges } from "@/constants";
 import TableHeader, { HeaderItem } from "@/ui/table/header";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
-import { useIsSavedTrack } from "@/queries/profile";
-import { useIsSaved } from "@/store/is-saved";
+import { useSaved } from "@/queries/profile";
 import TrackListItem from "../track/list-item";
-import HeartPop from "../track/heart-pop";
 
 const TopTracks: React.FC = () => {
-  const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
-  const {
-    data: topTracks,
-    isLoading,
-    hasNextPage,
-    fetchNextPage,
-  } = useTopTracksInfinitely({ timeRange });
-  useIsSavedTrack({
-    enabled: !!topTracks,
-    trackIds:
-      topTracks?.pages[topTracks?.pages.length - 1 || 0].items.map(
-        (t) => t.id,
-      ) || [],
-  });
-  const { check: isSaved } = useIsSaved();
+  const { data: topTracks, hasNextPage, fetchNextPage } = useSaved({});
   const { width } = useWindowDimensions();
-
-  const limitedTotal = useMemo(
-    () =>
-      topTracks?.pages?.[0].total
-        ? topTracks?.pages?.[0].total > 100
-          ? 100
-          : topTracks?.pages?.[0].total
-        : "Songs",
-    [topTracks],
-  );
 
   const headers = useMemo<HeaderItem[]>(
     () => [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: "45%" },
-      { key: "album.name", label: "Album", width: "30%" },
-      { key: "saved", label: "", width: "10%" },
+      { key: "name", label: "Name", width: "40%" },
+      { key: "album.name", label: "Album", width: "25%" },
+      { key: "addedOn", label: "Date Added", width: "20%" },
       {
         key: "duration",
         label: (
@@ -72,15 +45,18 @@ const TopTracks: React.FC = () => {
       topTracks?.pages
         .map(
           (page, pageIndex) =>
-            page.items.map((t, index) => ({
-              ...t,
-              duration: dayjs({ milliseconds: t.duration_ms }).format(
-                t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
-              ),
-              sino: pageIndex * 20 + index + 1,
-              name: <TrackListItem track={t} />,
-              saved: isSaved(t.id) ? <HeartPop /> : null,
-            })),
+            page.items.map((item, index) => {
+              const t = item.track;
+              return {
+                ...t,
+                duration: dayjs({ milliseconds: t.duration_ms }).format(
+                  t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
+                ),
+                sino: pageIndex * 20 + index + 1,
+                name: <TrackListItem track={t} />,
+                addedOn: formatToDisplay(item.added_at),
+              };
+            }),
           [],
         )
         .flat() || [],
@@ -90,19 +66,13 @@ const TopTracks: React.FC = () => {
   return (
     <YStack style={styles.topContainer}>
       <XStack style={styles.glimpseHeader}>
-        <Text variant="heading2">Your Top {limitedTotal}</Text>
-
-        <XStack gap={4}>
-          {timeRanges.map((tp) => (
-            <TextButton
-              key={tp.key}
-              onClick={() => setTimeRange(tp.key)}
-              color={tp.key === timeRange ? "brand" : "primary"}
-              disabled={isLoading || tp.key === timeRange}
-            >
-              {tp.label}
-            </TextButton>
-          ))}
+        <XStack gap={12} alignItems="center">
+          <Icon
+            name="solar:heart-angle-bold"
+            size={THEME.fontSize["3xl"] + 4}
+            color="#E11D48"
+          />
+          <Text variant="heading2">Liked Songs</Text>
         </XStack>
       </XStack>
 

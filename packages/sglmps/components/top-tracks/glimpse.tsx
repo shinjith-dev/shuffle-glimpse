@@ -4,7 +4,6 @@ import { XStack, YStack } from "@/ui/layout";
 import Table from "@/ui/table";
 import Text from "@/ui/text";
 import React, { Fragment, useEffect, useMemo, useState } from "react";
-import TopTracksTrack from "./track";
 import { View } from "react-native";
 import { Icon, OutlinedButton, TextButton } from "@/ui";
 import { THEME } from "@/lib";
@@ -19,7 +18,8 @@ import useWindowDimensions from "@/hooks/useWindowDimensions";
 import useRouter from "@/hooks/useRouter";
 import { useIsSavedTrack } from "@/queries/profile";
 import { useIsSaved } from "@/store/is-saved";
-import HeartPop from "./heart-pop";
+import TrackListItem from "../track/list-item";
+import HeartPop from "../track/heart-pop";
 
 const TopTracksGlimpse: React.FC = () => {
   const queryClient = useQueryClient();
@@ -62,7 +62,7 @@ const TopTracksGlimpse: React.FC = () => {
           t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
         ),
         sino: index + 1,
-        name: <TopTracksTrack track={t} />,
+        name: <TrackListItem track={t} />,
         saved: isSaved(t.id) ? <HeartPop /> : null,
       })) || [],
     [topTracks],

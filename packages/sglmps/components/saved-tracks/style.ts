@@ -12,21 +12,14 @@ const styles = StyleSheet.create({
     padding: 28,
     gap: 28,
   },
+  glimpseHeader: {
+    justifyContent: "space-between",
+    width: "100%",
+  },
   topContent: {
     height: "100%",
     width: "100%",
     flex: 1,
-  },
-  glimpse: {
-    width: "100%",
-    maxHeight: "100%",
-    overflow: "hidden",
-    gap: 20,
-  },
-  glimpseTable: { flexGrow: 1, width: "100%", paddingBottom: 20 },
-  glimpseHeader: {
-    justifyContent: "space-between",
-    width: "100%",
   },
 });
 

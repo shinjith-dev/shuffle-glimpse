@@ -35,7 +35,7 @@ const Sidebar: React.FC = () => {
         <MenuItem
           label="Liked Songs"
           icon="hugeicons:favourite"
-          path="/liked"
+          path="/saved-tracks"
         />
         <MenuItem
           label="Playlists"
@@ -47,11 +47,11 @@ const Sidebar: React.FC = () => {
           icon="hugeicons:headset"
           path="/recently-played"
         />
-        <MenuItem
+        {/*<MenuItem
           label="Saved"
           icon="hugeicons:collections-bookmark"
           path="/saved"
-        />
+        />*/}
       </YStack>
     </View>
   );

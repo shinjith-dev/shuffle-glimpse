@@ -1,14 +1,16 @@
-import { XStack, YStack } from "@/ui";
+import { Icon, XStack, YStack } from "@/ui";
 import Image from "@/ui/image";
 import Text from "@/ui/text";
 import { memo } from "react";
 import styles from "./style";
+import { View } from "react-native";
+import { THEME } from "@/lib";
 
 interface Props {
   track: TrackItem;
 }
 
-const TopTracksTrack: React.FC<Props> = memo(({ track }) => {
+const TrackListItem: React.FC<Props> = memo(({ track }) => {
   const image =
     track.album.images.length > 0
       ? track.album.images.reduce<ImageResponse>(
@@ -19,15 +21,23 @@ const TopTracksTrack: React.FC<Props> = memo(({ track }) => {
       : undefined;
 
   return (
-    <XStack style={styles.track}>
-      {image && (
+    <XStack style={styles.trackItem}>
+      {image ? (
         <Image
           width={image.width}
           height={image.height}
           alt="thumbnail"
           src={image.url}
-          style={styles.trackThumbnail}
+          style={styles.trackItemThumb}
         />
+      ) : (
+        <View style={[styles.trackItemThumb, styles.trackItemPlaceholder]}>
+          <Icon
+            name="hugeicons:music-note-03"
+            color={THEME.color["bg-40"]}
+            size={24}
+          />
+        </View>
       )}
       <YStack gap={4} style={{ maxWidth: "90%" }}>
         <Text variant="body1" numberOfLines={1}>
@@ -41,4 +51,4 @@ const TopTracksTrack: React.FC<Props> = memo(({ track }) => {
   );
 });
 
-export default TopTracksTrack;
+export default TrackListItem;
