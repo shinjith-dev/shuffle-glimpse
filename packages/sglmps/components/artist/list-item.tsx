@@ -19,13 +19,13 @@ const TopArtistsArtist: React.FC<Props> = memo(({ artist }) => {
       : undefined;
 
   return (
-    <YStack style={styles.artist}>
+    <YStack style={styles.artistItem}>
       {image && (
         <Avatar
           size="8xl"
           src={image.url}
           avatarProps={{
-            style: styles.artistAvatar,
+            style: styles.artistItemAvatar,
           }}
         />
       )}

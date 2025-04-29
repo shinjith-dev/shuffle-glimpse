@@ -5,12 +5,12 @@ import styles from "./style";
 import { Fragment } from "react";
 import { useTopArtistsGlimpse } from "@/queries";
 import Text from "@/ui/text";
-import TopArtistsArtist from "./artist";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import { THEME } from "@/lib";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { View } from "react-native";
 import useRouter from "@/hooks/useRouter";
+import TopArtistsArtist from "../artist/list-item";
 
 const TopArtistsGlimpse: React.FC = () => {
   const { width } = useWindowDimensions();

@@ -8,12 +8,9 @@ interface TableProps<
   Header extends HeaderItem[],
   Keys extends Header[number]["key"],
   Row extends Record<Keys, any>,
-> extends Omit<
-    FlatListProps<Row & { id: string | number }>,
-    "data" | "renderItem"
-  > {
+> extends Omit<FlatListProps<Row & { id: string }>, "data" | "renderItem"> {
   header: Header;
-  data: (Row & { id: string | number })[];
+  data: (Row & { id: string })[];
   hideHeader?: boolean;
   hover?: boolean;
   onRowClick?: (rowId: string) => void;

@@ -14,7 +14,7 @@ import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { useIsSavedTrack, useRecentlyPlayed } from "@/queries/profile";
 import TrackListItem from "../track/list-item";
-import { useIsSaved } from "@/store/is-saved";
+import { useIsSaved } from "@/store";
 import HeartPop from "../track/heart-pop";
 import useRouter from "@/hooks/useRouter";
 

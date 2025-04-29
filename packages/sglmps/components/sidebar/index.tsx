@@ -5,18 +5,27 @@ import styles from "./style";
 import Image from "../../ui/image";
 import { XStack, YStack } from "@/ui/layout";
 import MenuItem from "./menu-item";
+import usePathname from "@/hooks/usePathname";
+import { SidebarGradient } from "./gradient";
 
 const Sidebar: React.FC = () => {
+  const pathname = usePathname();
+
+  if (pathname.split("/")?.length > 2) return null;
   return (
     <View style={styles.sidebar}>
-      <Image
-        width={512}
-        height={128}
-        alt="logo"
-        src={require("@/assets/images/text-logo.svg")}
-        style={{ height: 60, width: 150, margin: "0 4px" }}
-        objectFit="contain"
-      />
+      <SidebarGradient />
+      <View>
+        <Image
+          width={512}
+          height={128}
+          alt="logo"
+          src={require("@/assets/images/text-logo.svg")}
+          style={{ height: 60, width: 150, margin: "0 4px" }}
+          objectFit="contain"
+        />
+      </View>
+
       <YStack style={{ flexGrow: 1 }}>
         <MenuItem label="Glimpse" icon="hugeicons:home-11" path="/" />
         <MenuItem

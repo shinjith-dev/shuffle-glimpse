@@ -17,7 +17,7 @@ const MenuItem: React.FC<IMenuProps> = memo(({ label, icon, path }) => {
   return (
     <button
       onClick={() => router.push(path)}
-      className={`hover:bg-bg-20/80 hover:text-fg flex w-full cursor-pointer flex-row items-center gap-2 rounded-md px-3 py-2.5 font-medium transition-all ${pathname === path ? "text-fg bg-bg-20/70" : "text-bg-80 bg-transparent"}`}
+      className={`hover:bg-fg/15 hover:text-fg flex w-full cursor-pointer flex-row items-center gap-2 rounded-md px-3 py-2.5 font-medium transition-all ${pathname === path ? "text-fg bg-fg/10" : "text-fg/70 bg-transparent"}`}
       style={{
         fontSize: THEME.fontSize.md,
       }}

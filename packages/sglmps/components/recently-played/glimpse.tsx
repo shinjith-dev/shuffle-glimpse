@@ -77,7 +77,12 @@ const RecentlyPlayedGlimpse: React.FC = () => {
 
       <View style={styles.glimpseTable}>
         {recent ? (
-          <Table hideHeader header={headers} data={tracks} />
+          <Table
+            hideHeader
+            header={headers}
+            data={tracks}
+            onRowClick={(id) => router.push(`/track/${id}`)}
+          />
         ) : (
           <Fragment>
             <TableHeader header={headers} />

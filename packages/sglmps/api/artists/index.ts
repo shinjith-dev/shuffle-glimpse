@@ -2,6 +2,9 @@
 
 import api from "../instance";
 
+export const getArtist = async ({ artistId }: GetArtistRequest) =>
+  api.get(`/artists/${String(artistId)}`).then((res) => res.data);
+
 export const getTopArtists = async ({
   timeRange = "short_term",
   offset = 0,

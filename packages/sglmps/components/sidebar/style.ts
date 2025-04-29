@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     gap: 28,
     padding: 24,
     zIndex: 10,
+    overflow: "hidden",
   },
   divider: {
     height: 2,
@@ -17,6 +18,13 @@ const styles = StyleSheet.create({
     backgroundColor: THEME.color["bg-20"],
     marginVertical: 12,
     borderRadius: 4,
+  },
+  gradient: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
   },
 });
 

@@ -1,7 +1,7 @@
 "use client";
-import { Button, Icon, IconButton, XStack, YStack } from "@/ui";
+import { Button, Icon, XStack, YStack } from "@/ui";
 import styles from "./style";
-import { useTrack } from "@/queries";
+import { useArtist, useTrack } from "@/queries";
 import TrackGradient from "./gradient";
 import { maxOfArray, THEME } from "@/lib";
 import Image from "@/ui/image";
@@ -10,24 +10,17 @@ import Text from "@/ui/text";
 import dayjs from "@/lib/dayjs";
 import LinearGradient from "react-native-linear-gradient";
 import useRouter from "@/hooks/useRouter";
-import { useEffect } from "react";
 
 interface Props {
-  trackId?: any;
+  artistId?: any;
 }
 
-const Track: React.FC<Props> = ({ trackId }) => {
-  const { data: track, error } = useTrack({ trackId });
+const Track: React.FC<Props> = ({ artistId }) => {
+  const { data: track } = useArtist({ artistId });
   const router = useRouter();
   const image = track?.album.images.length
     ? maxOfArray(track.album.images, "width")
     : undefined;
-
-  useEffect(
-    () => console.log(error?.message),
-    // router.push('/404')
-    [error],
-  );
 
   if (!track) return null;
 
@@ -50,16 +43,6 @@ const Track: React.FC<Props> = ({ trackId }) => {
         objectFit="contain"
       />
 
-      <View style={styles.back}>
-        <IconButton
-          variant="ghost"
-          color="primary"
-          size="3xl"
-          onClick={router.back}
-          icon="hugeicons:circle-arrow-left-double"
-        />
-      </View>
-
       <XStack style={styles.trackContent}>
         {image ? (
           <Image
@@ -78,12 +61,12 @@ const Track: React.FC<Props> = ({ trackId }) => {
             />
           </View>
         )}
-        <YStack gap={12} style={{ maxWidth: "60%" }}>
-          <Text variant="heading1" numberOfLines={2}>
+        <YStack gap={16} style={{ maxWidth: "60%" }}>
+          <Text variant="heading2" numberOfLines={2}>
             {track.name}
           </Text>
           <Text
-            variant="heading3"
+            variant="heading4"
             color={THEME.color["bg-90"]}
             numberOfLines={1}
             fontWeight={500}
@@ -94,7 +77,6 @@ const Track: React.FC<Props> = ({ trackId }) => {
             {track.album.name} · {dayjs(track.album.release_date).year()}
           </Text>
           <Button
-            size="lg"
             style={{ marginTop: 20 }}
             startIcon={
               <Image

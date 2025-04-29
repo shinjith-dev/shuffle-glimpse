@@ -37,12 +37,6 @@ const styles = StyleSheet.create({
     maxWidth: "100%",
     flexDirection: "row",
   },
-  artist: {
-    gap: 12,
-    alignItems: "center",
-    maxWidth: 180,
-  },
-  artistAvatar: {},
 });
 
 export default styles;

@@ -5,7 +5,7 @@ import {
   getRecentlyPlayed,
   getSaved,
 } from "@/api/profile";
-import { useIsSaved } from "@/store/is-saved";
+import { useIsSaved } from "@/store";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export const useProfile = () =>

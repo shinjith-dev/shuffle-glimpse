@@ -6,12 +6,12 @@ import { timeRanges } from "@/constants";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useTopArtists } from "@/queries";
 import Text from "@/ui/text";
-import TopArtistsArtist from "./artist";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { ScrollView } from "react-native";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import { THEME } from "@/lib";
 import dayjs from "@/lib/dayjs";
+import TopArtistsArtist from "../artist/list-item";
 
 const TopArtists: React.FC = () => {
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");

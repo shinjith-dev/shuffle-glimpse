@@ -1,7 +1,13 @@
 "use client";
 
-import { getTopArtists } from "@/api";
+import { getArtist, getTopArtists } from "@/api";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+
+export const useArtist = ({ artistId }: GetArtistRequest) =>
+  useQuery({
+    queryKey: ["artist", artistId],
+    queryFn: () => getArtist({ artistId }),
+  });
 
 export const useTopArtistsGlimpse = ({
   timeRange = "short_term",

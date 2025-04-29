@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { THEME, TSpacing } from "../../lib";
+import { IconSize, THEME, TSpacing } from "../../lib";
 import { Icon, IconProps } from "../icon";
 import { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
@@ -110,9 +110,12 @@ export const TextButton: React.FC<Partial<TextButtonProps>> = ({
   );
 };
 
-export type IconButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
+export type IconButtonProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "children"
+> &
   IconButtonVariantProps & {
-    size: TSpacing;
+    size: IconSize;
     children: string;
     rounded: boolean;
     icon: string;
@@ -135,13 +138,13 @@ export const IconButton: React.FC<Partial<IconButtonProps>> = ({
         props?.className,
       )}
       style={{
-        height: THEME.spacing[size] * 14,
-        width: THEME.spacing[size] * 14,
-        borderRadius: THEME.spacing[size] * 10,
+        height: THEME.iconSize[size] + (variant === "solid" ? 8 : 0),
+        width: THEME.iconSize[size] + (variant === "solid" ? 8 : 0),
+        borderRadius: THEME.iconSize[size] + 8,
         ...props?.style,
       }}
     >
-      <Icon name={icon} />
+      <Icon name={icon} size={THEME.iconSize[size]} />
     </button>
   );
 };

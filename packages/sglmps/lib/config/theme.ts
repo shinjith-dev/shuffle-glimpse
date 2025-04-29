@@ -41,6 +41,7 @@ export const THEME = {
     lg: 32,
     xl: 36,
     "2xl": 40,
+    "3xl": 44,
   },
   color: {
     ...theme.color,
@@ -48,3 +49,4 @@ export const THEME = {
 };
 
 export type TSpacing = keyof typeof THEME.spacing;
+export type IconSize = keyof typeof THEME.iconSize;

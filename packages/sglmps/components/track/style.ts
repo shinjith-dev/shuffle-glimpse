@@ -1,4 +1,4 @@
-import { opacity, THEME } from "@/lib";
+import { THEME } from "@/lib";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -24,25 +24,25 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    position: "relative",
+    position: "static",
   },
   gradient: {
-    width: "130%",
-    height: "120%",
+    width: "100%",
+    height: "100%",
     position: "absolute",
-    top: -20,
-    right: -20,
-    zIndex: -1,
+    top: 0,
+    right: 0,
   },
   trackContent: {
     gap: 36,
     borderRadius: 16,
     width: "80%",
-    maxWidth: 1000,
+    maxWidth: 1200,
+    justifyContent: "center",
   },
   trackThumb: {
-    width: 280,
-    height: 280,
+    width: 360,
+    height: 360,
     borderRadius: 8,
     backgroundColor: THEME.color["bg-20"],
   },
@@ -52,6 +52,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 28,
     right: 28,
+  },
+  back: {
+    position: "absolute",
+    top: 28,
+    left: 28,
   },
 });
 

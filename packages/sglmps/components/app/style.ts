@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     height: "100%",
-    position: "relative",
+    position: "static",
   },
   glimpseCont: {
     height: "100%",
