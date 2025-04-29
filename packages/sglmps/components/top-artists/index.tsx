@@ -11,7 +11,7 @@ import { ScrollView } from "react-native";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import { THEME } from "@/lib";
 import dayjs from "@/lib/dayjs";
-import TopArtistsArtist from "../artist/list-item";
+import ArtistItem from "../artist/list-item";
 
 const TopArtists: React.FC = () => {
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
@@ -61,7 +61,7 @@ const TopArtists: React.FC = () => {
         contentContainerStyle={styles.glimpseArtists}
       >
         {topArtists ? (
-          artists.map((a) => <TopArtistsArtist key={a.id} artist={a} />)
+          artists.map((a) => <ArtistItem key={a.id} artist={a} />)
         ) : (
           <ContentLoader
             speed={1}

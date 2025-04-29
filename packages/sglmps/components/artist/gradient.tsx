@@ -3,7 +3,7 @@ import styles from "./style";
 import { findDarkestInRange, THEME } from "@/lib";
 import useColorThief from "use-color-thief";
 
-const TrackGradient = ({ src }: { src: string }) => {
+const ArtistGradient = ({ src }: { src: string }) => {
   const { palette } = useColorThief(src, {
     format: "hex",
     colorCount: 10,
@@ -30,4 +30,4 @@ const TrackGradient = ({ src }: { src: string }) => {
   );
 };
 
-export default TrackGradient;
+export default ArtistGradient;

@@ -1,32 +1,32 @@
 "use client";
-import { Button, Icon, XStack, YStack } from "@/ui";
+import { Button, Icon, IconButton, OutlinedButton, YStack } from "@/ui";
 import styles from "./style";
-import { useArtist, useTrack } from "@/queries";
-import TrackGradient from "./gradient";
+import { useArtist } from "@/queries";
+import ArtistGradient from "./gradient";
 import { maxOfArray, THEME } from "@/lib";
 import Image from "@/ui/image";
 import { View } from "react-native";
 import Text from "@/ui/text";
-import dayjs from "@/lib/dayjs";
 import LinearGradient from "react-native-linear-gradient";
 import useRouter from "@/hooks/useRouter";
+import { Avatar } from "@/ui/avatar";
 
 interface Props {
   artistId?: any;
 }
 
-const Track: React.FC<Props> = ({ artistId }) => {
-  const { data: track } = useArtist({ artistId });
+const Artist: React.FC<Props> = ({ artistId }) => {
+  const { data: artist } = useArtist({ artistId });
   const router = useRouter();
-  const image = track?.album.images.length
-    ? maxOfArray(track.album.images, "width")
+  const image = artist?.images.length
+    ? maxOfArray(artist.images, "width")
     : undefined;
 
-  if (!track) return null;
+  if (!artist) return null;
 
   return (
-    <YStack style={styles.track}>
-      {image && <TrackGradient src={image.url} />}
+    <YStack style={styles.artist}>
+      {image && <ArtistGradient src={image.url} />}
       <LinearGradient
         style={styles.gradient}
         colors={[THEME.color.bg, "transparent", "transparent"]}
@@ -39,63 +39,67 @@ const Track: React.FC<Props> = ({ artistId }) => {
         height={128}
         alt="logo"
         src={require("@/assets/images/spotify.svg")}
-        style={styles.trackSpotifyLogo}
+        style={styles.artistSpotifyLogo}
         objectFit="contain"
       />
 
-      <XStack style={styles.trackContent}>
-        {image ? (
-          <Image
-            width={image.width}
-            height={image.height}
-            alt="thumbnail"
+      <View style={styles.back}>
+        <IconButton
+          variant="ghost"
+          color="primary"
+          size="3xl"
+          onClick={router.back}
+          icon="hugeicons:circle-arrow-left-double"
+        />
+      </View>
+
+      <YStack style={styles.artistContent}>
+        {image && (
+          <Avatar
+            size="12xl"
             src={image.url}
-            style={styles.trackThumb}
+            avatarProps={{
+              style: styles.artistItemAvatar,
+            }}
           />
-        ) : (
-          <View style={[styles.trackThumb, styles.trackItemPlaceholder]}>
-            <Icon
-              name="hugeicons:music-note-03"
-              color={THEME.color["bg-40"]}
-              size={160}
-            />
-          </View>
         )}
-        <YStack gap={16} style={{ maxWidth: "60%" }}>
-          <Text variant="heading2" numberOfLines={2}>
-            {track.name}
+
+        <YStack alignItems="center" style={{ maxWidth: "100%" }}>
+          <Text
+            style={{ textAlign: "center", marginBottom: 12 }}
+            variant="heading1"
+            numberOfLines={2}
+          >
+            {artist.name}
           </Text>
           <Text
             variant="heading4"
+            color={THEME.color.brand}
+            numberOfLines={1}
+            fontWeight={500}
+          >
+            {artist.followers.total}
+          </Text>
+          <Text
+            variant="body2"
             color={THEME.color["bg-90"]}
             numberOfLines={1}
             fontWeight={500}
           >
-            {track.artists.map((a) => a.name).join(", ")}
+            FOLLOWERS
           </Text>
-          <Text variant="body1" color={THEME.color["bg-80"]} numberOfLines={1}>
-            {track.album.name} · {dayjs(track.album.release_date).year()}
-          </Text>
-          <Button
+
+          <OutlinedButton
             style={{ marginTop: 20 }}
-            startIcon={
-              <Image
-                width={64}
-                height={64}
-                alt="spotify-logo"
-                src={require("@/assets/images/spotify-white.svg")}
-                style={{ height: 20, width: 20 }}
-                objectFit="contain"
-              />
-            }
-            onClick={() => router.push(track.external_urls.spotify)}
+            color="secondary"
+            onClick={() => router.push(artist.external_urls.spotify)}
           >
-            Open in Spotify
-          </Button>
+            Show on Spotify
+          </OutlinedButton>
         </YStack>
-      </XStack>
+      </YStack>
     </YStack>
   );
 };
 
-export default Track;
+export default Artist;

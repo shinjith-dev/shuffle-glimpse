@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
   },
   container: {
-    borderRadius: 150,
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden",
@@ -29,6 +28,9 @@ export const AvatarSizes = {
   "7xl": 160,
   "8xl": 180,
   "9xl": 200,
+  "10xl": 240,
+  "11xl": 280,
+  "12xl": 320,
 };
 
 export default styles;

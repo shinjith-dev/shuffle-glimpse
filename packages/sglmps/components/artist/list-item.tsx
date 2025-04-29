@@ -1,14 +1,17 @@
-import { YStack } from "@/ui";
 import Text from "@/ui/text";
 import { memo } from "react";
 import styles from "./style";
 import { Avatar } from "@/ui/avatar";
+import { Pressable } from "react-native";
+import useRouter from "@/hooks/useRouter";
 
 interface Props {
   artist: ArtistItem;
 }
 
-const TopArtistsArtist: React.FC<Props> = memo(({ artist }) => {
+const ArtistItem: React.FC<Props> = memo(({ artist }) => {
+  const router = useRouter();
+
   const image =
     artist.images.length > 0
       ? artist.images.reduce<ImageResponse>(
@@ -19,7 +22,13 @@ const TopArtistsArtist: React.FC<Props> = memo(({ artist }) => {
       : undefined;
 
   return (
-    <YStack style={styles.artistItem}>
+    <Pressable
+      onPress={() => router.push(`/artist/${artist.id}`)}
+      style={({ pressed, hovered }) => [
+        styles.artistItem,
+        (pressed || hovered) && styles.artistItemHovered,
+      ]}
+    >
       {image && (
         <Avatar
           size="8xl"
@@ -32,8 +41,8 @@ const TopArtistsArtist: React.FC<Props> = memo(({ artist }) => {
       <Text style={{ textAlign: "center" }} variant="body1" numberOfLines={2}>
         {artist.name}
       </Text>
-    </YStack>
+    </Pressable>
   );
 });
 
-export default TopArtistsArtist;
+export default ArtistItem;

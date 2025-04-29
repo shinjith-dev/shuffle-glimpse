@@ -36,6 +36,7 @@ export const Avatar = forwardRef(
             borderColor,
             height: AvatarSizes[size],
             width: AvatarSizes[size],
+            borderRadius: AvatarSizes[size],
           },
           border && styles.bordered,
           style,

@@ -36,3 +36,20 @@ interface ArtistFollowers {
   href: any;
   total: number;
 }
+
+interface Artist {
+  external_urls: ArtistUrls;
+  followers: ArtistFollowers;
+  genres: string[];
+  href: string;
+  id: string;
+  images: ImageResponse[];
+  name: string;
+  popularity: number;
+  type: string;
+  uri: string;
+}
+
+interface ArtistUrls {
+  spotify: string;
+}

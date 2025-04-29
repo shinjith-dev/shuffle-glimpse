@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   glimpseArtists: {
-    gap: 28,
+    gap: 12,
     paddingVertical: 12,
     flexWrap: "wrap",
     maxWidth: "100%",

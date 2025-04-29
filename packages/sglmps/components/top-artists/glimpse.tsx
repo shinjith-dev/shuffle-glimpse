@@ -10,7 +10,7 @@ import { THEME } from "@/lib";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { View } from "react-native";
 import useRouter from "@/hooks/useRouter";
-import TopArtistsArtist from "../artist/list-item";
+import ArtistItem from "../artist/list-item";
 
 const TopArtistsGlimpse: React.FC = () => {
   const { width } = useWindowDimensions();
@@ -33,9 +33,7 @@ const TopArtistsGlimpse: React.FC = () => {
 
       <View style={styles.glimpseArtists}>
         {topArtists ? (
-          topArtists.items.map((a) => (
-            <TopArtistsArtist key={a.id} artist={a} />
-          ))
+          topArtists.items.map((a) => <ArtistItem key={a.id} artist={a} />)
         ) : (
           <ContentLoader
             speed={1}

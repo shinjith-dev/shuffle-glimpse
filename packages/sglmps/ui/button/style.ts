@@ -48,9 +48,9 @@ export const outlinedButtonVariants = cva(
         ],
         primary: ["border-white", "text-fg", "hover:bg-white", "hover:text-bg"],
         secondary: [
-          "border-bg-80",
-          "text-bg-80",
-          "hover:bg-bg-80",
+          "border-bg-90",
+          "text-bg-90",
+          "hover:bg-bg-90",
           "hover:text-bg",
         ],
       },
