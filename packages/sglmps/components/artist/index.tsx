@@ -49,7 +49,7 @@ const Artist: React.FC<Props> = ({ artistId }) => {
           color="primary"
           size="3xl"
           onClick={router.back}
-          icon="hugeicons:circle-arrow-left-double"
+          icon="hugeicons:circle-arrow-left-02"
         />
       </View>
 
