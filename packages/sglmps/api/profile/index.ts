@@ -8,9 +8,11 @@ export const getProfle = async () =>
 export const checkIsSavedTrack = async ({
   trackIds = [],
 }: CheckIsSavedTrackRequest) =>
-  await api
-    .get<boolean[]>(`/me/tracks/contains?ids=${trackIds.join(",")}`)
-    .then((res) => res.data);
+  trackIds.length > 0
+    ? await api
+        .get<boolean[]>(`/me/tracks/contains?ids=${trackIds.join(",")}`)
+        .then((res) => res.data)
+    : Promise.resolve(true);
 
 export const getSaved = async ({
   limit = 20,
