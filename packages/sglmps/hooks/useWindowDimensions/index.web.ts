@@ -1,5 +1,5 @@
+import Dimensions from "@/lib/react-native/Dimensions/index.web";
 import { useEffect, useState } from "react";
-import Dimensions from "../../lib/react-native-web/Dimensions/index.next";
 
 const getServerDimensions = () => ({
   width: 1920,

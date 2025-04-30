@@ -1,10 +1,10 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useAuth } from "sglmps/hooks";
 
-export default function CallBackHandler() {
+function CallBackHandler() {
   const searchParams = useSearchParams();
   const { callback } = useAuth();
 
@@ -16,4 +16,12 @@ export default function CallBackHandler() {
   }, [searchParams, callback]);
 
   return null;
+}
+
+export default function CallBackHandlerWrapped() {
+  return (
+    <Suspense>
+      <CallBackHandler />
+    </Suspense>
+  );
 }
