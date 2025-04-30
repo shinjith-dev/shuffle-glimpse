@@ -12,7 +12,7 @@ export const checkIsSavedTrack = async ({
     ? await api
         .get<boolean[]>(`/me/tracks/contains?ids=${trackIds.join(",")}`)
         .then((res) => res.data)
-    : Promise.resolve(true);
+    : Promise.resolve([]);
 
 export const getSaved = async ({
   limit = 20,
