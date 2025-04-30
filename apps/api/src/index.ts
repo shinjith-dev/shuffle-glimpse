@@ -1,6 +1,6 @@
 import { storeState, validateState } from './lib';
 
-const FRONTEND_URL = 'http://127.0.0.1:3000';
+const FRONTEND_URL = 'https://shuffleg.netlify.app';
 const ALLOWED_ORIGINS = [FRONTEND_URL, null];
 const PERMISSION_SCOPE = [
 	'user-top-read',
