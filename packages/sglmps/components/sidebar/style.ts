@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { THEME } from "../../lib";
+import { opacity, THEME } from "../../lib";
 
 const styles = StyleSheet.create({
   sidebar: {
@@ -12,10 +12,15 @@ const styles = StyleSheet.create({
     zIndex: 10,
     overflow: "hidden",
   },
+  collapsed: {
+    width: "auto",
+    paddingHorizontal: 12,
+    paddingVertical: 20,
+  },
   divider: {
     height: 2,
     width: "100%",
-    backgroundColor: THEME.color["bg-20"],
+    backgroundColor: opacity(THEME.color.fg, 0.05),
     marginVertical: 12,
     borderRadius: 4,
   },

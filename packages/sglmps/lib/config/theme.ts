@@ -43,6 +43,11 @@ export const THEME = {
     "2xl": 40,
     "3xl": 44,
   },
+  breakPoints: {
+    mobile: 768,
+    tab: 1400,
+    desktop: 2000,
+  },
   color: {
     ...theme.color,
   },

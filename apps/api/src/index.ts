@@ -44,7 +44,7 @@ export default {
 				const state = await storeState(env);
 				const scope = PERMISSION_SCOPE.join(' ');
 				const client_id = env.SPOTIFY_CLIENT_ID;
-				const redirect_uri = `${FRONTEND_URL}/callback`;
+				const redirect_uri = `${origin}/callback`;
 
 				const params = new URLSearchParams({
 					response_type: 'code',
@@ -67,7 +67,7 @@ export default {
 
 				const body = {
 					...Object.fromEntries(reqBody),
-					redirect_uri: `${FRONTEND_URL}/callback`,
+					redirect_uri: `${origin}/callback`,
 					grant_type: 'authorization_code',
 				};
 
@@ -96,7 +96,7 @@ export default {
 
 				const body = {
 					...Object.fromEntries(reqBody),
-					redirect_uri: `${FRONTEND_URL}/callback`,
+					redirect_uri: `${origin}/callback`,
 					grant_type: 'refresh_token',
 				};
 
