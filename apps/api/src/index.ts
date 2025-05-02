@@ -1,7 +1,7 @@
 import { storeState, validateState } from './lib';
 
 const FRONTEND_URL = 'https://shuffleg.netlify.app';
-const ALLOWED_ORIGINS = [FRONTEND_URL, null];
+const ALLOWED_ORIGINS = [FRONTEND_URL, 'http://127.0.0.1:3000'];
 const PERMISSION_SCOPE = [
 	'user-top-read',
 	'user-library-read',
@@ -28,7 +28,7 @@ export default {
 			});
 		}
 
-		if (!ALLOWED_ORIGINS.includes(origin)) {
+		if (origin && !ALLOWED_ORIGINS.includes(origin)) {
 			return new Response('forbidden', {
 				status: 403,
 				headers: {
