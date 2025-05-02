@@ -31,11 +31,10 @@ const RecentlyPlayed: React.FC = () => {
   const { width } = useWindowDimensions();
   const router = useRouter();
 
-  const headers = useMemo<HeaderItem[]>(
-    () => [
+  const headers = useMemo<HeaderItem[]>(() => {
+    const base: HeaderItem[] = [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: "40%" },
-      { key: "album.name", label: "Album", width: "30%" },
+      { key: "name", label: "Name", width: width < 1500 ? "70%" : "40%" },
       { key: "playedAt", label: "Played At", width: "15%" },
       { key: "saved", label: "" },
       {
@@ -49,9 +48,16 @@ const RecentlyPlayed: React.FC = () => {
         ),
         width: "10%",
       },
-    ],
-    [],
-  );
+    ];
+
+    return [
+      ...base.slice(0, 2),
+      ...(width >= 1500
+        ? [{ key: "album.name", label: "Album", width: "30%" } as HeaderItem]
+        : []),
+      ...base.slice(2),
+    ];
+  }, [width]);
 
   const tracks = useMemo(
     () =>

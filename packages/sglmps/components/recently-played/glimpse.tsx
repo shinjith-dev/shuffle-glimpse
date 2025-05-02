@@ -24,11 +24,10 @@ const RecentlyPlayedGlimpse: React.FC = () => {
     trackIds: recent?.items.map((t) => t.track.id) || [],
   });
 
-  const headers = useMemo<HeaderItem[]>(
-    () => [
+  const headers = useMemo<HeaderItem[]>(() => {
+    const base: HeaderItem[] = [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: "40%" },
-      { key: "album.name", label: "Album", width: "35%" },
+      { key: "name", label: "Name", width: width < 1500 ? "75%" : "40%" },
       { key: "playedAt", label: "Played At", width: "15%" },
       {
         key: "duration",
@@ -41,9 +40,16 @@ const RecentlyPlayedGlimpse: React.FC = () => {
         ),
         width: "10%",
       },
-    ],
-    [],
-  );
+    ];
+
+    return [
+      ...base.slice(0, 2),
+      ...(width >= 1500
+        ? [{ key: "album.name", label: "Album", width: "35%" } as HeaderItem]
+        : []),
+      ...base.slice(2),
+    ];
+  }, [width]);
 
   const tracks = useMemo(
     () =>
@@ -57,9 +63,10 @@ const RecentlyPlayedGlimpse: React.FC = () => {
           sino: index + 1,
           name: <TrackListItem track={t} />,
           playedAt: formatToDisplay(item.played_at),
+          album: width >= 1500 ? t.album.name : undefined,
         };
       }) || [],
-    [recent],
+    [recent, width],
   );
 
   return (

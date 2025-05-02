@@ -21,11 +21,10 @@ const SavedTracks: React.FC = () => {
   const { width } = useWindowDimensions();
   const router = useRouter();
 
-  const headers = useMemo<HeaderItem[]>(
-    () => [
+  const headers = useMemo<HeaderItem[]>(() => {
+    const base: HeaderItem[] = [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: "40%" },
-      { key: "album.name", label: "Album", width: "35%" },
+      { key: "name", label: "Name", width: width < 1500 ? "75%" : "40%" },
       { key: "addedOn", label: "Added On", width: "15%" },
       {
         key: "duration",
@@ -38,9 +37,16 @@ const SavedTracks: React.FC = () => {
         ),
         width: "10%",
       },
-    ],
-    [],
-  );
+    ];
+
+    return [
+      ...base.slice(0, 2),
+      ...(width >= 1500
+        ? [{ key: "album.name", label: "Album", width: "35%" } as HeaderItem]
+        : []),
+      ...base.slice(2),
+    ];
+  }, [width]);
 
   const tracks = useMemo(
     () =>

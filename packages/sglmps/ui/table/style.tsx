@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   headerContent: {
-    minWidth: 56,
+    minWidth: 36,
     textAlign: "left",
     overflow: "hidden",
     paddingRight: 28,
@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
   itemContent: {
     textAlign: "left",
     overflow: "hidden",
-    minWidth: 56,
-    paddingRight: 32,
+    minWidth: 36,
+    paddingRight: 28,
     flexShrink: 0,
   },
 });

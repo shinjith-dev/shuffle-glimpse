@@ -1,5 +1,5 @@
 "use client";
-import { Button, Icon, IconButton, OutlinedButton, YStack } from "@/ui";
+import { IconButton, OutlinedButton, YStack } from "@/ui";
 import styles from "./style";
 import { useArtist } from "@/queries";
 import ArtistGradient from "./gradient";

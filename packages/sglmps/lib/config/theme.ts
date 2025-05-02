@@ -45,7 +45,7 @@ export const THEME = {
   },
   breakPoints: {
     mobile: 768,
-    tab: 1400,
+    tab: 1200,
     desktop: 2000,
   },
   color: {

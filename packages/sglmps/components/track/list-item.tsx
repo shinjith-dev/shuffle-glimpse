@@ -5,12 +5,14 @@ import { memo } from "react";
 import styles from "./style";
 import { View } from "react-native";
 import { THEME } from "@/lib";
+import useWindowDimensions from "@/hooks/useWindowDimensions";
 
 interface Props {
   track: PlaylistTracks;
 }
 
 const TrackListItem: React.FC<Props> = memo(({ track }) => {
+  const { width } = useWindowDimensions();
   const image =
     track.album.images.length > 0
       ? track.album.images.reduce<ImageResponse>(
@@ -45,6 +47,7 @@ const TrackListItem: React.FC<Props> = memo(({ track }) => {
         </Text>
         <Text variant="body2" numberOfLines={1}>
           {track.artists.map((a) => a.name).join(", ")}
+          {width < 1500 && ` · ${track.album.name}`}
         </Text>
       </YStack>
     </XStack>

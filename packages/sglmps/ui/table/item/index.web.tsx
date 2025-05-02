@@ -6,7 +6,7 @@ import { View } from "react-native";
 
 interface TableItemProps {
   header: HeaderItem[];
-  item: Record<string, any> & { id: string };
+  item: Record<string, any> & { id: string; sino?: number };
   hover: boolean;
   onClick?: () => void;
 }
@@ -31,7 +31,11 @@ export default function TableItem({
               key={h.key}
               variant="body2"
               numberOfLines={1}
-              style={[styles.itemContent, { width: h.width }]}
+              style={[
+                styles.itemContent,
+                { width: h.width },
+                h.key === "sino" && { paddingRight: 0 },
+              ]}
             >
               {content}
             </Text>

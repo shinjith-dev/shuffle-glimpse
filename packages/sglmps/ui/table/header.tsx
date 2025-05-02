@@ -18,12 +18,16 @@ export default function TableHeader({ header }: TableHeaderProps) {
   return (
     <XStack style={styles.header}>
       {header.map((h) =>
-        typeof h.label === "string" ? (
+        typeof h.label === "string" || typeof h.label === "number" ? (
           <Text
             key={h.key}
             variant="body2"
             numberOfLines={1}
-            style={[styles.headerContent, { width: h.width }]}
+            style={[
+              styles.headerContent,
+              { width: h.width },
+              h.key === "sino" && { paddingRight: 0 },
+            ]}
           >
             {h.label}
           </Text>
