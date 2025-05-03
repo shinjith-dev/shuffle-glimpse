@@ -7,14 +7,16 @@ import { memo, useMemo } from "react";
 import styles from "./style";
 import ProfileGradient from "./gradient";
 import Text from "@/ui/text";
-import { Platform } from "react-native";
+import { Platform, View } from "react-native";
 import Image from "@/ui/image";
 import LinearGradient from "react-native-linear-gradient";
+import { useWidth } from "@/hooks";
 
 const ProfileGlimpse: React.FC = memo(() => {
   const { data: profile } = useProfile();
   const { data: playlists } = usePlaylistsGlimpse();
   const image = maxOfArray(profile?.images, "width");
+  const { isMobile } = useWidth();
 
   const description = useMemo(
     () =>
@@ -27,7 +29,7 @@ const ProfileGlimpse: React.FC = memo(() => {
 
   if (!profile || !image?.url) return null;
   return (
-    <YStack style={styles.container}>
+    <YStack style={[styles.container, isMobile && styles.containerMobile]}>
       <ProfileGradient src={image.url} />
       <LinearGradient
         style={styles.gradient}
@@ -36,10 +38,24 @@ const ProfileGlimpse: React.FC = memo(() => {
         start={{ x: 0.9, y: 0 }}
         end={{ x: 0, y: 0.9 }}
       />
+      <Image
+        width={128}
+        height={128}
+        alt="logo"
+        src={require("@/assets/images/spotify.svg")}
+        style={{
+          top: 20,
+          right: 20,
+          position: "absolute",
+          height: isMobile ? 36 : 44,
+          width: isMobile ? 36 : 44,
+        }}
+        objectFit="contain"
+      />
 
-      <XStack style={styles.contentRow}>
+      <View style={isMobile ? styles.contentCol : styles.contentRow}>
         <Avatar
-          size="9xl"
+          size={isMobile ? "5xl" : "9xl"}
           src={image?.url}
           style={{
             ...Platform.select({
@@ -62,31 +78,23 @@ const ProfileGlimpse: React.FC = memo(() => {
             }),
           }}
         />
-        <YStack gap={12} style={styles.content}>
-          <Text variant="heading1">{profile.display_name}</Text>
-          <Text variant="body2" color={THEME.color["bg-90"]}>
-            {description}
-          </Text>
-        </YStack>
-        <YStack
-          alignItems="flex-end"
-          justifyContent="space-between"
-          style={{ height: "100%" }}
-        >
-          <Image
-            width={128}
-            height={128}
-            alt="logo"
-            src={require("@/assets/images/spotify.svg")}
-            style={{ height: 44, width: 44 }}
-            objectFit="contain"
-          />
-
-          <OutlinedButton color="primary" size="sm">
+        <XStack gap={12} alignItems="flex-end" style={{ flexGrow: 1 }}>
+          <YStack
+            gap={isMobile ? 4 : 12}
+            style={[styles.content, isMobile && { paddingVertical: 0 }]}
+          >
+            <Text variant={isMobile ? "heading2" : "heading1"}>
+              {profile.display_name}
+            </Text>
+            <Text variant="body2" color={THEME.color["bg-90"]}>
+              {description}
+            </Text>
+          </YStack>
+          <OutlinedButton color="primary" size={isMobile ? "xs" : "sm"}>
             Logout
           </OutlinedButton>
-        </YStack>
-      </XStack>
+        </XStack>
+      </View>
     </YStack>
   );
 });

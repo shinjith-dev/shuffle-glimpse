@@ -7,9 +7,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     width: "100%",
   },
+  containerMobile: {
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+  },
   contentRow: {
+    flexDirection: "row",
     alignItems: "flex-end",
     gap: 20,
+    width: "100%",
+  },
+  contentCol: {
+    flexDirection: "column",
+    gap: 12,
     width: "100%",
   },
   content: {

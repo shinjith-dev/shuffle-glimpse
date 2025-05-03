@@ -18,6 +18,7 @@ import { useIsSaved } from "@/store";
 import TrackListItem from "../track/list-item";
 import HeartPop from "../track/heart-pop";
 import useRouter from "@/hooks/useRouter";
+import { useWidth } from "@/hooks";
 
 const TopTracks: React.FC = () => {
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
@@ -36,6 +37,7 @@ const TopTracks: React.FC = () => {
   });
   const { tracks: savedDep, check: isSaved } = useIsSaved();
   const { width } = useWindowDimensions();
+  const { isMobile } = useWidth();
   const router = useRouter();
 
   const limitedTotal = useMemo(
@@ -51,27 +53,35 @@ const TopTracks: React.FC = () => {
   const headers = useMemo<HeaderItem[]>(() => {
     const base: HeaderItem[] = [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: width < 1500 ? "85%" : "50%" },
-      { key: "saved", label: "", width: "5%" },
       {
-        key: "duration",
-        label: (
-          <Icon
-            name="hugeicons:time-quarter-02"
-            size={16}
-            color={THEME.color["bg-80"]}
-          />
-        ),
-        width: "10%",
+        key: "name",
+        label: "Name",
+        width: width < 1500 ? "85%" : "50%",
       },
+      { key: "saved", label: "", width: "5%" },
     ];
 
     return [
       ...base.slice(0, 2),
       ...(width >= 1500
-        ? [{ key: "album", label: "Album", width: "35%" } as HeaderItem]
+        ? [{ key: "album.name", label: "Album", width: "35%" } as HeaderItem]
         : []),
       ...base.slice(2),
+      ...(width >= 1028
+        ? [
+            {
+              key: "duration",
+              label: (
+                <Icon
+                  name="hugeicons:time-quarter-02"
+                  size={16}
+                  color={THEME.color["bg-80"]}
+                />
+              ),
+              width: "10%",
+            } as HeaderItem,
+          ]
+        : []),
     ];
   }, [width]);
 
@@ -96,14 +106,21 @@ const TopTracks: React.FC = () => {
   );
 
   return (
-    <YStack style={styles.topContainer}>
-      <XStack style={styles.glimpseHeader}>
-        <Text variant="heading3">Your Top {limitedTotal}</Text>
+    <YStack
+      style={[styles.topContainer, isMobile && styles.topContainerMobile]}
+    >
+      <XStack
+        style={[styles.glimpseHeader, isMobile && styles.topHeaderMobile]}
+      >
+        <Text variant={isMobile ? "heading4" : "heading3"}>
+          Your Top {limitedTotal}
+        </Text>
 
         <XStack gap={4}>
           {timeRanges.map((tp) => (
             <TextButton
               key={tp.key}
+              size={isMobile ? "sm" : "md"}
               onClick={() => setTimeRange(tp.key)}
               color={tp.key === timeRange ? "brand" : "primary"}
               disabled={isLoading || tp.key === timeRange}
@@ -119,13 +136,14 @@ const TopTracks: React.FC = () => {
           <Table
             header={headers}
             data={tracks}
+            hideHeader={isMobile}
             onRowClick={(id) => router.push(`/track/${id}`)}
             onEndReached={() => hasNextPage && fetchNextPage()}
             onEndReachedThreshold={1}
           />
         ) : (
           <Fragment>
-            <TableHeader header={headers} />
+            {!isMobile && <TableHeader header={headers} />}
 
             <ContentLoader
               speed={1}

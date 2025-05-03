@@ -17,6 +17,7 @@ import TrackListItem from "../track/list-item";
 import { useIsSaved } from "@/store";
 import HeartPop from "../track/heart-pop";
 import useRouter from "@/hooks/useRouter";
+import { useWidth } from "@/hooks";
 
 const RecentlyPlayed: React.FC = () => {
   const { data: recent, hasNextPage, fetchNextPage } = useRecentlyPlayed({});
@@ -29,25 +30,23 @@ const RecentlyPlayed: React.FC = () => {
   });
   const { tracks: savedDep, check: isSaved } = useIsSaved();
   const { width } = useWindowDimensions();
+  const { isMobile } = useWidth();
   const router = useRouter();
 
   const headers = useMemo<HeaderItem[]>(() => {
     const base: HeaderItem[] = [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: width < 1500 ? "70%" : "40%" },
-      { key: "playedAt", label: "Played At", width: "15%" },
-      { key: "saved", label: "" },
       {
-        key: "duration",
-        label: (
-          <Icon
-            name="hugeicons:time-quarter-02"
-            size={16}
-            color={THEME.color["bg-80"]}
-          />
-        ),
-        width: "10%",
+        key: "name",
+        label: "Name",
+        width:
+          width < 1500
+            ? width < THEME.breakPoints.mobile
+              ? "95%"
+              : "70%"
+            : "40%",
       },
+      { key: "saved", label: "" },
     ];
 
     return [
@@ -56,6 +55,30 @@ const RecentlyPlayed: React.FC = () => {
         ? [{ key: "album.name", label: "Album", width: "30%" } as HeaderItem]
         : []),
       ...base.slice(2),
+      ...(width >= THEME.breakPoints.mobile
+        ? [
+            {
+              key: "playedAt",
+              label: "Played At",
+              width: width < 1028 ? "25%" : "15%",
+            } as HeaderItem,
+          ]
+        : []),
+      ...(width >= 1028
+        ? [
+            {
+              key: "duration",
+              label: (
+                <Icon
+                  name="hugeicons:time-quarter-02"
+                  size={16}
+                  color={THEME.color["bg-80"]}
+                />
+              ),
+              width: "10%",
+            } as HeaderItem,
+          ]
+        : []),
     ];
   }, [width]);
 
@@ -84,9 +107,11 @@ const RecentlyPlayed: React.FC = () => {
   );
 
   return (
-    <YStack style={styles.saved}>
-      <XStack style={styles.header}>
-        <Text variant="heading3">Recently Played</Text>
+    <YStack style={[styles.recently, isMobile && styles.recentlyMobile]}>
+      <XStack style={[styles.header, isMobile && styles.headerMobile]}>
+        <Text variant={isMobile ? "heading4" : "heading3"}>
+          Recently Played
+        </Text>
       </XStack>
 
       <View style={styles.contents}>
@@ -94,13 +119,14 @@ const RecentlyPlayed: React.FC = () => {
           <Table
             header={headers}
             data={tracks}
+            hideHeader={isMobile}
             onRowClick={(id) => router.push(`/track/${id}`)}
             onEndReached={() => hasNextPage && fetchNextPage()}
             onEndReachedThreshold={1}
           />
         ) : (
           <Fragment>
-            <TableHeader header={headers} />
+            {!isMobile && <TableHeader header={headers} />}
 
             <ContentLoader
               speed={1}

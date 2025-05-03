@@ -14,10 +14,12 @@ import useWindowDimensions from "@/hooks/useWindowDimensions";
 import useRouter from "@/hooks/useRouter";
 import { useIsSavedTrack, useRecentlyPlayedGlimpse } from "@/queries/profile";
 import TrackListItem from "../track/list-item";
+import { useWidth } from "@/hooks";
 
 const RecentlyPlayedGlimpse: React.FC = () => {
   const { data: recent } = useRecentlyPlayedGlimpse({ limit: 5 });
   const { width } = useWindowDimensions();
+  const { isMobile } = useWidth();
   const router = useRouter();
   useIsSavedTrack({
     enabled: !!recent,
@@ -27,27 +29,34 @@ const RecentlyPlayedGlimpse: React.FC = () => {
   const headers = useMemo<HeaderItem[]>(() => {
     const base: HeaderItem[] = [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: width < 1500 ? "75%" : "40%" },
-      { key: "playedAt", label: "Played At", width: "15%" },
       {
-        key: "duration",
-        label: (
-          <Icon
-            name="hugeicons:time-quarter-02"
-            size={16}
-            color={THEME.color["bg-80"]}
-          />
-        ),
-        width: "10%",
+        key: "name",
+        label: "Name",
+        width: width < 1500 ? (width < 1028 ? "100%" : "90%") : "50%",
       },
     ];
 
     return [
       ...base.slice(0, 2),
       ...(width >= 1500
-        ? [{ key: "album.name", label: "Album", width: "35%" } as HeaderItem]
+        ? [{ key: "album.name", label: "Album", width: "40%" } as HeaderItem]
         : []),
       ...base.slice(2),
+      ...(width >= 1028
+        ? [
+            {
+              key: "duration",
+              label: (
+                <Icon
+                  name="hugeicons:time-quarter-02"
+                  size={16}
+                  color={THEME.color["bg-80"]}
+                />
+              ),
+              width: "10%",
+            } as HeaderItem,
+          ]
+        : []),
     ];
   }, [width]);
 
@@ -70,12 +79,17 @@ const RecentlyPlayedGlimpse: React.FC = () => {
   );
 
   return (
-    <YStack style={styles.glimpse}>
-      <XStack style={styles.glimpseHeader}>
-        <Text variant="heading4">Recently Played</Text>
+    <YStack style={[styles.glimpse, isMobile && { gap: 12 }]}>
+      <XStack
+        style={[styles.glimpseHeader, isMobile && { paddingHorizontal: 12 }]}
+      >
+        <Text variant={isMobile ? "heading5" : "heading4"}>
+          Recently Played
+        </Text>
 
         <TextButton
           color="primary"
+          size={isMobile ? "sm" : "md"}
           onClick={() => router.push("/recently-played")}
         >
           View All

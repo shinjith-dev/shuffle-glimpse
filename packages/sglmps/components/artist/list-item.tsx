@@ -4,6 +4,7 @@ import styles from "./style";
 import { Avatar } from "@/ui/avatar";
 import { Pressable } from "react-native";
 import useRouter from "@/hooks/useRouter";
+import { useWidth } from "@/hooks";
 
 interface Props {
   artist: ArtistItem;
@@ -11,6 +12,7 @@ interface Props {
 
 const ArtistItem: React.FC<Props> = memo(({ artist }) => {
   const router = useRouter();
+  const { isMobile } = useWidth();
 
   const image =
     artist.images.length > 0
@@ -27,11 +29,12 @@ const ArtistItem: React.FC<Props> = memo(({ artist }) => {
       style={({ pressed, hovered }) => [
         styles.artistItem,
         (pressed || hovered) && styles.artistItemHovered,
+        isMobile && { maxWidth: 136 },
       ]}
     >
       {image && (
         <Avatar
-          size="8xl"
+          size={isMobile ? "5xl" : "8xl"}
           src={image.url}
           avatarProps={{
             style: styles.artistItemAvatar,

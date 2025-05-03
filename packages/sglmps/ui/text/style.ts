@@ -22,13 +22,22 @@ const styles = StyleSheet.create({
     color: THEME.color.fg,
     fontWeight: 600,
   },
+  heading5: {
+    fontSize: THEME.fontSize["xl"],
+    color: THEME.color.fg,
+    fontWeight: 600,
+  },
   body1: {
     fontSize: THEME.fontSize.md,
     color: THEME.color.fg,
   },
   body2: {
     fontSize: THEME.fontSize.sm,
-    color: THEME.color["bg-80"],
+    color: THEME.color.fg,
+  },
+  body3: {
+    fontSize: THEME.fontSize.xs,
+    color: THEME.color.fg,
   },
 });
 

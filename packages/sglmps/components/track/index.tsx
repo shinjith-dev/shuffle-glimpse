@@ -11,6 +11,7 @@ import dayjs from "@/lib/dayjs";
 import LinearGradient from "react-native-linear-gradient";
 import useRouter from "@/hooks/useRouter";
 import { useEffect } from "react";
+import { useWidth } from "@/hooks";
 
 interface Props {
   trackId?: any;
@@ -19,6 +20,7 @@ interface Props {
 const Track: React.FC<Props> = ({ trackId }) => {
   const { data: track, error } = useTrack({ trackId });
   const router = useRouter();
+  const { isMobile } = useWidth();
   const image = track?.album.images.length
     ? maxOfArray(track.album.images, "width")
     : undefined;
@@ -46,7 +48,13 @@ const Track: React.FC<Props> = ({ trackId }) => {
         height={128}
         alt="logo"
         src={require("@/assets/images/spotify.svg")}
-        style={styles.trackSpotifyLogo}
+        style={{
+          height: isMobile ? THEME.iconSize.xl : THEME.iconSize["3xl"],
+          width: isMobile ? THEME.iconSize.xl : THEME.iconSize["3xl"],
+          position: "absolute",
+          top: 28,
+          right: 28,
+        }}
         objectFit="contain"
       />
 
@@ -54,23 +62,40 @@ const Track: React.FC<Props> = ({ trackId }) => {
         <IconButton
           variant="ghost"
           color="primary"
-          size="3xl"
+          size={isMobile ? "xl" : "3xl"}
           onClick={router.back}
           icon="hugeicons:circle-arrow-left-02"
         />
       </View>
 
-      <XStack style={styles.trackContent}>
+      <XStack
+        style={[styles.trackContent, isMobile && styles.trackContentMobile]}
+      >
         {image ? (
           <Image
             width={image.width}
             height={image.height}
             alt="thumbnail"
             src={image.url}
-            style={styles.trackThumb}
+            style={{
+              width: isMobile ? 280 : 360,
+              height: isMobile ? 280 : 360,
+              borderRadius: 8,
+              backgroundColor: THEME.color["bg-20"],
+            }}
           />
         ) : (
-          <View style={[styles.trackThumb, styles.trackItemPlaceholder]}>
+          <View
+            style={[
+              {
+                width: isMobile ? 280 : 360,
+                height: isMobile ? 280 : 360,
+                borderRadius: 8,
+                backgroundColor: THEME.color["bg-20"],
+              },
+              styles.trackItemPlaceholder,
+            ]}
+          >
             <Icon
               name="hugeicons:music-note-03"
               color={THEME.color["bg-40"]}
@@ -78,23 +103,37 @@ const Track: React.FC<Props> = ({ trackId }) => {
             />
           </View>
         )}
-        <YStack gap={12} style={{ maxWidth: "60%" }}>
-          <Text variant="heading1" numberOfLines={2}>
+        <YStack
+          alignItems={isMobile ? "center" : "flex-start"}
+          gap={12}
+          style={{ maxWidth: isMobile ? "90%" : "60%" }}
+        >
+          <Text
+            variant={isMobile ? "heading3" : "heading1"}
+            style={{ textAlign: isMobile ? "center" : "left" }}
+            numberOfLines={2}
+          >
             {track.name}
           </Text>
           <Text
-            variant="heading3"
+            variant={isMobile ? "heading5" : "heading3"}
             color={THEME.color["bg-90"]}
+            style={{ textAlign: isMobile ? "center" : "left" }}
             numberOfLines={1}
             fontWeight={500}
           >
             {track.artists.map((a) => a.name).join(", ")}
           </Text>
-          <Text variant="body1" color={THEME.color["bg-80"]} numberOfLines={1}>
+          <Text
+            variant={isMobile ? "body3" : "body1"}
+            color={THEME.color["bg-80"]}
+            style={{ textAlign: isMobile ? "center" : "left" }}
+            numberOfLines={1}
+          >
             {track.album.name} · {dayjs(track.album.release_date).year()}
           </Text>
           <Button
-            size="lg"
+            size={isMobile ? "md" : "lg"}
             style={{ marginTop: 20 }}
             startIcon={
               <Image

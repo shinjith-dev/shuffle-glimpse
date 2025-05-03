@@ -12,6 +12,13 @@ const styles = StyleSheet.create({
     zIndex: 10,
     overflow: "hidden",
   },
+  bottomBar: {
+    width: "100%",
+    height: 68,
+    padding: 0,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+  },
   collapsed: {
     width: "auto",
     paddingHorizontal: 12,

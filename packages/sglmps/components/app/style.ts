@@ -8,10 +8,15 @@ const styles = StyleSheet.create({
     width: "100%",
     maxWidth: "100%",
     backgroundColor: THEME.color.bg,
-    flexDirection: "row",
+    flexDirection: "row-reverse",
     padding: 20,
     gap: 20,
     position: "relative",
+  },
+  mobileLayout: {
+    padding: 0,
+    gap: 0,
+    flexDirection: "column",
   },
   layoutContent: {
     flexGrow: 1,
@@ -26,6 +31,10 @@ const styles = StyleSheet.create({
     backgroundColor: THEME.color["bg-10"],
     borderRadius: 8,
   },
+  glimpseContMobile: {
+    borderRadius: 0,
+    backgroundColor: THEME.color.bg,
+  },
   glimpse: {
     flexGrow: 1,
     width: "100%",
@@ -33,6 +42,11 @@ const styles = StyleSheet.create({
     gap: 40,
     padding: 32,
     position: "relative",
+  },
+  glimpseMobile: {
+    padding: 0,
+    paddingVertical: 20,
+    gap: 12,
   },
   gradient: {
     width: "100%",

@@ -17,6 +17,7 @@ import { useIsSavedTrack } from "@/queries/profile";
 import { useIsSaved } from "@/store";
 import TrackListItem from "../track/list-item";
 import HeartPop from "../track/heart-pop";
+import { useWidth } from "@/hooks";
 
 const TopTracksGlimpse: React.FC = () => {
   const { data: topTracks } = useTopTracksGlimpse({
@@ -24,6 +25,7 @@ const TopTracksGlimpse: React.FC = () => {
     timeRange: "long_term",
   });
   const { width } = useWindowDimensions();
+  const { isMobile } = useWidth();
   const router = useRouter();
   useIsSavedTrack({
     enabled: !!topTracks,
@@ -34,19 +36,12 @@ const TopTracksGlimpse: React.FC = () => {
   const headers = useMemo<HeaderItem[]>(() => {
     const base: HeaderItem[] = [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: width < 1500 ? "85%" : "50%" },
-      { key: "saved", label: "", width: "5%" },
       {
-        key: "duration",
-        label: (
-          <Icon
-            name="hugeicons:time-quarter-02"
-            size={16}
-            color={THEME.color["bg-80"]}
-          />
-        ),
-        width: "10%",
+        key: "name",
+        label: "Name",
+        width: width < 1500 ? (width < 1028 ? "95%" : "85%") : "50%",
       },
+      { key: "saved", label: "", width: "5%" },
     ];
 
     return [
@@ -55,6 +50,21 @@ const TopTracksGlimpse: React.FC = () => {
         ? [{ key: "album.name", label: "Album", width: "35%" } as HeaderItem]
         : []),
       ...base.slice(2),
+      ...(width >= 1028
+        ? [
+            {
+              key: "duration",
+              label: (
+                <Icon
+                  name="hugeicons:time-quarter-02"
+                  size={16}
+                  color={THEME.color["bg-80"]}
+                />
+              ),
+              width: "10%",
+            } as HeaderItem,
+          ]
+        : []),
     ];
   }, [width]);
 
@@ -73,11 +83,19 @@ const TopTracksGlimpse: React.FC = () => {
   );
 
   return (
-    <YStack style={styles.glimpse}>
-      <XStack style={styles.glimpseHeader}>
-        <Text variant="heading4">Top Songs this Year</Text>
+    <YStack style={[styles.glimpse, isMobile && { gap: 12 }]}>
+      <XStack
+        style={[styles.glimpseHeader, isMobile && { paddingHorizontal: 12 }]}
+      >
+        <Text variant={isMobile ? "heading5" : "heading4"}>
+          Top Songs this Year
+        </Text>
 
-        <TextButton color="primary" onClick={() => router.push("/top-tracks")}>
+        <TextButton
+          size={isMobile ? "sm" : "md"}
+          color="primary"
+          onClick={() => router.push("/top-tracks")}
+        >
           View all
         </TextButton>
       </XStack>

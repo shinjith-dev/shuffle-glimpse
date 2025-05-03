@@ -1,7 +1,7 @@
 import Text from "@/ui/text";
 import { HeaderItem } from "../header";
 import styles from "../style";
-import { getNestedValue } from "@/lib";
+import { getNestedValue, THEME } from "@/lib";
 import { View } from "react-native";
 
 interface TableItemProps {
@@ -30,6 +30,7 @@ export default function TableItem({
             <Text
               key={h.key}
               variant="body2"
+              color={THEME.color["bg-80"]}
               numberOfLines={1}
               style={[
                 styles.itemContent,

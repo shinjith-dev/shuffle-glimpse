@@ -6,6 +6,8 @@ import styles from "./style";
 import { View } from "react-native";
 import { THEME } from "@/lib";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
+import dayjs from "@/lib/dayjs";
+import { useWidth } from "@/hooks";
 
 interface Props {
   track: PlaylistTracks;
@@ -13,6 +15,7 @@ interface Props {
 
 const TrackListItem: React.FC<Props> = memo(({ track }) => {
   const { width } = useWindowDimensions();
+  const { isMobile } = useWidth();
   const image =
     track.album.images.length > 0
       ? track.album.images.reduce<ImageResponse>(
@@ -30,24 +33,47 @@ const TrackListItem: React.FC<Props> = memo(({ track }) => {
           height={image.height}
           alt="thumbnail"
           src={image.url}
-          style={styles.trackItemThumb}
+          style={{
+            width: isMobile ? 40 : 48,
+            height: isMobile ? 40 : 48,
+            borderRadius: 4,
+            backgroundColor: THEME.color["bg-20"],
+          }}
         />
       ) : (
-        <View style={[styles.trackItemThumb, styles.trackItemPlaceholder]}>
+        <View
+          style={[
+            {
+              width: isMobile ? 40 : 48,
+              height: isMobile ? 40 : 48,
+              borderRadius: 4,
+              backgroundColor: THEME.color["bg-20"],
+            },
+            styles.trackItemPlaceholder,
+          ]}
+        >
           <Icon
             name="hugeicons:music-note-03"
             color={THEME.color["bg-40"]}
-            size={24}
+            size={isMobile ? 20 : 24}
           />
         </View>
       )}
       <YStack gap={4} style={{ maxWidth: "90%" }}>
-        <Text variant="body1" numberOfLines={1}>
+        <Text variant={isMobile ? "body2" : "body1"} numberOfLines={1}>
           {track.name}
         </Text>
-        <Text variant="body2" numberOfLines={1}>
+        <Text
+          variant={isMobile ? "body3" : "body2"}
+          color={THEME.color["bg-80"]}
+          numberOfLines={1}
+        >
           {track.artists.map((a) => a.name).join(", ")}
           {width < 1500 && ` · ${track.album.name}`}
+          {width < 1028 &&
+            ` · ${dayjs({ milliseconds: track.duration_ms }).format(
+              track.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
+            )}`}
         </Text>
       </YStack>
     </XStack>

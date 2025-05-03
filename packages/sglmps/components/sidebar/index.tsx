@@ -16,47 +16,64 @@ const Sidebar: React.FC = () => {
 
   if (pathname.split("/")?.length > 2) return null;
   return (
-    <View style={[styles.sidebar, collapsed && styles.collapsed]}>
-      <SidebarGradient />
-      <View>
-        {collapsed ? (
-          <Image
-            width={128}
-            height={128}
-            alt="logo"
-            src={require("@/assets/images/logo.svg")}
-            style={{ height: 40, width: 40 }}
-            objectFit="contain"
-          />
-        ) : (
-          <Image
-            width={512}
-            height={128}
-            alt="logo"
-            src={require("@/assets/images/text-logo.svg")}
-            style={{ height: 60, width: 150, margin: "0 4px" }}
-            objectFit="contain"
-          />
-        )}
-      </View>
+    <View
+      style={[
+        styles.sidebar,
+        collapsed && styles.collapsed,
+        isMobile && styles.bottomBar,
+      ]}
+    >
+      {!isMobile && <SidebarGradient />}
+      {!isMobile && (
+        <View>
+          {collapsed ? (
+            <Image
+              width={128}
+              height={128}
+              alt="logo"
+              src={require("@/assets/images/logo.svg")}
+              style={{ height: 40, width: 40 }}
+              objectFit="contain"
+            />
+          ) : (
+            <Image
+              width={512}
+              height={128}
+              alt="logo"
+              src={require("@/assets/images/text-logo.svg")}
+              style={{ height: 60, width: 150, margin: "0 4px" }}
+              objectFit="contain"
+            />
+          )}
+        </View>
+      )}
 
-      <YStack style={{ flexGrow: 1, gap: collapsed ? 12 : 4 }}>
+      <YStack
+        style={[
+          { flexGrow: 1, gap: collapsed ? 12 : 4 },
+          isMobile && {
+            flexDirection: "row",
+            justifyContent: "space-around",
+            alignItems: "center",
+          },
+        ]}
+      >
         <MenuItem label="Glimpse" icon="hugeicons:home-11" path="/" />
         <MenuItem
-          label="Top Artists"
+          label={isMobile ? "Artists" : "Top Artists"}
           icon="hugeicons:ai-mic"
           path="/top-artists"
         />
         <MenuItem
-          label="Top Songs"
+          label={isMobile ? "Songs" : "Top Songs"}
           icon="hugeicons:music-note-03"
           path="/top-tracks"
         />
 
-        <View style={styles.divider} />
+        {!isMobile && <View style={styles.divider} />}
 
         <MenuItem
-          label="Liked Songs"
+          label={isMobile ? "Liked" : "Liked Songs"}
           icon="hugeicons:favourite"
           path="/saved-tracks"
         />
@@ -66,7 +83,7 @@ const Sidebar: React.FC = () => {
           path="/playlists"
         />*/}
         <MenuItem
-          label="Recent Played"
+          label={isMobile ? "Recent" : "Recent Played"}
           icon="hugeicons:headset"
           path="/recently-played"
         />
@@ -77,27 +94,29 @@ const Sidebar: React.FC = () => {
         />*/}
       </YStack>
 
-      <XStack justifyContent="center">
-        {collapsed ? (
-          <Image
-            width={128}
-            height={128}
-            alt="logo"
-            src={require("@/assets/images/spotify-white.svg")}
-            style={{ height: 36, width: 36 }}
-            objectFit="contain"
-          />
-        ) : (
-          <Image
-            width={400}
-            height={112}
-            alt="logo"
-            src={require("@/assets/images/text-spotify-white.svg")}
-            style={{ height: 56, width: 140, margin: "0 4px" }}
-            objectFit="contain"
-          />
-        )}
-      </XStack>
+      {!isMobile && (
+        <XStack justifyContent="center">
+          {collapsed ? (
+            <Image
+              width={128}
+              height={128}
+              alt="logo"
+              src={require("@/assets/images/spotify-white.svg")}
+              style={{ height: 36, width: 36 }}
+              objectFit="contain"
+            />
+          ) : (
+            <Image
+              width={400}
+              height={112}
+              alt="logo"
+              src={require("@/assets/images/text-spotify-white.svg")}
+              style={{ height: 56, width: 140, margin: "0 4px" }}
+              objectFit="contain"
+            />
+          )}
+        </XStack>
+      )}
     </View>
   );
 };

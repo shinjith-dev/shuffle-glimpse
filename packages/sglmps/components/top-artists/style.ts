@@ -12,10 +12,17 @@ const styles = StyleSheet.create({
     padding: 28,
     gap: 28,
   },
+  topContainerMobile: { padding: 0, gap: 12, backgroundColor: THEME.color.bg },
   topContent: {
     height: "100%",
     width: "100%",
     flex: 1,
+  },
+  headerMobile: {
+    flexDirection: "column",
+    gap: 8,
+    padding: 16,
+    backgroundColor: THEME.color["bg-10"],
   },
   glimpse: {
     width: "100%",
@@ -33,9 +40,17 @@ const styles = StyleSheet.create({
   glimpseArtists: {
     gap: 12,
     paddingVertical: 12,
-    flexWrap: "wrap",
+    maxWidth: "100%",
+    overflow: "scroll",
+    flexDirection: "row",
+  },
+  topArtists: {
+    gap: 12,
+    paddingVertical: 12,
     maxWidth: "100%",
     flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
   },
 });
 

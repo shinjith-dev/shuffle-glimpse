@@ -9,12 +9,6 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     maxWidth: "95%",
   },
-  trackItemThumb: {
-    width: 48,
-    height: 48,
-    borderRadius: 4,
-    backgroundColor: THEME.color["bg-20"],
-  },
   trackItemPlaceholder: {
     justifyContent: "center",
     alignItems: "center",
@@ -40,18 +34,11 @@ const styles = StyleSheet.create({
     maxWidth: 1200,
     justifyContent: "center",
   },
-  trackThumb: {
-    width: 360,
-    height: 360,
-    borderRadius: 8,
-    backgroundColor: THEME.color["bg-20"],
-  },
-  trackSpotifyLogo: {
-    height: 44,
-    width: 44,
-    position: "absolute",
-    top: 28,
-    right: 28,
+  trackContentMobile: {
+    gap: 28,
+    width: "95%",
+    flexDirection: "column",
+    alignItems: "center",
   },
   back: {
     position: "absolute",

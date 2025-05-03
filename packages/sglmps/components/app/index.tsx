@@ -8,12 +8,17 @@ import ProfileGlimpse from "../profile/glimpse";
 import { YStack } from "@/ui";
 import AppGradient from "./gradient";
 import RecentlyPlayedGlimpse from "../recently-played/glimpse";
+import { useWidth } from "@/hooks";
 
 const Glimpse: React.FC = () => {
+  const { isMobile } = useWidth();
+
   return (
-    <ScrollView style={styles.glimpseCont}>
+    <ScrollView
+      style={[styles.glimpseCont, isMobile && styles.glimpseContMobile]}
+    >
       <ProfileGlimpse />
-      <YStack style={styles.glimpse}>
+      <YStack style={[styles.glimpse, isMobile && styles.glimpseMobile]}>
         <AppGradient />
         <TopTracksGlimpse />
         <TopArtistsGlimpse />

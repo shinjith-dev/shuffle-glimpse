@@ -15,27 +15,26 @@ import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { useSaved } from "@/queries/profile";
 import TrackListItem from "../track/list-item";
 import useRouter from "@/hooks/useRouter";
+import { useWidth } from "@/hooks";
 
 const SavedTracks: React.FC = () => {
   const { data: topTracks, hasNextPage, fetchNextPage } = useSaved({});
   const { width } = useWindowDimensions();
+  const { isMobile } = useWidth();
   const router = useRouter();
 
   const headers = useMemo<HeaderItem[]>(() => {
     const base: HeaderItem[] = [
       { key: "sino", label: "#" },
-      { key: "name", label: "Name", width: width < 1500 ? "75%" : "40%" },
-      { key: "addedOn", label: "Added On", width: "15%" },
       {
-        key: "duration",
-        label: (
-          <Icon
-            name="hugeicons:time-quarter-02"
-            size={16}
-            color={THEME.color["bg-80"]}
-          />
-        ),
-        width: "10%",
+        key: "name",
+        label: "Name",
+        width:
+          width < 1500
+            ? width < THEME.breakPoints.mobile
+              ? "98%"
+              : "75%"
+            : "40%",
       },
     ];
 
@@ -45,6 +44,30 @@ const SavedTracks: React.FC = () => {
         ? [{ key: "album.name", label: "Album", width: "35%" } as HeaderItem]
         : []),
       ...base.slice(2),
+      ...(width >= THEME.breakPoints.mobile
+        ? [
+            {
+              key: "addedOn",
+              label: "Added On",
+              width: width < 1028 ? "25%" : "15%",
+            } as HeaderItem,
+          ]
+        : []),
+      ...(width >= 1028
+        ? [
+            {
+              key: "duration",
+              label: (
+                <Icon
+                  name="hugeicons:time-quarter-02"
+                  size={16}
+                  color={THEME.color["bg-80"]}
+                />
+              ),
+              width: "10%",
+            } as HeaderItem,
+          ]
+        : []),
     ];
   }, [width]);
 
@@ -72,9 +95,9 @@ const SavedTracks: React.FC = () => {
   );
 
   return (
-    <YStack style={styles.saved}>
-      <XStack style={styles.header}>
-        <Text variant="heading3">Liked Songs</Text>
+    <YStack style={[styles.saved, isMobile && styles.savedMobile]}>
+      <XStack style={[styles.header, isMobile && styles.headerMobile]}>
+        <Text variant={isMobile ? "heading4" : "heading3"}>Liked Songs</Text>
       </XStack>
 
       <View style={styles.contents}>
@@ -82,13 +105,14 @@ const SavedTracks: React.FC = () => {
           <Table
             header={headers}
             data={tracks}
+            hideHeader={isMobile}
             onRowClick={(id) => router.push(`/track/${id}`)}
             onEndReached={() => hasNextPage && fetchNextPage()}
             onEndReachedThreshold={1}
           />
         ) : (
           <Fragment>
-            <TableHeader header={headers} />
+            {!isMobile && <TableHeader header={headers} />}
 
             <ContentLoader
               speed={1}

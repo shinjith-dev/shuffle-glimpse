@@ -12,8 +12,10 @@ export interface TextProps extends RNTextProps {
     | "heading2"
     | "heading3"
     | "heading4"
+    | "heading5"
     | "body1"
-    | "body2";
+    | "body2"
+    | "body3";
   color?: ColorValue;
   fontSize?: number;
   fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;

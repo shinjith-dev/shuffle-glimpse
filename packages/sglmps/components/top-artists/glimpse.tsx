@@ -11,10 +11,18 @@ import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { View } from "react-native";
 import useRouter from "@/hooks/useRouter";
 import ArtistItem from "../artist/list-item";
+import { useWidth } from "@/hooks";
+import { AvatarSizes } from "@/ui/avatar/style";
 
 const TopArtistsGlimpse: React.FC = () => {
   const { width } = useWindowDimensions();
-  const ARTIST_COUNT = Math.max(Math.floor((width - 416) / 208), 1);
+  const { isMobile, isTab } = useWidth();
+  const RESERVED_WIDTH = isMobile ? 0 : isTab ? 116 : 416;
+  const AVATAR_WIDTH = isMobile ? AvatarSizes["5xl"] : AvatarSizes["8xl"];
+  const ARTIST_COUNT = Math.max(
+    Math.floor((width - RESERVED_WIDTH) / (AVATAR_WIDTH + 28)),
+    5,
+  );
   const { data: topArtists } = useTopArtistsGlimpse({
     limit: ARTIST_COUNT,
     timeRange: "long_term",
@@ -22,11 +30,19 @@ const TopArtistsGlimpse: React.FC = () => {
   const router = useRouter();
 
   return (
-    <YStack style={styles.glimpse}>
-      <XStack style={styles.glimpseHeader}>
-        <Text variant="heading4">Top Artists this Year</Text>
+    <YStack style={[styles.glimpse, isMobile && { gap: 12 }]}>
+      <XStack
+        style={[styles.glimpseHeader, isMobile && { paddingHorizontal: 12 }]}
+      >
+        <Text variant={isMobile ? "heading5" : "heading4"}>
+          Top Artists this Year
+        </Text>
 
-        <TextButton color="primary" onClick={() => router.push("/top-artists")}>
+        <TextButton
+          size={isMobile ? "sm" : "md"}
+          color="primary"
+          onClick={() => router.push("/top-artists")}
+        >
           View all
         </TextButton>
       </XStack>
@@ -37,9 +53,9 @@ const TopArtistsGlimpse: React.FC = () => {
         ) : (
           <ContentLoader
             speed={1}
-            width={width - 416}
+            width={width - RESERVED_WIDTH}
             height={248}
-            viewBox={`0 0 ${width - 416} 248`}
+            viewBox={`0 0 ${width - RESERVED_WIDTH} 248`}
             backgroundColor={THEME.color["bg-10"]}
             foregroundColor={THEME.color["bg-30"]}
           >

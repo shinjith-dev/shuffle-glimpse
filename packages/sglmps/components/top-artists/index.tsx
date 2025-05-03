@@ -12,6 +12,7 @@ import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import { THEME } from "@/lib";
 import dayjs from "@/lib/dayjs";
 import ArtistItem from "../artist/list-item";
+import { useWidth } from "@/hooks";
 
 const TopArtists: React.FC = () => {
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
@@ -22,6 +23,7 @@ const TopArtists: React.FC = () => {
     fetchNextPage,
   } = useTopArtists({ timeRange });
   const { width } = useWindowDimensions();
+  const { isMobile } = useWidth();
 
   useEffect(() => {
     if (hasNextPage) fetchNextPage();
@@ -39,14 +41,19 @@ const TopArtists: React.FC = () => {
   );
 
   return (
-    <YStack style={styles.topContainer}>
-      <XStack style={styles.glimpseHeader}>
-        <Text variant="heading3">Your Top {limitedTotal} Artists</Text>
+    <YStack
+      style={[styles.topContainer, isMobile && styles.topContainerMobile]}
+    >
+      <XStack style={[styles.glimpseHeader, isMobile && styles.headerMobile]}>
+        <Text variant={isMobile ? "heading4" : "heading3"}>
+          Your Top {limitedTotal} Artists
+        </Text>
 
         <XStack gap={4}>
           {timeRanges.map((tp) => (
             <TextButton
               key={tp.key}
+              size={isMobile ? "sm" : "md"}
               onClick={() => setTimeRange(tp.key)}
               color={tp.key === timeRange ? "brand" : "primary"}
               disabled={isLoading || tp.key === timeRange}
@@ -58,7 +65,7 @@ const TopArtists: React.FC = () => {
       </XStack>
       <ScrollView
         style={styles.topContent}
-        contentContainerStyle={styles.glimpseArtists}
+        contentContainerStyle={styles.topArtists}
       >
         {topArtists ? (
           artists.map((a) => <ArtistItem key={a.id} artist={a} />)

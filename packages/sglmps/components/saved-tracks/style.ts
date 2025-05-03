@@ -12,9 +12,15 @@ const styles = StyleSheet.create({
     padding: 28,
     gap: 28,
   },
+  savedMobile: { gap: 0, padding: 0, backgroundColor: THEME.color.bg },
   header: {
     justifyContent: "space-between",
     width: "100%",
+  },
+  headerMobile: {
+    padding: 16,
+    justifyContent: "center",
+    backgroundColor: THEME.color["bg-10"],
   },
   contents: {
     height: "100%",

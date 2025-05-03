@@ -2,7 +2,7 @@ import { THEME } from "@/lib";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  saved: {
+  recently: {
     height: "100%",
     maxWidth: "100%",
     maxHeight: "100%",
@@ -12,9 +12,15 @@ const styles = StyleSheet.create({
     padding: 28,
     gap: 28,
   },
+  recentlyMobile: { gap: 0, padding: 0, backgroundColor: THEME.color.bg },
   header: {
     justifyContent: "space-between",
     width: "100%",
+  },
+  headerMobile: {
+    padding: 16,
+    justifyContent: "center",
+    backgroundColor: THEME.color["bg-10"],
   },
   contents: {
     height: "100%",
