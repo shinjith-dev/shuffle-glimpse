@@ -3,7 +3,7 @@ import { maxOfArray, THEME } from "@/lib";
 import { usePlaylistsGlimpse, useProfile } from "@/queries/profile";
 import { OutlinedButton, XStack, YStack } from "@/ui";
 import { Avatar } from "@/ui/avatar";
-import { memo, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import styles from "./style";
 import ProfileGradient from "./gradient";
 import Text from "@/ui/text";
@@ -12,12 +12,16 @@ import Image from "@/ui/image";
 import LinearGradient from "react-native-linear-gradient";
 import { useWidth } from "@/hooks";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
+import { useAuthStore } from "@/store";
+import useRouter from "@/hooks/useRouter";
 
 const ProfileGlimpse: React.FC = memo(() => {
   const { data: profile } = useProfile();
   const { data: playlists } = usePlaylistsGlimpse();
   const image = maxOfArray(profile?.images, "width");
   const { isMobile, contentWidth } = useWidth();
+  const logout = useAuthStore((state) => state.clearTokens);
+  const router = useRouter();
 
   const description = useMemo(
     () =>
@@ -27,6 +31,11 @@ const ProfileGlimpse: React.FC = memo(() => {
       ].join("  ·  "),
     [profile, playlists?.total],
   );
+
+  const handleLogout = useCallback(() => {
+    logout();
+    router.push("/login");
+  }, [logout]);
 
   if (!profile || !image?.url)
     return (
@@ -125,7 +134,11 @@ const ProfileGlimpse: React.FC = memo(() => {
               {description}
             </Text>
           </YStack>
-          <OutlinedButton color="primary" size={isMobile ? "xs" : "sm"}>
+          <OutlinedButton
+            color="primary"
+            size={isMobile ? "xs" : "sm"}
+            onClick={handleLogout}
+          >
             Logout
           </OutlinedButton>
         </XStack>

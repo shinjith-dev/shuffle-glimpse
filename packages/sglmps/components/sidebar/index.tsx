@@ -104,16 +104,16 @@ const Sidebar: React.FC = () => {
               Github
             </Text>
           </Link>
-          <Link href="https://github.com/shinjith-dev/shuffle-glimpse">
+          <Link href="/privacy-policy">
             <Text color={THEME.color["bg-70"]} variant="body3">
               Privacy Policy
             </Text>
           </Link>
-          <Link href="https://github.com/shinjith-dev/shuffle-glimpse">
+          <Link href="/terms-and-conditions">
             <Text color={THEME.color["bg-70"]} variant="body3">
               Terms & Conditions
             </Text>
-          </Link>
+          </Link>{" "}
         </YStack>
       )}
     </View>
