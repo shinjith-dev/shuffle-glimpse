@@ -32,21 +32,21 @@ const Artist: React.FC<Props> = ({ artistId }) => {
       <LinearGradient
         style={styles.gradient}
         colors={[THEME.color.bg, "transparent", "transparent"]}
-        locations={[0, 0.2, 1]}
-        start={{ x: 0.9, y: 0 }}
-        end={{ x: 0, y: 0.9 }}
+        locations={[0, 0.3, 1]}
+        start={{ x: 0.8, y: 0 }}
+        end={{ x: 0, y: 0.8 }}
       />
       <Image
         width={128}
         height={128}
         alt="logo"
-        src={require("@/assets/images/spotify.svg")}
+        src={require("@/assets/images/text-spotify.svg")}
         style={{
-          height: isMobile ? THEME.iconSize.xl : THEME.iconSize["3xl"],
-          width: isMobile ? THEME.iconSize.xl : THEME.iconSize["3xl"],
-          position: "absolute",
           top: 28,
-          right: 28,
+          right: 20,
+          position: "absolute",
+          height: isMobile ? 36 : 44,
+          width: isMobile ? 100 : 120,
         }}
         objectFit="contain"
       />

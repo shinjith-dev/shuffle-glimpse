@@ -41,7 +41,11 @@ const ArtistItem: React.FC<Props> = memo(({ artist }) => {
           }}
         />
       )}
-      <Text style={{ textAlign: "center" }} variant="body1" numberOfLines={2}>
+      <Text
+        style={{ textAlign: "center" }}
+        variant={isMobile ? "body2" : "body1"}
+        numberOfLines={2}
+      >
         {artist.name}
       </Text>
     </Pressable>

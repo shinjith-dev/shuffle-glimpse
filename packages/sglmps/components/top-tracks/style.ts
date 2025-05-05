@@ -14,11 +14,10 @@ const styles = StyleSheet.create({
   },
   topContainerMobile: { gap: 0, padding: 0, backgroundColor: THEME.color.bg },
   topHeaderMobile: {
-    padding: 16,
-    gap: 8,
     flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: THEME.color["bg-10"],
+    alignItems: "flex-start",
+    gap: 8,
+    padding: 16,
   },
   topContent: {
     height: "100%",
@@ -33,8 +32,18 @@ const styles = StyleSheet.create({
   },
   glimpseTable: { flexGrow: 1, width: "100%", paddingBottom: 20 },
   glimpseHeader: {
-    justifyContent: "space-between",
+    rowGap: 12,
+    columnGap: 36,
+    alignItems: "center",
     width: "100%",
+    flexWrap: "wrap",
+  },
+  gradient: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
   },
 });
 

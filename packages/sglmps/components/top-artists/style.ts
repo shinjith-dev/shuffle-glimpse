@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
   },
   headerMobile: {
     flexDirection: "column",
+    alignItems: "flex-start",
     gap: 8,
     padding: 16,
-    backgroundColor: THEME.color["bg-10"],
   },
   glimpse: {
     width: "100%",
@@ -33,9 +33,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   glimpseHeader: {
-    justifyContent: "space-between",
+    rowGap: 12,
+    columnGap: 36,
     alignItems: "center",
     width: "100%",
+    flexWrap: "wrap",
   },
   glimpseArtists: {
     gap: 12,
@@ -46,11 +48,17 @@ const styles = StyleSheet.create({
   },
   topArtists: {
     gap: 12,
-    paddingVertical: 12,
     maxWidth: "100%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
+  },
+  gradient: {
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
   },
 });
 

@@ -5,7 +5,7 @@ import Text from "@/ui/text";
 import React, { Fragment, useMemo } from "react";
 import { View } from "react-native";
 import { Icon, TextButton } from "@/ui";
-import { THEME } from "@/lib";
+import { opacity, THEME } from "@/lib";
 import dayjs, { formatToDisplay } from "@/lib/dayjs";
 import styles from "./style";
 import TableHeader, { HeaderItem } from "@/ui/table/header";
@@ -19,7 +19,7 @@ import { useWidth } from "@/hooks";
 const RecentlyPlayedGlimpse: React.FC = () => {
   const { data: recent } = useRecentlyPlayedGlimpse({ limit: 5 });
   const { width } = useWindowDimensions();
-  const { isMobile } = useWidth();
+  const { isMobile, contentWidth } = useWidth();
   const router = useRouter();
   useIsSavedTrack({
     enabled: !!recent,
@@ -105,32 +105,61 @@ const RecentlyPlayedGlimpse: React.FC = () => {
             onRowClick={(id) => router.push(`/track/${id}`)}
           />
         ) : (
-          <Fragment>
-            <TableHeader header={headers} />
-
-            <ContentLoader
-              speed={1}
-              width={width - 416}
-              height={504}
-              viewBox={`0 0 ${width - 416} 504`}
-              backgroundColor={THEME.color["bg-10"]}
-              foregroundColor={THEME.color["bg-30"]}
-            >
-              {[...new Array(5)].map((_, index) => (
-                <Fragment key={`top-tracks-skeleton-${index}`}>
-                  <Circle cx="68" cy={36 * (index + 1) + 36 * index} r="24" />
+          <ContentLoader
+            speed={1}
+            width={contentWidth}
+            height={isMobile ? 320 : 360}
+            viewBox={`0 0 ${contentWidth} ${isMobile ? 320 : 360}`}
+            backgroundColor={opacity(THEME.color.fg, 0.05)}
+            foregroundColor={opacity(THEME.color.fg, 0.2)}
+          >
+            {[...new Array(5)].map((_, index) => (
+              <Fragment key={`top-tracks-skeleton-${index}`}>
+                <Rect
+                  x="8"
+                  y={(isMobile ? 24 : 28) + index * (isMobile ? 64 : 72)}
+                  rx="4"
+                  ry="4"
+                  width={16}
+                  height={12}
+                />
+                <Rect
+                  x="50"
+                  y={12 + index * (isMobile ? 64 : 72)}
+                  rx="4"
+                  ry="4"
+                  width={isMobile ? 40 : 48}
+                  height={isMobile ? 40 : 48}
+                />
+                <Rect
+                  x={isMobile ? 100 : 108}
+                  y={16 + index * (isMobile ? 64 : 72)}
+                  rx="4"
+                  ry="4"
+                  width={isMobile ? 240 : 400}
+                  height={isMobile ? 16 : 20}
+                />
+                <Rect
+                  x={isMobile ? 100 : 108}
+                  y={(isMobile ? 38 : 44) + index * (isMobile ? 64 : 72)}
+                  rx="4"
+                  ry="4"
+                  width={isMobile ? 160 : 300}
+                  height={12}
+                />
+                {width >= 1028 && (
                   <Rect
-                    x="100"
-                    y={12 * (index + 1) + 60 * index}
-                    rx="8"
-                    ry="8"
-                    width={width - 516}
-                    height="48"
+                    x="88%"
+                    y={28 + index * 72}
+                    rx="4"
+                    ry="4"
+                    width={40}
+                    height={12}
                   />
-                </Fragment>
-              ))}
-            </ContentLoader>
-          </Fragment>
+                )}
+              </Fragment>
+            ))}
+          </ContentLoader>
         )}
       </View>
     </YStack>

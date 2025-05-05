@@ -3,7 +3,6 @@ import { opacity, THEME } from "../../lib";
 
 const styles = StyleSheet.create({
   sidebar: {
-    backgroundColor: THEME.color["bg-10"],
     height: "100%",
     width: 300,
     borderRadius: 8,
@@ -18,6 +17,10 @@ const styles = StyleSheet.create({
     padding: 0,
     paddingVertical: 0,
     paddingHorizontal: 0,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
   collapsed: {
     width: "auto",

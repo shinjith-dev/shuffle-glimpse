@@ -3,6 +3,7 @@ import { FlatList, FlatListProps } from "react-native";
 import TableItem from "./item";
 import TableHeader, { HeaderItem } from "./header";
 import styles from "./style";
+import { YStack } from "../layout";
 
 interface TableProps<
   Header extends HeaderItem[],
@@ -32,24 +33,23 @@ export default function Table<
   ...props
 }: TableProps<Header, Keys, Row>) {
   return (
-    <FlatList
-      data={data}
-      style={styles.table}
-      contentContainerStyle={styles.tableContents}
-      renderItem={({ item }) => (
-        <TableItem
-          hover={hover}
-          key={item.id}
-          item={item}
-          header={header}
-          onClick={onRowClick ? () => onRowClick(item.id) : undefined}
-        />
-      )}
-      ListHeaderComponent={() =>
-        hideHeader ? null : <TableHeader header={header} />
-      }
-      stickyHeaderIndices={hideHeader ? undefined : [0]}
-      {...props}
-    />
+    <YStack style={{ flex: 1 }}>
+      {!hideHeader && <TableHeader header={header} />}
+      <FlatList
+        data={data}
+        style={styles.table}
+        contentContainerStyle={styles.tableContents}
+        renderItem={({ item }) => (
+          <TableItem
+            hover={hover}
+            key={item.id}
+            item={item}
+            header={header}
+            onClick={onRowClick ? () => onRowClick(item.id) : undefined}
+          />
+        )}
+        {...props}
+      />
+    </YStack>
   );
 }

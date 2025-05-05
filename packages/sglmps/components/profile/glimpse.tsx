@@ -11,12 +11,13 @@ import { Platform, View } from "react-native";
 import Image from "@/ui/image";
 import LinearGradient from "react-native-linear-gradient";
 import { useWidth } from "@/hooks";
+import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 
 const ProfileGlimpse: React.FC = memo(() => {
   const { data: profile } = useProfile();
   const { data: playlists } = usePlaylistsGlimpse();
   const image = maxOfArray(profile?.images, "width");
-  const { isMobile } = useWidth();
+  const { isMobile, contentWidth } = useWidth();
 
   const description = useMemo(
     () =>
@@ -27,6 +28,40 @@ const ProfileGlimpse: React.FC = memo(() => {
     [profile, playlists?.total],
   );
 
+  if (!profile || !image?.url)
+    return (
+      <ContentLoader
+        speed={1}
+        width={contentWidth}
+        height={isMobile ? 244 : 260}
+        viewBox={`0 0 ${contentWidth} ${isMobile ? 244 : 260}`}
+        backgroundColor={THEME.color["bg-10"]}
+        foregroundColor={THEME.color["bg-30"]}
+      >
+        <Circle
+          cx={isMobile ? 76 : 128}
+          cy={isMobile ? 76 : 128}
+          r={isMobile ? 60 : 100}
+        />
+        <Rect
+          x={isMobile ? 16 : 250}
+          y={isMobile ? 156 : 120}
+          rx={8}
+          ry={8}
+          width={contentWidth / 2}
+          height={isMobile ? 40 : 60}
+        />
+        <Rect
+          x={isMobile ? 16 : 250}
+          y={isMobile ? 208 : 200}
+          rx={4}
+          ry={4}
+          width={contentWidth / 3}
+          height={16}
+        />
+      </ContentLoader>
+    );
+
   if (!profile || !image?.url) return null;
   return (
     <YStack style={[styles.container, isMobile && styles.containerMobile]}>
@@ -35,20 +70,20 @@ const ProfileGlimpse: React.FC = memo(() => {
         style={styles.gradient}
         colors={[THEME.color.bg, "transparent", "transparent"]}
         locations={[0, 0.3, 1]}
-        start={{ x: 0.9, y: 0 }}
-        end={{ x: 0, y: 0.9 }}
+        start={{ x: 0.8, y: 0 }}
+        end={{ x: 0, y: 0.8 }}
       />
       <Image
         width={128}
         height={128}
         alt="logo"
-        src={require("@/assets/images/spotify.svg")}
+        src={require("@/assets/images/text-spotify.svg")}
         style={{
-          top: 20,
+          top: isMobile ? 20 : 28,
           right: 20,
           position: "absolute",
           height: isMobile ? 36 : 44,
-          width: isMobile ? 36 : 44,
+          width: isMobile ? 100 : 120,
         }}
         objectFit="contain"
       />

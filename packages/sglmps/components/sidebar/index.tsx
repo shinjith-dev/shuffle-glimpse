@@ -3,11 +3,14 @@ import React from "react";
 import { View } from "react-native";
 import styles from "./style";
 import Image from "../../ui/image";
-import { XStack, YStack } from "@/ui/layout";
+import { YStack } from "@/ui/layout";
 import MenuItem from "./menu-item";
 import usePathname from "@/hooks/usePathname";
 import { SidebarGradient } from "./gradient";
 import { useWidth } from "@/hooks";
+import Text from "@/ui/text";
+import Link from "@/ui/link";
+import { THEME } from "@/lib";
 
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
@@ -23,7 +26,7 @@ const Sidebar: React.FC = () => {
         isMobile && styles.bottomBar,
       ]}
     >
-      {!isMobile && <SidebarGradient />}
+      <SidebarGradient />
       {!isMobile && (
         <View>
           {collapsed ? (
@@ -94,28 +97,24 @@ const Sidebar: React.FC = () => {
         />*/}
       </YStack>
 
-      {!isMobile && (
-        <XStack justifyContent="center">
-          {collapsed ? (
-            <Image
-              width={128}
-              height={128}
-              alt="logo"
-              src={require("@/assets/images/spotify-white.svg")}
-              style={{ height: 36, width: 36 }}
-              objectFit="contain"
-            />
-          ) : (
-            <Image
-              width={400}
-              height={112}
-              alt="logo"
-              src={require("@/assets/images/text-spotify-white.svg")}
-              style={{ height: 56, width: 140, margin: "0 4px" }}
-              objectFit="contain"
-            />
-          )}
-        </XStack>
+      {!isMobile && !collapsed && (
+        <YStack gap={4}>
+          <Link href="https://github.com/shinjith-dev/shuffle-glimpse">
+            <Text color={THEME.color["bg-70"]} variant="body3">
+              Github
+            </Text>
+          </Link>
+          <Link href="https://github.com/shinjith-dev/shuffle-glimpse">
+            <Text color={THEME.color["bg-70"]} variant="body3">
+              Privacy Policy
+            </Text>
+          </Link>
+          <Link href="https://github.com/shinjith-dev/shuffle-glimpse">
+            <Text color={THEME.color["bg-70"]} variant="body3">
+              Terms & Conditions
+            </Text>
+          </Link>
+        </YStack>
       )}
     </View>
   );

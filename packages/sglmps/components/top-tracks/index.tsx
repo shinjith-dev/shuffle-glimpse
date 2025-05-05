@@ -19,6 +19,8 @@ import TrackListItem from "../track/list-item";
 import HeartPop from "../track/heart-pop";
 import useRouter from "@/hooks/useRouter";
 import { useWidth } from "@/hooks";
+import LinearGradient from "react-native-linear-gradient";
+import Image from "@/ui/image";
 
 const TopTracks: React.FC = () => {
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
@@ -37,7 +39,7 @@ const TopTracks: React.FC = () => {
   });
   const { tracks: savedDep, check: isSaved } = useIsSaved();
   const { width } = useWindowDimensions();
-  const { isMobile } = useWidth();
+  const { isMobile, contentWidth } = useWidth();
   const router = useRouter();
 
   const limitedTotal = useMemo(
@@ -109,14 +111,63 @@ const TopTracks: React.FC = () => {
     <YStack
       style={[styles.topContainer, isMobile && styles.topContainerMobile]}
     >
+      {!isMobile && (
+        <Fragment>
+          <LinearGradient
+            style={styles.gradient}
+            colors={[THEME.color.bg, "transparent", "transparent"]}
+            locations={[0, 0.3, 1]}
+            start={{ x: 0.8, y: 0 }}
+            end={{ x: 0, y: 0.8 }}
+          />
+          <Image
+            width={128}
+            height={128}
+            alt="logo"
+            src={require("@/assets/images/text-spotify.svg")}
+            style={{
+              top: 28,
+              right: 20,
+              position: "absolute",
+              height: isMobile ? 36 : 44,
+              width: isMobile ? 100 : 120,
+            }}
+            objectFit="contain"
+          />
+        </Fragment>
+      )}
+
       <XStack
-        style={[styles.glimpseHeader, isMobile && styles.topHeaderMobile]}
+        style={[
+          styles.glimpseHeader,
+          isMobile && styles.topHeaderMobile,
+          !isMobile && { paddingRight: 140 },
+        ]}
       >
-        <Text variant={isMobile ? "heading4" : "heading3"}>
+        {isMobile && (
+          <Image
+            width={128}
+            height={128}
+            alt="logo"
+            src={require("@/assets/images/text-spotify.svg")}
+            style={{
+              top: 20,
+              right: 20,
+              position: "absolute",
+              height: isMobile ? 36 : 44,
+              width: isMobile ? 100 : 120,
+            }}
+            objectFit="contain"
+          />
+        )}
+        <Text
+          variant={isMobile ? "heading4" : "heading3"}
+          style={{ paddingHorizontal: 8 }}
+        >
           Your Top {limitedTotal}
         </Text>
 
-        <XStack gap={4}>
+        <XStack gap={4} justifyContent="flex-end" style={{ flexGrow: 1 }}>
           {timeRanges.map((tp) => (
             <TextButton
               key={tp.key}
@@ -147,23 +198,66 @@ const TopTracks: React.FC = () => {
 
             <ContentLoader
               speed={1}
-              width={width - 416}
-              height={504}
-              viewBox={`0 0 ${width - 416} 504`}
+              width={contentWidth}
+              height={isMobile ? 320 : 360}
+              viewBox={`0 0 ${contentWidth} ${isMobile ? 320 : 360}`}
               backgroundColor={THEME.color["bg-10"]}
               foregroundColor={THEME.color["bg-30"]}
             >
-              {[...new Array(7)].map((_, index) => (
+              {[...new Array(5)].map((_, index) => (
                 <Fragment key={`top-tracks-skeleton-${index}`}>
-                  <Circle cx="68" cy={36 * (index + 1) + 36 * index} r="24" />
                   <Rect
-                    x="100"
-                    y={12 * (index + 1) + 60 * index}
-                    rx="8"
-                    ry="8"
-                    width={width - 516}
-                    height="48"
+                    x="8"
+                    y={(isMobile ? 24 : 28) + index * (isMobile ? 64 : 72)}
+                    rx="4"
+                    ry="4"
+                    width={16}
+                    height={12}
                   />
+                  <Rect
+                    x="50"
+                    y={12 + index * (isMobile ? 64 : 72)}
+                    rx="4"
+                    ry="4"
+                    width={isMobile ? 40 : 48}
+                    height={isMobile ? 40 : 48}
+                  />
+                  <Rect
+                    x={isMobile ? 100 : 108}
+                    y={16 + index * (isMobile ? 64 : 72)}
+                    rx="4"
+                    ry="4"
+                    width={isMobile ? 240 : 400}
+                    height={isMobile ? 16 : 20}
+                  />
+                  <Rect
+                    x={isMobile ? 100 : 108}
+                    y={(isMobile ? 38 : 44) + index * (isMobile ? 64 : 72)}
+                    rx="4"
+                    ry="4"
+                    width={isMobile ? 160 : 300}
+                    height={12}
+                  />
+                  {width >= 1500 && (
+                    <Rect
+                      x="50%"
+                      y={28 + index * 72}
+                      rx="4"
+                      ry="4"
+                      width="25%"
+                      height={16}
+                    />
+                  )}
+                  {width >= 1028 && (
+                    <Rect
+                      x="88%"
+                      y={28 + index * 72}
+                      rx="4"
+                      ry="4"
+                      width={40}
+                      height={12}
+                    />
+                  )}
                 </Fragment>
               ))}
             </ContentLoader>

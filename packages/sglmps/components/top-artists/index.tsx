@@ -6,13 +6,14 @@ import { timeRanges } from "@/constants";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useTopArtists } from "@/queries";
 import Text from "@/ui/text";
-import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { ScrollView } from "react-native";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import { THEME } from "@/lib";
-import dayjs from "@/lib/dayjs";
 import ArtistItem from "../artist/list-item";
 import { useWidth } from "@/hooks";
+import { AvatarSizes } from "@/ui/avatar/style";
+import LinearGradient from "react-native-linear-gradient";
+import Image from "@/ui/image";
 
 const TopArtists: React.FC = () => {
   const [timeRange, setTimeRange] = useState<RequestTimeRange>("short_term");
@@ -22,8 +23,12 @@ const TopArtists: React.FC = () => {
     hasNextPage,
     fetchNextPage,
   } = useTopArtists({ timeRange });
-  const { width } = useWindowDimensions();
-  const { isMobile } = useWidth();
+  const { isMobile, contentWidth } = useWidth();
+  const AVATAR_WIDTH = isMobile ? AvatarSizes["5xl"] : AvatarSizes["8xl"];
+  const ARTIST_COUNT = Math.max(
+    Math.floor(contentWidth / (AVATAR_WIDTH + 28)),
+    1,
+  );
 
   useEffect(() => {
     if (hasNextPage) fetchNextPage();
@@ -44,12 +49,67 @@ const TopArtists: React.FC = () => {
     <YStack
       style={[styles.topContainer, isMobile && styles.topContainerMobile]}
     >
-      <XStack style={[styles.glimpseHeader, isMobile && styles.headerMobile]}>
-        <Text variant={isMobile ? "heading4" : "heading3"}>
+      {!isMobile && (
+        <Fragment>
+          <LinearGradient
+            style={styles.gradient}
+            colors={[THEME.color.bg, "transparent", "transparent"]}
+            locations={[0, 0.3, 1]}
+            start={{ x: 0.8, y: 0 }}
+            end={{ x: 0, y: 0.8 }}
+          />
+          <Image
+            width={128}
+            height={128}
+            alt="logo"
+            src={require("@/assets/images/text-spotify.svg")}
+            style={{
+              top: 28,
+              right: 20,
+              position: "absolute",
+              height: isMobile ? 36 : 44,
+              width: isMobile ? 100 : 120,
+            }}
+            objectFit="contain"
+          />
+        </Fragment>
+      )}
+
+      <XStack
+        style={[
+          styles.glimpseHeader,
+          isMobile && styles.headerMobile,
+          !isMobile && { paddingRight: 140 },
+        ]}
+      >
+        {isMobile && (
+          <Image
+            width={128}
+            height={128}
+            alt="logo"
+            src={require("@/assets/images/text-spotify.svg")}
+            style={{
+              top: 20,
+              right: 20,
+              position: "absolute",
+              height: isMobile ? 36 : 44,
+              width: isMobile ? 100 : 120,
+            }}
+            objectFit="contain"
+          />
+        )}
+        <Text
+          variant={isMobile ? "heading4" : "heading3"}
+          style={{ paddingHorizontal: 8 }}
+        >
           Your Top {limitedTotal} Artists
         </Text>
 
-        <XStack gap={4}>
+        <XStack
+          gap={4}
+          justifyContent={isMobile ? "flex-start" : "flex-end"}
+          style={{ flexGrow: 1 }}
+        >
           {timeRanges.map((tp) => (
             <TextButton
               key={tp.key}
@@ -63,6 +123,7 @@ const TopArtists: React.FC = () => {
           ))}
         </XStack>
       </XStack>
+
       <ScrollView
         style={styles.topContent}
         contentContainerStyle={styles.topArtists}
@@ -72,21 +133,42 @@ const TopArtists: React.FC = () => {
         ) : (
           <ContentLoader
             speed={1}
-            width={width - 416}
-            height={248}
-            viewBox={`0 0 ${width - 416} 248`}
+            width={contentWidth}
+            height={(isMobile ? 192 : 230) * 2}
+            viewBox={`0 0 ${contentWidth} ${(isMobile ? 192 : 230) * 2}`}
             backgroundColor={THEME.color["bg-10"]}
             foregroundColor={THEME.color["bg-30"]}
           >
-            {[...new Array(7)].map((_, index) => (
+            {[...new Array(ARTIST_COUNT)].map((_, index) => (
               <Fragment key={`top-artists-skeleton-${index}`}>
-                <Circle cy="90" cx={90 * (index + 1) + 118 * index} r="90" />
+                <Circle
+                  cy="90"
+                  cx={(isMobile ? 68 : 104) + (isMobile ? 148 : 220) * index}
+                  r={isMobile ? 60 : 90}
+                />
                 <Rect
-                  y="192"
-                  x={40 * (index + 1) + 168 * index}
+                  y={isMobile ? 166 : 196}
+                  x={(isMobile ? 20 : 40) + (isMobile ? 148 : 220) * index}
                   rx="8"
                   ry="8"
-                  width={100}
+                  width={isMobile ? 100 : 120}
+                  height="20"
+                />
+              </Fragment>
+            ))}
+            {[...new Array(ARTIST_COUNT)].map((_, index) => (
+              <Fragment key={`top-artists-skeleton-2-${index}`}>
+                <Circle
+                  cy={isMobile ? 280 : 330}
+                  cx={(isMobile ? 68 : 104) + (isMobile ? 148 : 220) * index}
+                  r={isMobile ? 60 : 90}
+                />
+                <Rect
+                  y={isMobile ? 356 : 436}
+                  x={(isMobile ? 20 : 40) + (isMobile ? 148 : 220) * index}
+                  rx="8"
+                  ry="8"
+                  width={isMobile ? 100 : 120}
                   height="20"
                 />
               </Fragment>
