@@ -88,8 +88,8 @@ const ProfileGlimpse: React.FC = memo(() => {
         alt="logo"
         src={require("@/assets/images/text-spotify.svg")}
         style={{
-          top: isMobile ? 20 : 28,
-          right: 20,
+          top: isMobile ? 16 : 28,
+          right: isMobile ? 12 : 20,
           position: "absolute",
           height: isMobile ? 36 : 44,
           width: isMobile ? 100 : 120,

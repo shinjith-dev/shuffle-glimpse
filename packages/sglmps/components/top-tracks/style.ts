@@ -13,6 +13,13 @@ const styles = StyleSheet.create({
     gap: 28,
   },
   topContainerMobile: { gap: 0, padding: 0, backgroundColor: THEME.color.bg },
+  topHeader: {
+    rowGap: 12,
+    columnGap: 36,
+    alignItems: "center",
+    width: "100%",
+    flexWrap: "wrap",
+  },
   topHeaderMobile: {
     flexDirection: "column",
     alignItems: "flex-start",
@@ -32,11 +39,9 @@ const styles = StyleSheet.create({
   },
   glimpseTable: { flexGrow: 1, width: "100%", paddingBottom: 20 },
   glimpseHeader: {
-    rowGap: 12,
-    columnGap: 36,
     alignItems: "center",
     width: "100%",
-    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   gradient: {
     width: "100%",

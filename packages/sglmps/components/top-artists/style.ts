@@ -18,6 +18,13 @@ const styles = StyleSheet.create({
     width: "100%",
     flex: 1,
   },
+  header: {
+    rowGap: 12,
+    columnGap: 36,
+    alignItems: "center",
+    width: "100%",
+    flexWrap: "wrap",
+  },
   headerMobile: {
     flexDirection: "column",
     alignItems: "flex-start",
@@ -33,11 +40,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   glimpseHeader: {
-    rowGap: 12,
-    columnGap: 36,
     alignItems: "center",
     width: "100%",
-    flexWrap: "wrap",
+    justifyContent: "space-between",
   },
   glimpseArtists: {
     gap: 12,

@@ -58,7 +58,7 @@ const TopTracks: React.FC = () => {
       {
         key: "name",
         label: "Name",
-        width: width < 1500 ? "85%" : "50%",
+        width: width < 1500 ? "83%" : "50%",
       },
       { key: "saved", label: "", width: "5%" },
     ];
@@ -129,8 +129,8 @@ const TopTracks: React.FC = () => {
               top: 28,
               right: 20,
               position: "absolute",
-              height: isMobile ? 36 : 44,
-              width: isMobile ? 100 : 120,
+              height: 44,
+              width: 120,
             }}
             objectFit="contain"
           />
@@ -151,11 +151,11 @@ const TopTracks: React.FC = () => {
             alt="logo"
             src={require("@/assets/images/text-spotify.svg")}
             style={{
-              top: 20,
-              right: 20,
+              top: 16,
+              right: 12,
               position: "absolute",
-              height: isMobile ? 36 : 44,
-              width: isMobile ? 100 : 120,
+              height: 36,
+              width: 100,
             }}
             objectFit="contain"
           />

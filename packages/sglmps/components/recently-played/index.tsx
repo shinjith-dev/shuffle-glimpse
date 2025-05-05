@@ -44,7 +44,7 @@ const RecentlyPlayed: React.FC = () => {
         width:
           width < 1500
             ? width < THEME.breakPoints.mobile
-              ? "95%"
+              ? "83%"
               : "70%"
             : "40%",
       },
@@ -128,8 +128,8 @@ const RecentlyPlayed: React.FC = () => {
               top: 28,
               right: 20,
               position: "absolute",
-              height: isMobile ? 36 : 44,
-              width: isMobile ? 100 : 120,
+              height: 44,
+              width: 120,
             }}
             objectFit="contain"
           />
@@ -150,11 +150,11 @@ const RecentlyPlayed: React.FC = () => {
             alt="logo"
             src={require("@/assets/images/text-spotify.svg")}
             style={{
-              top: 20,
-              right: 20,
+              top: 16,
+              right: 12,
               position: "absolute",
-              height: isMobile ? 36 : 44,
-              width: isMobile ? 100 : 120,
+              height: 36,
+              width: 100,
             }}
             objectFit="contain"
           />

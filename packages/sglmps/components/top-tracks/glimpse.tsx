@@ -40,7 +40,7 @@ const TopTracksGlimpse: React.FC = () => {
       {
         key: "name",
         label: "Name",
-        width: width < 1500 ? (width < 1028 ? "90%" : "85%") : "50%",
+        width: width < 1500 ? (width < 1028 ? "83%" : "85%") : "50%",
       },
       { key: "saved", label: "", width: "5%" },
     ];

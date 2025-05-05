@@ -1,3 +1,4 @@
+"use client";
 import { THEME } from "@/lib";
 import Image from "@/ui/image";
 import { View } from "react-native";

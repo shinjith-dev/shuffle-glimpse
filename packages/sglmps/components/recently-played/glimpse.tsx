@@ -15,6 +15,8 @@ import useRouter from "@/hooks/useRouter";
 import { useIsSavedTrack, useRecentlyPlayedGlimpse } from "@/queries/profile";
 import TrackListItem from "../track/list-item";
 import { useWidth } from "@/hooks";
+import HeartPop from "../track/heart-pop";
+import { useIsSaved } from "@/store";
 
 const RecentlyPlayedGlimpse: React.FC = () => {
   const { data: recent } = useRecentlyPlayedGlimpse({ limit: 5 });
@@ -25,6 +27,7 @@ const RecentlyPlayedGlimpse: React.FC = () => {
     enabled: !!recent,
     trackIds: recent?.items.map((t) => t.track.id) || [],
   });
+  const { tracks: savedDep, check: isSaved } = useIsSaved();
 
   const headers = useMemo<HeaderItem[]>(() => {
     const base: HeaderItem[] = [
@@ -32,8 +35,9 @@ const RecentlyPlayedGlimpse: React.FC = () => {
       {
         key: "name",
         label: "Name",
-        width: width < 1500 ? (width < 1028 ? "100%" : "90%") : "50%",
+        width: width < 1500 ? (width < 1028 ? "83%" : "85%") : "45%",
       },
+      { key: "saved", label: "", width: "5%" },
     ];
 
     return [
@@ -73,9 +77,10 @@ const RecentlyPlayedGlimpse: React.FC = () => {
           name: <TrackListItem track={t} />,
           playedAt: formatToDisplay(item.played_at),
           album: width >= 1500 ? t.album.name : undefined,
+          saved: isSaved(t.id) ? <HeartPop /> : null,
         };
       }) || [],
-    [recent, width],
+    [recent, width, savedDep],
   );
 
   return (

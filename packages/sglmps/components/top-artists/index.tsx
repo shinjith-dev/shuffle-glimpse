@@ -67,8 +67,8 @@ const TopArtists: React.FC = () => {
               top: 28,
               right: 20,
               position: "absolute",
-              height: isMobile ? 36 : 44,
-              width: isMobile ? 100 : 120,
+              height: 44,
+              width: 120,
             }}
             objectFit="contain"
           />
@@ -77,7 +77,7 @@ const TopArtists: React.FC = () => {
 
       <XStack
         style={[
-          styles.glimpseHeader,
+          styles.header,
           isMobile && styles.headerMobile,
           !isMobile && { paddingRight: 140 },
         ]}
@@ -89,11 +89,11 @@ const TopArtists: React.FC = () => {
             alt="logo"
             src={require("@/assets/images/text-spotify.svg")}
             style={{
-              top: 20,
-              right: 20,
+              top: 16,
+              right: 12,
               position: "absolute",
-              height: isMobile ? 36 : 44,
-              width: isMobile ? 100 : 120,
+              height: 36,
+              width: 100,
             }}
             objectFit="contain"
           />
