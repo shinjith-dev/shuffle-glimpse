@@ -26,31 +26,38 @@ const Glimpse: React.FC = () => {
         <TopTracksGlimpse />
         <TopArtistsGlimpse />
         <RecentlyPlayedGlimpse />
-      </YStack>
 
-      <XStack gap={8} alignItems="center">
-        <Link href="https://github.com/shinjith-dev/shuffle-glimpse">
-          <Text color={THEME.color["bg-70"]} variant="body3">
-            Github
-          </Text>
-        </Link>
-        <Text color={THEME.color["bg-70"]} variant="body3">
-          ·
-        </Text>
-        <Link href="/privacy-policy">
-          <Text color={THEME.color["bg-70"]} variant="body3">
-            Privacy Policy
-          </Text>
-        </Link>
-        <Text color={THEME.color["bg-70"]} variant="body3">
-          ·
-        </Text>
-        <Link href="/terms-and-conditions">
-          <Text color={THEME.color["bg-70"]} variant="body3">
-            Terms & Conditions
-          </Text>
-        </Link>
-      </XStack>
+        {isMobile && (
+          <XStack
+            gap={8}
+            alignItems="center"
+            justifyContent="center"
+            style={{ width: "100%" }}
+          >
+            <Link href="https://github.com/shinjith-dev/shuffle-glimpse">
+              <Text color={THEME.color["bg-70"]} variant="body3">
+                Github
+              </Text>
+            </Link>
+            <Text color={THEME.color["bg-70"]} variant="body3">
+              ·
+            </Text>
+            <Link href="/privacy-policy">
+              <Text color={THEME.color["bg-70"]} variant="body3">
+                Privacy Policy
+              </Text>
+            </Link>
+            <Text color={THEME.color["bg-70"]} variant="body3">
+              ·
+            </Text>
+            <Link href="/terms-and-conditions">
+              <Text color={THEME.color["bg-70"]} variant="body3">
+                Terms & Conditions
+              </Text>
+            </Link>
+          </XStack>
+        )}
+      </YStack>
     </ScrollView>
   );
 };
