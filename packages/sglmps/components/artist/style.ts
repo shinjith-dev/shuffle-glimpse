@@ -47,11 +47,6 @@ const styles = StyleSheet.create({
     top: 28,
     right: 28,
   },
-  back: {
-    position: "absolute",
-    top: 28,
-    left: 28,
-  },
   artistItemPlaceholder: {
     justifyContent: "center",
     alignItems: "center",

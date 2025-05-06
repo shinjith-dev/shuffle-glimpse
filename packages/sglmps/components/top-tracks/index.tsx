@@ -190,6 +190,7 @@ const TopTracks: React.FC = () => {
             hideHeader={isMobile}
             onRowClick={(id) => router.push(`/track/${id}`)}
             onEndReached={() => hasNextPage && fetchNextPage()}
+            contentContainerStyle={isMobile && { paddingBottom: 68 }}
             onEndReachedThreshold={1}
           />
         ) : (

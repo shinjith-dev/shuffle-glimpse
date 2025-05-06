@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     padding: 24,
     zIndex: 10,
     overflow: "hidden",
+    backgroundColor: THEME.color["bg-10"],
   },
   bottomBar: {
     width: "100%",
@@ -21,6 +22,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+    backgroundColor: "transparent",
+    borderRadius: 0,
   },
   collapsed: {
     width: "auto",

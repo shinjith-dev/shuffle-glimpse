@@ -126,7 +126,10 @@ const TopArtists: React.FC = () => {
 
       <ScrollView
         style={styles.topContent}
-        contentContainerStyle={styles.topArtists}
+        contentContainerStyle={[
+          styles.topArtists,
+          isMobile && { paddingBottom: 68 },
+        ]}
       >
         {topArtists ? (
           artists.map((a) => <ArtistItem key={a.id} artist={a} />)

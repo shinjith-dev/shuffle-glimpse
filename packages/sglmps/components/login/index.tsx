@@ -1,6 +1,7 @@
 "use client";
 import { auth } from "@/api";
-import { opacity, THEME } from "@/lib";
+import { useWidth } from "@/hooks";
+import { THEME } from "@/lib";
 import { Button } from "@/ui/button";
 import Image from "@/ui/image";
 import { XStack, YStack } from "@/ui/layout";
@@ -10,6 +11,7 @@ import React from "react";
 import { View } from "react-native";
 
 const Login: React.FC = () => {
+  const { isMobile } = useWidth();
   const handleLogin = () => {
     try {
       auth.login();
@@ -24,7 +26,11 @@ const Login: React.FC = () => {
       alignItems="center"
       justifyContent="center"
       flex={1}
-      style={{ height: "100%", backgroundColor: THEME.color.bg, padding: 20 }}
+      style={{
+        height: "100%",
+        backgroundColor: THEME.color.bg,
+        padding: isMobile ? 12 : 20,
+      }}
     >
       <View
         style={{
@@ -45,58 +51,108 @@ const Login: React.FC = () => {
         />
       </View>
 
+      <Image
+        width={128}
+        height={128}
+        alt="logo"
+        src={require("@/assets/images/text-logo.svg")}
+        style={{
+          top: isMobile ? 16 : 28,
+          left: isMobile ? 12 : 20,
+          position: "absolute",
+          height: isMobile ? 36 : 44,
+          width: isMobile ? 100 : 120,
+        }}
+        objectFit="contain"
+      />
+
+      <XStack
+        alignItems="center"
+        gap={12}
+        style={{
+          top: isMobile ? 16 : 28,
+          right: isMobile ? 12 : 20,
+          position: "absolute",
+        }}
+      >
+        <Text color={THEME.color.brand} variant="body3">
+          Built with
+        </Text>
+        <Image
+          width={128}
+          height={128}
+          alt="logo"
+          src={require("@/assets/images/text-spotify.svg")}
+          style={{
+            height: isMobile ? 28 : 36,
+            width: isMobile ? 92 : 112,
+          }}
+          objectFit="contain"
+        />
+      </XStack>
+
       <YStack
-        gap={16}
         alignItems="center"
         justifyContent="center"
         style={{ flexGrow: 1 }}
       >
-        <Image
-          width={512}
-          height={128}
-          alt="logo"
-          src={require("@/assets/images/text-logo.svg")}
-          style={{ height: 100, width: 300 }}
-          objectFit="contain"
-        />
-        <Button
-          onClick={handleLogin}
-          color="primary"
-          startIcon={
-            <Image
-              width={64}
-              height={64}
-              alt="spotify-logo"
-              src={require("@/assets/images/spotify-black.svg")}
-              style={{ height: 20, width: 20 }}
-              objectFit="contain"
-            />
-          }
-        >
-          Login with Spotify
-        </Button>
+        <div className="auth-text-gradient mb-4 text-center sm:mb-5">
+          <h1 className="mb-2 py-3 text-5xl font-semibold text-white sm:mb-3 sm:text-6xl md:text-7xl">
+            A Glimpse of Your Spotify Listening
+          </h1>
+          <p className="mx-auto max-w-5xl text-xl font-medium italic sm:text-2xl md:text-3xl md:leading-[44px]">
+            Shuffle Glimpse shows your Spotify top tracks, favorite artists, and
+            listening habits. No more waiting for year-end recaps.
+          </p>
+        </div>
+
+        <YStack gap={8}>
+          <Button
+            onClick={handleLogin}
+            color="primary"
+            size={isMobile ? "md" : "lg"}
+            startIcon={
+              <Image
+                width={64}
+                height={64}
+                alt="spotify-logo"
+                src={require("@/assets/images/spotify-black.svg")}
+                style={{ height: 20, width: 20 }}
+                objectFit="contain"
+              />
+            }
+          >
+            Login with Spotify
+          </Button>
+          Terms and Privacy Policy.
+        </YStack>
       </YStack>
 
-      <XStack gap={8} alignItems="center">
-        <Link href="https://github.com/shinjith-dev/shuffle-glimpse">
-          <Text color={THEME.color["bg-70"]} variant="body3">
-            Github
-          </Text>
-        </Link>
-        <Text color={THEME.color["bg-70"]} variant="body3">
-          ·
-        </Text>
-        <Link href="/privacy-policy">
-          <Text color={THEME.color["bg-70"]} variant="body3">
-            Privacy Policy
-          </Text>
-        </Link>
-        <Text color={THEME.color["bg-70"]} variant="body3">
-          ·
+      <XStack
+        gap={6}
+        alignItems="center"
+        justifyContent="center"
+        style={{ flexWrap: "wrap" }}
+      >
+        <Text
+          variant="body3"
+          color={THEME.color["bg-70"]}
+          style={{ textAlign: "center" }}
+        >
+          We only access your data temporarily and never store it. By logging
+          in, you agree to our
         </Text>
         <Link href="/terms-and-conditions">
-          <Text color={THEME.color["bg-70"]} variant="body3">
+          <Text color={THEME.color["bg-90"]} variant="body3">
             Terms & Conditions
+          </Text>
+        </Link>
+        <Text color={THEME.color["bg-70"]} variant="body3">
+          and
+        </Text>
+        <Link href="/privacy-policy">
+          <Text color={THEME.color["bg-90"]} variant="body3">
+            Privacy Policy.
           </Text>
         </Link>
       </XStack>

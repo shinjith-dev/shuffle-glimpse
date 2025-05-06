@@ -13,9 +13,9 @@ export const SidebarGradient = () => {
       style={styles.gradient}
       colors={[
         isMobile
-          ? opacity(THEME.color["bg-10"], isMobile ? 0.9 : 1)
+          ? opacity(THEME.color["bg-10"], isMobile ? 0.4 : 1)
           : sidebarColor || THEME.color["bg-10"],
-        THEME.color["bg-10"],
+        opacity(THEME.color["bg-10"], isMobile ? 0.95 : 1),
         THEME.color["bg-10"],
       ]}
       locations={[0, isMobile ? 0.4 : 0.7, 1]}

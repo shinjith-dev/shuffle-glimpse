@@ -12,7 +12,11 @@ const styles = StyleSheet.create({
     padding: 28,
     gap: 28,
   },
-  topContainerMobile: { padding: 0, gap: 12, backgroundColor: THEME.color.bg },
+  topContainerMobile: {
+    padding: 0,
+    gap: 12,
+    backgroundColor: THEME.color.bg,
+  },
   topContent: {
     height: "100%",
     width: "100%",

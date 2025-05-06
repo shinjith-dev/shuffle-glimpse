@@ -37,8 +37,11 @@ export default function Table<
       {!hideHeader && <TableHeader header={header} />}
       <FlatList
         data={data}
-        style={styles.table}
-        contentContainerStyle={styles.tableContents}
+        style={[styles.table, props.style]}
+        contentContainerStyle={[
+          styles.tableContents,
+          props.contentContainerStyle,
+        ]}
         renderItem={({ item }) => (
           <TableItem
             hover={hover}

@@ -50,3 +50,17 @@ body {
 br {
   margin: 4px 0;
 }
+
+.auth-text-gradient {
+  color: var(--color-fg);
+  background-image: linear-gradient(
+    45deg,
+    #0e0b89,
+    #97dace 33%,
+    #adce5e 67%,
+    #103669 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

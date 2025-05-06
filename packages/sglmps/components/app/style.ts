@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
   },
   mobileLayout: {
     padding: 0,
-    paddingBottom: 68,
     gap: 0,
     flexDirection: "column",
   },
@@ -35,6 +34,7 @@ const styles = StyleSheet.create({
   glimpseContMobile: {
     borderRadius: 0,
     backgroundColor: THEME.color.bg,
+    paddingBottom: 68,
   },
   glimpse: {
     flexGrow: 1,

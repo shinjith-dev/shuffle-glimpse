@@ -49,8 +49,8 @@ const Track: React.FC<Props> = ({ trackId }) => {
         alt="logo"
         src={require("@/assets/images/text-spotify.svg")}
         style={{
-          top: 28,
-          right: 20,
+          top: isMobile ? 16 : 28,
+          right: isMobile ? 12 : 20,
           position: "absolute",
           height: isMobile ? 36 : 44,
           width: isMobile ? 100 : 120,
@@ -58,7 +58,13 @@ const Track: React.FC<Props> = ({ trackId }) => {
         objectFit="contain"
       />
 
-      <View style={styles.back}>
+      <View
+        style={{
+          top: isMobile ? 16 : 28,
+          left: isMobile ? 12 : 20,
+          position: "absolute",
+        }}
+      >
         <IconButton
           variant="ghost"
           color="primary"
