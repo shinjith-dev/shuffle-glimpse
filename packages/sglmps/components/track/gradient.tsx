@@ -23,9 +23,8 @@ const TrackGradient = ({ src }: { src: string }) => {
         dominantColor ? (dominantColor as string) : THEME.color["bg-20"],
         THEME.color.bg,
       ]}
-      // locations={[]}
-      start={{ x: 0, y: 0.2 }}
-      end={{ x: 1, y: 0 }}
+      start={{ x: 0.3, y: 0 }}
+      end={{ x: 0.7, y: 1 }}
     />
   );
 };

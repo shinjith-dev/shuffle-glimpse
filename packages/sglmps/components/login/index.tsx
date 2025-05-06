@@ -97,7 +97,7 @@ const Login: React.FC = () => {
         style={{ flexGrow: 1 }}
       >
         <div className="auth-text-gradient mb-4 text-center sm:mb-5">
-          <h1 className="mb-2 py-3 text-5xl font-semibold text-white sm:mb-3 sm:text-6xl md:text-7xl">
+          <h1 className="mb-2 py-3 text-5xl font-semibold text-white sm:text-6xl md:text-7xl">
             A Glimpse of Your Spotify Listening
           </h1>
           <p className="mx-auto max-w-5xl text-xl font-medium italic sm:text-2xl md:text-3xl md:leading-[44px]">

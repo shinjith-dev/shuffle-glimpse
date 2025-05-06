@@ -8,8 +8,8 @@ import { Icon, TextButton } from "@/ui";
 import { opacity, THEME } from "@/lib";
 import dayjs, { formatToDisplay } from "@/lib/dayjs";
 import styles from "./style";
-import TableHeader, { HeaderItem } from "@/ui/table/header";
-import ContentLoader, { Circle, Rect } from "react-content-loader/native";
+import { HeaderItem } from "@/ui/table/header";
+import ContentLoader, { Rect } from "react-content-loader/native";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import useRouter from "@/hooks/useRouter";
 import { useIsSavedTrack, useRecentlyPlayedGlimpse } from "@/queries/profile";
@@ -74,10 +74,11 @@ const RecentlyPlayedGlimpse: React.FC = () => {
             t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
           ),
           sino: index + 1,
-          name: <TrackListItem track={t} />,
+          name: <TrackListItem track={t} album={t.album} />,
           playedAt: formatToDisplay(item.played_at),
           album: width >= 1500 ? t.album.name : undefined,
           saved: isSaved(t.id) ? <HeartPop /> : null,
+          disabled: !t?.is_playable,
         };
       }) || [],
     [recent, width, savedDep],

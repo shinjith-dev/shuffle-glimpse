@@ -13,6 +13,14 @@ const styles = StyleSheet.create({
     backgroundColor: opacity(THEME.color["bg-30"], 0.2),
   },
   artistItemAvatar: {},
+  artistContainer: {
+    height: "100%",
+    width: "100%",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    flex: 1,
+  },
   artist: {
     height: "100%",
     width: "100%",
@@ -30,9 +38,11 @@ const styles = StyleSheet.create({
   artistContent: {
     gap: 12,
     borderRadius: 16,
-    width: "80%",
+    width: "100%",
     maxWidth: 1200,
     alignItems: "center",
+    height: "100%",
+    position: "relative",
   },
   artistAvatar: {
     width: 360,

@@ -1,11 +1,11 @@
 "use client";
-import { useTopTracksGlimpse } from "@/queries";
+import { useArtistTopTracks } from "@/queries";
 import { XStack, YStack } from "@/ui/layout";
 import Table from "@/ui/table";
 import Text from "@/ui/text";
 import React, { Fragment, useMemo } from "react";
 import { View } from "react-native";
-import { Icon, TextButton } from "@/ui";
+import { Icon } from "@/ui";
 import { opacity, THEME } from "@/lib";
 import dayjs from "@/lib/dayjs";
 import styles from "./style";
@@ -19,17 +19,19 @@ import TrackListItem from "../track/list-item";
 import HeartPop from "../track/heart-pop";
 import { useWidth } from "@/hooks";
 
-const TopTracksGlimpse: React.FC = () => {
-  const { data: topTracks } = useTopTracksGlimpse({
-    limit: 5,
-    timeRange: "long_term",
-  });
+interface Props {
+  artistId: string;
+}
+
+const ArtistsTopTracks: React.FC<Props> = ({ artistId }) => {
+  const { data: artistTracks } = useArtistTopTracks({ artistId });
+
   const { width } = useWindowDimensions();
   const { isMobile, contentWidth } = useWidth();
   const router = useRouter();
   useIsSavedTrack({
-    enabled: !!topTracks,
-    trackIds: topTracks?.items.map((t) => t.id) || [],
+    enabled: !!artistTracks,
+    trackIds: artistTracks?.tracks.map((t) => t.id) || [],
   });
   const { tracks: savedDep, check: isSaved } = useIsSaved();
 
@@ -70,7 +72,7 @@ const TopTracksGlimpse: React.FC = () => {
 
   const tracks = useMemo(
     () =>
-      topTracks?.items.map((t, index) => ({
+      artistTracks?.tracks.map((t, index) => ({
         ...t,
         duration: dayjs({ milliseconds: t.duration_ms }).format(
           t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
@@ -80,7 +82,7 @@ const TopTracksGlimpse: React.FC = () => {
         saved: isSaved(t.id) ? <HeartPop /> : null,
         disabled: !t?.is_playable,
       })) || [],
-    [topTracks, savedDep, width],
+    [artistTracks, savedDep, width],
   );
 
   return (
@@ -88,21 +90,11 @@ const TopTracksGlimpse: React.FC = () => {
       <XStack
         style={[styles.glimpseHeader, isMobile && { paddingHorizontal: 12 }]}
       >
-        <Text variant={isMobile ? "heading5" : "heading4"}>
-          Top Songs this Year
-        </Text>
-
-        <TextButton
-          size={isMobile ? "sm" : "md"}
-          color="primary"
-          onClick={() => router.push("/top-tracks")}
-        >
-          View all
-        </TextButton>
+        <Text variant={isMobile ? "heading5" : "heading4"}>Popular Tracks</Text>
       </XStack>
 
       <View style={styles.glimpseTable}>
-        {topTracks ? (
+        {artistTracks ? (
           <Table
             hideHeader
             header={headers}
@@ -171,4 +163,4 @@ const TopTracksGlimpse: React.FC = () => {
   );
 };
 
-export default TopTracksGlimpse;
+export default ArtistsTopTracks;

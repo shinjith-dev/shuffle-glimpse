@@ -12,7 +12,7 @@ import Image from "@/ui/image";
 import LinearGradient from "react-native-linear-gradient";
 import { useWidth } from "@/hooks";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
-import { useAuthStore } from "@/store";
+import { useAuthStore, useIsSaved } from "@/store";
 import useRouter from "@/hooks/useRouter";
 
 const ProfileGlimpse: React.FC = memo(() => {
@@ -21,6 +21,7 @@ const ProfileGlimpse: React.FC = memo(() => {
   const image = maxOfArray(profile?.images, "width");
   const { isMobile, contentWidth } = useWidth();
   const logout = useAuthStore((state) => state.clearTokens);
+  const clearSaved = useIsSaved((state) => state.clear);
   const router = useRouter();
 
   const description = useMemo(
@@ -34,10 +35,11 @@ const ProfileGlimpse: React.FC = memo(() => {
 
   const handleLogout = useCallback(() => {
     logout();
+    clearSaved();
     router.push("/login");
   }, [logout]);
 
-  if (!profile || !image?.url)
+  if (!profile)
     return (
       <ContentLoader
         speed={1}
@@ -71,10 +73,9 @@ const ProfileGlimpse: React.FC = memo(() => {
       </ContentLoader>
     );
 
-  if (!profile || !image?.url) return null;
   return (
     <YStack style={[styles.container, isMobile && styles.containerMobile]}>
-      <ProfileGradient src={image.url} />
+      {image?.url && <ProfileGradient src={image.url} />}
       <LinearGradient
         style={styles.gradient}
         colors={[THEME.color.bg, "transparent", "transparent"]}

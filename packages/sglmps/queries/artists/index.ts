@@ -1,12 +1,18 @@
 "use client";
 
-import { getArtist, getTopArtists } from "@/api";
+import { getArtist, getArtistsTopTracks, getTopArtists } from "@/api";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export const useArtist = ({ artistId }: GetArtistRequest) =>
   useQuery({
     queryKey: ["artist", artistId],
     queryFn: () => getArtist({ artistId }),
+  });
+
+export const useArtistTopTracks = ({ artistId }: GetArtistRequest) =>
+  useQuery({
+    queryKey: ["artist", "tracks", artistId],
+    queryFn: () => getArtistsTopTracks({ artistId }),
   });
 
 export const useTopArtistsGlimpse = ({

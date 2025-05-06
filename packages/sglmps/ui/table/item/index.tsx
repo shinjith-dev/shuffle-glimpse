@@ -8,6 +8,7 @@ interface TableItemProps {
   header: HeaderItem[];
   item: Record<string, any> & { id: string; sino?: number };
   hover: boolean;
+  disabled?: boolean;
   onClick?: () => void;
 }
 

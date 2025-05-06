@@ -5,16 +5,15 @@ import TableHeader, { HeaderItem } from "./header";
 import styles from "./style";
 import { YStack } from "../layout";
 
+type RowReservedKeys = { id: string; sino?: number; disabled?: boolean };
+
 interface TableProps<
   Header extends HeaderItem[],
   Keys extends Header[number]["key"],
   Row extends Record<Keys, any>,
-> extends Omit<
-    FlatListProps<Row & { id: string; sino?: number }>,
-    "data" | "renderItem"
-  > {
+> extends Omit<FlatListProps<Row & RowReservedKeys>, "data" | "renderItem"> {
   header: Header;
-  data: (Row & { id: string })[];
+  data: (Row & RowReservedKeys)[];
   hideHeader?: boolean;
   hover?: boolean;
   onRowClick?: (rowId: string) => void;
@@ -48,6 +47,7 @@ export default function Table<
             key={item.id}
             item={item}
             header={header}
+            disabled={item?.disabled}
             onClick={onRowClick ? () => onRowClick(item.id) : undefined}
           />
         )}

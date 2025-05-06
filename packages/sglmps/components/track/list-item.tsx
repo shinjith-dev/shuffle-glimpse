@@ -10,18 +10,19 @@ import dayjs from "@/lib/dayjs";
 import { useWidth } from "@/hooks";
 
 interface Props {
-  track: PlaylistTracks;
+  track: TrackItem | AlbumTrack;
+  album: TrackAlbum | Album;
 }
 
-const TrackListItem: React.FC<Props> = memo(({ track }) => {
+const TrackListItem: React.FC<Props> = memo(({ track, album }) => {
   const { width } = useWindowDimensions();
   const { isMobile } = useWidth();
   const image =
-    track.album.images.length > 0
-      ? track.album.images.reduce<ImageResponse>(
+    album.images && album.images.length > 0
+      ? album.images.reduce<ImageResponse>(
           (prev, img) =>
             img.width > 40 && img.width < (prev?.width || 0) ? img : prev,
-          track.album.images[0],
+          album.images[0],
         )
       : undefined;
 
@@ -69,7 +70,7 @@ const TrackListItem: React.FC<Props> = memo(({ track }) => {
           numberOfLines={1}
         >
           {track.artists.map((a) => a.name).join(", ")}
-          {width < 1500 && ` · ${track.album.name}`}
+          {width < 1500 && ` · ${album.name}`}
           {width < 1028 &&
             ` · ${dayjs({ milliseconds: track.duration_ms }).format(
               track.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",

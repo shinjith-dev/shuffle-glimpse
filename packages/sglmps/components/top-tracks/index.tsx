@@ -11,7 +11,7 @@ import dayjs from "@/lib/dayjs";
 import styles from "./style";
 import { timeRanges } from "@/constants";
 import TableHeader, { HeaderItem } from "@/ui/table/header";
-import ContentLoader, { Circle, Rect } from "react-content-loader/native";
+import ContentLoader, { Rect } from "react-content-loader/native";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { useIsSavedTrack } from "@/queries/profile";
 import { useIsSaved } from "@/store";
@@ -98,8 +98,9 @@ const TopTracks: React.FC = () => {
                 t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
               ),
               sino: pageIndex * 20 + index + 1,
-              name: <TrackListItem track={t} />,
+              name: <TrackListItem album={t.album} track={t} />,
               saved: isSaved(t.id) ? <HeartPop /> : null,
+              disabled: !t?.is_playable,
             })),
           [],
         )

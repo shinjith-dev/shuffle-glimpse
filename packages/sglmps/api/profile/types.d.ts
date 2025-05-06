@@ -49,7 +49,7 @@ interface PlaylistItem {
   primary_color: any;
   public: boolean;
   snapshot_id: string;
-  tracks: PlaylistTracks[];
+  tracks: TrackItem[];
   type: string;
   uri: string;
 }
@@ -71,7 +71,7 @@ interface PlaylistOwnerUrls {
   spotify: string;
 }
 
-interface PlaylistTracks {
+interface TrackItem {
   href: string;
   total: number;
 }
@@ -98,7 +98,7 @@ interface GetSavedResponse {
 
 interface GetSavedResponseItem {
   added_at: string;
-  track: PlaylistTracks;
+  track: TrackItem;
 }
 
 interface GetRecentlyPlayedRequest {
@@ -116,7 +116,7 @@ interface GetRecentlyPlayedResponse {
 }
 
 interface GetRecentlyPlayedResponseItem {
-  track: PlaylistTracks;
+  track: TrackItem;
   played_at: string;
   context: PlaybackContext;
 }

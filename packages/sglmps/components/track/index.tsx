@@ -1,5 +1,5 @@
 "use client";
-import { Button, Icon, IconButton, XStack, YStack } from "@/ui";
+import { Button, Icon, IconButton, TextButton, XStack, YStack } from "@/ui";
 import styles from "./style";
 import { useTrack } from "@/queries";
 import TrackGradient from "./gradient";
@@ -34,7 +34,15 @@ const Track: React.FC<Props> = ({ trackId }) => {
   if (!track) return null;
 
   return (
-    <YStack style={styles.track}>
+    <YStack
+      style={[
+        styles.track,
+        {
+          paddingHorizontal: isMobile ? 12 : 20,
+          paddingVertical: 60,
+        },
+      ]}
+    >
       {image && <TrackGradient src={image.url} />}
       <LinearGradient
         style={styles.gradient}
@@ -74,9 +82,7 @@ const Track: React.FC<Props> = ({ trackId }) => {
         />
       </View>
 
-      <XStack
-        style={[styles.trackContent, isMobile && styles.trackContentMobile]}
-      >
+      <YStack style={styles.trackContent}>
         {image ? (
           <Image
             width={image.width}
@@ -84,8 +90,8 @@ const Track: React.FC<Props> = ({ trackId }) => {
             alt="thumbnail"
             src={image.url}
             style={{
-              width: isMobile ? 280 : 360,
-              height: isMobile ? 280 : 360,
+              width: isMobile ? 240 : 320,
+              height: isMobile ? 240 : 320,
               borderRadius: 8,
               backgroundColor: THEME.color["bg-20"],
             }}
@@ -94,8 +100,8 @@ const Track: React.FC<Props> = ({ trackId }) => {
           <View
             style={[
               {
-                width: isMobile ? 280 : 360,
-                height: isMobile ? 280 : 360,
+                width: isMobile ? 240 : 320,
+                height: isMobile ? 240 : 320,
                 borderRadius: 8,
                 backgroundColor: THEME.color["bg-20"],
               },
@@ -109,31 +115,35 @@ const Track: React.FC<Props> = ({ trackId }) => {
             />
           </View>
         )}
+
         <YStack
-          alignItems={isMobile ? "center" : "flex-start"}
-          gap={12}
-          style={{ maxWidth: isMobile ? "90%" : "60%" }}
+          alignItems="center"
+          gap={isMobile ? 8 : 12}
+          style={{ maxWidth: "100%" }}
         >
           <Text
             variant={isMobile ? "heading3" : "heading1"}
-            style={{ textAlign: isMobile ? "center" : "left" }}
+            style={{ textAlign: "center" }}
             numberOfLines={2}
           >
             {track.name}
           </Text>
-          <Text
-            variant={isMobile ? "heading5" : "heading3"}
-            color={THEME.color["bg-90"]}
-            style={{ textAlign: isMobile ? "center" : "left" }}
-            numberOfLines={1}
-            fontWeight={500}
-          >
-            {track.artists.map((a) => a.name).join(", ")}
-          </Text>
+          <XStack>
+            {track.artists.map((a, index) => (
+              <TextButton
+                color="primary"
+                size="xl"
+                key={a.id}
+                onClick={() => router.push(`/artist/${a.id}`)}
+              >
+                {`${a.name}${index !== track.artists.length - 1 ? ", " : ""}`}
+              </TextButton>
+            ))}
+          </XStack>
           <Text
             variant={isMobile ? "body3" : "body1"}
             color={THEME.color["bg-80"]}
-            style={{ textAlign: isMobile ? "center" : "left" }}
+            style={{ textAlign: "center" }}
             numberOfLines={1}
           >
             {track.album.name} · {dayjs(track.album.release_date).year()}
@@ -156,7 +166,7 @@ const Track: React.FC<Props> = ({ trackId }) => {
             Listen on Spotify
           </Button>
         </YStack>
-      </XStack>
+      </YStack>
     </YStack>
   );
 };

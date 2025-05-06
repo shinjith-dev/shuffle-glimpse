@@ -5,6 +5,11 @@ import api from "../instance";
 export const getArtist = async ({ artistId }: GetArtistRequest) =>
   api.get<Artist>(`/artists/${String(artistId)}`).then((res) => res.data);
 
+export const getArtistsTopTracks = async ({ artistId }: GetArtistRequest) =>
+  api
+    .get<{ tracks: TrackItem[] }>(`/artists/${String(artistId)}/top-tracks`)
+    .then((res) => res.data);
+
 export const getTopArtists = async ({
   timeRange = "short_term",
   offset = 0,

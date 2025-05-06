@@ -1,4 +1,3 @@
-import { THEME } from "@/lib";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -19,6 +18,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     position: "static",
+    flex: 1,
   },
   gradient: {
     width: "100%",
@@ -28,11 +28,12 @@ const styles = StyleSheet.create({
     right: 0,
   },
   trackContent: {
-    gap: 36,
+    gap: 12,
     borderRadius: 16,
-    width: "80%",
+    width: "100%",
     maxWidth: 1200,
-    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
   },
   trackContentMobile: {
     gap: 28,

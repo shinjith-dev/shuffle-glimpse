@@ -1,3 +1,4 @@
+"use client";
 import Text from "@/ui/text";
 import { HeaderItem } from "../header";
 import styles from "../style";
@@ -8,6 +9,7 @@ interface TableItemProps {
   header: HeaderItem[];
   item: Record<string, any> & { id: string; sino?: number };
   hover: boolean;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -15,12 +17,13 @@ export default function TableItem({
   header,
   item,
   hover,
+  disabled = false,
   onClick,
 }: TableItemProps) {
   return (
-    <div
-      onClick={onClick}
-      className={`flex w-full items-center rounded-md p-3 ${hover && "hover:bg-bg-30/20"} ${onClick && "cursor-pointer"}`}
+    <button
+      onClick={disabled ? undefined : onClick}
+      className={`flex w-full items-center rounded-md p-3 ${!disabled && hover && "hover:bg-bg-30/20"} ${!disabled && onClick && "cursor-pointer"}`}
     >
       {header.map((h) => {
         const content = getNestedValue(item, h.key);
@@ -30,7 +33,7 @@ export default function TableItem({
             <Text
               key={h.key}
               variant="body2"
-              color={THEME.color["bg-80"]}
+              color={disabled ? THEME.color["bg-60"] : THEME.color["bg-80"]}
               numberOfLines={1}
               style={[
                 styles.itemContent,
@@ -51,6 +54,6 @@ export default function TableItem({
           </View>
         );
       })}
-    </div>
+    </button>
   );
 }

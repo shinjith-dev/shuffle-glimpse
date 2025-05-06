@@ -20,6 +20,11 @@ interface Track {
   track_number: number;
   type: string;
   uri: string;
+  restrictions?: TrackRestrictions;
+}
+
+interface TrackRestrictions {
+  reason: string;
 }
 
 interface TrackAlbum {
@@ -84,7 +89,7 @@ interface GetTopTracksRequest {
 }
 
 interface GetTopTracksResponse {
-  items: PlaylistTracks[];
+  items: TrackItem[];
   total: number;
   limit: number;
   offset: number;
@@ -93,7 +98,7 @@ interface GetTopTracksResponse {
   previous: any;
 }
 
-interface PlaylistTracks {
+interface TrackItem {
   album: TrackAlbum;
   artists: TrackArtist[];
   available_markets: string[];

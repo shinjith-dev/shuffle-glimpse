@@ -10,7 +10,7 @@ import { THEME } from "@/lib";
 import dayjs, { formatToDisplay } from "@/lib/dayjs";
 import styles from "./style";
 import TableHeader, { HeaderItem } from "@/ui/table/header";
-import ContentLoader, { Circle, Rect } from "react-content-loader/native";
+import ContentLoader, { Rect } from "react-content-loader/native";
 import useWindowDimensions from "@/hooks/useWindowDimensions";
 import { useIsSavedTrack, useRecentlyPlayed } from "@/queries/profile";
 import TrackListItem from "../track/list-item";
@@ -97,9 +97,10 @@ const RecentlyPlayed: React.FC = () => {
                   t.duration_ms / 3_600_000 >= 1 ? "HH:mm:ss" : "mm:ss",
                 ),
                 sino: pageIndex * 20 + index + 1,
-                name: <TrackListItem track={t} />,
+                name: <TrackListItem album={t.album} track={t} />,
                 playedAt: formatToDisplay(item.played_at),
                 saved: isSaved(t.id) ? <HeartPop /> : null,
+                disabled: !t?.is_playable,
               };
             }),
           [],

@@ -13,6 +13,10 @@ export const useIsSaved = create<IsSavedStore>()(
           });
         }),
       check: (id) => get().tracks[id],
+      clear: () =>
+        set((state) => {
+          state.tracks = {};
+        }),
     })),
     { name: "is-saved" },
   ),

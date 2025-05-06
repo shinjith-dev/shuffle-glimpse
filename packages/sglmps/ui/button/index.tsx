@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { IconSize, THEME, TSpacing } from "../../lib";
-import { Icon, IconProps } from "../icon";
+import { Icon } from "../icon";
 import { ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 import {

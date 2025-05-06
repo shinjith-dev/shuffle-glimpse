@@ -1,3 +1,4 @@
+"use client";
 import { ReactNode } from "react";
 import { XStack } from "../layout";
 import Text from "../text";
