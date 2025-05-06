@@ -124,7 +124,6 @@ const Login: React.FC = () => {
           >
             Login with Spotify
           </Button>
-          Terms and Privacy Policy.
         </YStack>
       </YStack>
 

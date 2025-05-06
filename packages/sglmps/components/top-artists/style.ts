@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 12,
     maxWidth: "100%",
-    overflow: "scroll",
     flexDirection: "row",
   },
   topArtists: {

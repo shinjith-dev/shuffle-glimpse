@@ -7,7 +7,7 @@ import { useTopArtistsGlimpse } from "@/queries";
 import Text from "@/ui/text";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import { THEME } from "@/lib";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import useRouter from "@/hooks/useRouter";
 import ArtistItem from "../artist/list-item";
 import { useWidth } from "@/hooks";
@@ -44,7 +44,11 @@ const TopArtistsGlimpse: React.FC = () => {
         </TextButton>
       </XStack>
 
-      <View style={styles.glimpseArtists}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.glimpseArtists}
+      >
         {topArtists ? (
           topArtists.items.map((a) => <ArtistItem key={a.id} artist={a} />)
         ) : (
@@ -75,7 +79,7 @@ const TopArtistsGlimpse: React.FC = () => {
             ))}
           </ContentLoader>
         )}
-      </View>
+      </ScrollView>
     </YStack>
   );
 };
