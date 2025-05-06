@@ -41,10 +41,10 @@ export const metadata: Metadata = {
       "Shuffle Glimpse shows your Spotify top tracks, favorite artists, and listening habits. No more waiting for year-end recaps.",
     images: [
       {
-        url: "https://shuffle.shinjith.dev/images/home/thumbnail.png",
+        url: "https://shuffle.shinjith.dev/thumbnail.png",
         width: 1200,
         height: 630,
-        alt: "dminhvu",
+        alt: "shuffle glimpse",
       },
     ],
   },
@@ -57,10 +57,10 @@ export const metadata: Metadata = {
     site: "@ShinjithR",
     images: [
       {
-        url: "https://shuffle.shinjith.dev/images/home/thumbnail.png",
+        url: "https://shuffle.shinjith.dev/thumbnail.png",
         width: 1200,
         height: 630,
-        alt: "dminhvu",
+        alt: "shuffle glimpse",
       },
     ],
   },
