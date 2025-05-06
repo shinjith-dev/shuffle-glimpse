@@ -1,11 +1,18 @@
+"use client";
+
+import { useWidth } from "@/hooks";
+import useRouter from "@/hooks/useRouter";
 import { THEME } from "@/lib";
-import { XStack, YStack } from "@/ui";
+import { IconButton, XStack, YStack } from "@/ui";
 import Image from "@/ui/image";
 import Link from "@/ui/link";
 import Text from "@/ui/text";
 import { ScrollView, View } from "react-native";
 
 export default function TermsAndConditions() {
+  const { isMobile } = useWidth();
+  const router = useRouter();
+
   return (
     <YStack
       alignItems="center"
@@ -32,10 +39,27 @@ export default function TermsAndConditions() {
         />
       </View>
 
+      <View
+        style={{
+          top: isMobile ? 16 : 28,
+          left: isMobile ? 12 : 20,
+          position: "absolute",
+          zIndex: 10,
+        }}
+      >
+        <IconButton
+          variant="ghost"
+          color="primary"
+          size={isMobile ? "xl" : "3xl"}
+          onClick={router.back}
+          icon="hugeicons:circle-arrow-left-02"
+        />
+      </View>
+
       <ScrollView style={{ flex: 1, height: "100%", width: "100%" }}>
         <YStack
           gap={20}
-          style={{ maxWidth: 1000, padding: 28, marginHorizontal: "auto" }}
+          style={{ maxWidth: 1000, padding: 20, marginHorizontal: "auto" }}
         >
           <Text
             style={{ textAlign: "center", width: "100%" }}
