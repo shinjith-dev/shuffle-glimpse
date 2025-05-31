@@ -58,9 +58,8 @@ const TopTracks: React.FC = () => {
       {
         key: "name",
         label: "Name",
-        width: width < 1500 ? "83%" : "50%",
+        width: width < 1500 ? (width < 1028 ? "95%" : "83%") : "50%",
       },
-      { key: "saved", label: "", width: "5%" },
     ];
 
     return [
@@ -71,6 +70,7 @@ const TopTracks: React.FC = () => {
       ...base.slice(2),
       ...(width >= 1028
         ? [
+            { key: "saved", label: "", width: "5%" } as HeaderItem,
             {
               key: "duration",
               label: (

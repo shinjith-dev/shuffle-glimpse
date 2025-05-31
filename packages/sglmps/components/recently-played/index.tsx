@@ -44,11 +44,10 @@ const RecentlyPlayed: React.FC = () => {
         width:
           width < 1500
             ? width < THEME.breakPoints.mobile
-              ? "83%"
+              ? "95%"
               : "70%"
             : "40%",
       },
-      { key: "saved", label: "" },
     ];
 
     return [
@@ -59,6 +58,7 @@ const RecentlyPlayed: React.FC = () => {
       ...base.slice(2),
       ...(width >= THEME.breakPoints.mobile
         ? [
+            { key: "saved", label: "" } as HeaderItem,
             {
               key: "playedAt",
               label: "Played At",

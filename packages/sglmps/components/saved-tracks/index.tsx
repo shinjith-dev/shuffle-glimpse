@@ -34,7 +34,7 @@ const SavedTracks: React.FC = () => {
         width:
           width < 1500
             ? width < THEME.breakPoints.mobile
-              ? "98%"
+              ? "95%"
               : "75%"
             : "40%",
       },

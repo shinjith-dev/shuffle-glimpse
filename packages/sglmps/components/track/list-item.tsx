@@ -30,7 +30,7 @@ const TrackListItem: React.FC<Props> = memo(({ track, album }) => {
 
   return (
     <XStack style={styles.trackItem}>
-      <XStack flex={1} gap={12} style={{ maxWidth: "95%" }}>
+      <XStack flex={1} gap={12}>
         {image ? (
           <Image
             width={image.width}
