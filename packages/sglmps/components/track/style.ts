@@ -3,10 +3,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   trackItem: {
     alignItems: "center",
-    gap: 12,
-    flexGrow: 1,
-    flexShrink: 1,
-    maxWidth: "95%",
+    flex: 1,
   },
   trackItemPlaceholder: {
     justifyContent: "center",

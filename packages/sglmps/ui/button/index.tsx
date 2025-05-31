@@ -116,7 +116,7 @@ export type IconButtonProps = Omit<
 > &
   IconButtonVariantProps & {
     size: IconSize;
-    children: string;
+    children: ReactElement;
     rounded: boolean;
     icon: string;
   };
@@ -144,7 +144,7 @@ export const IconButton: React.FC<Partial<IconButtonProps>> = ({
         ...props?.style,
       }}
     >
-      <Icon name={icon} size={THEME.iconSize[size]} />
+      {children ? children : <Icon name={icon} size={THEME.iconSize[size]} />}
     </button>
   );
 };

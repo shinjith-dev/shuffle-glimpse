@@ -1,7 +1,7 @@
 "use client";
 import { maxOfArray, THEME } from "@/lib";
 import { usePlaylistsGlimpse, useProfile } from "@/queries/profile";
-import { OutlinedButton, XStack, YStack } from "@/ui";
+import { Button, OutlinedButton, XStack, YStack } from "@/ui";
 import { Avatar } from "@/ui/avatar";
 import { memo, useCallback, useMemo } from "react";
 import styles from "./style";
@@ -123,7 +123,11 @@ const ProfileGlimpse: React.FC = memo(() => {
             }),
           }}
         />
-        <XStack gap={12} alignItems="flex-end" style={{ flexGrow: 1 }}>
+        <YStack
+          gap={12}
+          alignItems={isMobile ? "flex-start" : "flex-end"}
+          style={{ flexGrow: 1, flexDirection: isMobile ? "column" : "row" }}
+        >
           <YStack
             gap={isMobile ? 4 : 12}
             style={[styles.content, isMobile && { paddingVertical: 0 }]}
@@ -135,14 +139,34 @@ const ProfileGlimpse: React.FC = memo(() => {
               {description}
             </Text>
           </YStack>
-          <OutlinedButton
-            color="primary"
-            size={isMobile ? "xs" : "sm"}
-            onClick={handleLogout}
-          >
-            Logout
-          </OutlinedButton>
-        </XStack>
+          <XStack gap={12}>
+            <Button
+              size={isMobile ? "xs" : "sm"}
+              color="primary"
+              startIcon={
+                <Image
+                  width={64}
+                  height={64}
+                  alt="spotify-logo"
+                  src={require("@/assets/images/spotify-black.svg")}
+                  style={{ height: 22, width: 22 }}
+                  objectFit="contain"
+                />
+              }
+              onClick={() => router.push(profile.external_urls.spotify)}
+            >
+              Show on Spotify
+            </Button>
+
+            <OutlinedButton
+              color="primary"
+              size={isMobile ? "xs" : "sm"}
+              onClick={handleLogout}
+            >
+              Logout
+            </OutlinedButton>
+          </XStack>
+        </YStack>
       </View>
     </YStack>
   );

@@ -117,7 +117,7 @@ const Login: React.FC = () => {
                 height={64}
                 alt="spotify-logo"
                 src={require("@/assets/images/spotify-black.svg")}
-                style={{ height: 20, width: 20 }}
+                style={{ height: 22, width: 22 }}
                 objectFit="contain"
               />
             }

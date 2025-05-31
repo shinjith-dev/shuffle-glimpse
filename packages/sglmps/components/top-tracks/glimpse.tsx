@@ -41,17 +41,16 @@ const TopTracksGlimpse: React.FC = () => {
         label: "Name",
         width: width < 1500 ? (width < 1028 ? "83%" : "85%") : "50%",
       },
-      { key: "saved", label: "", width: "5%" },
     ];
 
     return [
-      ...base.slice(0, 2),
+      ...base,
       ...(width >= 1500
         ? [{ key: "album.name", label: "Album", width: "35%" } as HeaderItem]
         : []),
-      ...base.slice(2),
       ...(width >= 1028
         ? [
+            { key: "saved", label: "", width: "5%" } as HeaderItem,
             {
               key: "duration",
               label: (

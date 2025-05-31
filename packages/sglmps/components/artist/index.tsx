@@ -1,5 +1,5 @@
 "use client";
-import { IconButton, OutlinedButton, YStack } from "@/ui";
+import { Button, IconButton, YStack } from "@/ui";
 import styles from "./style";
 import { useArtist } from "@/queries";
 import ArtistGradient from "./gradient";
@@ -118,14 +118,23 @@ const Artist: React.FC<Props> = ({ artistId }) => {
                 FOLLOWERS
               </Text>
 
-              <OutlinedButton
+              <Button
+                size={isMobile ? "md" : "lg"}
                 style={{ marginTop: 20 }}
-                size={isMobile ? "sm" : "md"}
-                color="secondary"
+                startIcon={
+                  <Image
+                    width={64}
+                    height={64}
+                    alt="spotify-logo"
+                    src={require("@/assets/images/spotify-white.svg")}
+                    style={{ height: 22, width: 22 }}
+                    objectFit="contain"
+                  />
+                }
                 onClick={() => router.push(artist.external_urls.spotify)}
               >
                 Show on Spotify
-              </OutlinedButton>
+              </Button>
             </YStack>
           ) : (
             <View>

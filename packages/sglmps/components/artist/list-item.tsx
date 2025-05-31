@@ -1,10 +1,11 @@
-import Text from "@/ui/text";
 import { memo } from "react";
 import styles from "./style";
 import { Avatar } from "@/ui/avatar";
-import { Pressable } from "react-native";
+import { Pressable, View } from "react-native";
 import useRouter from "@/hooks/useRouter";
 import { useWidth } from "@/hooks";
+import { TextButton } from "@/ui";
+import Image from "@/ui/image";
 
 interface Props {
   artist: ArtistItem;
@@ -24,31 +25,37 @@ const ArtistItem: React.FC<Props> = memo(({ artist }) => {
       : undefined;
 
   return (
-    <Pressable
-      onPress={() => router.push(`/artist/${artist.id}`)}
-      style={({ pressed, hovered }) => [
-        styles.artistItem,
-        (pressed || hovered) && styles.artistItemHovered,
-        isMobile && { maxWidth: 136 },
-      ]}
-    >
-      {image && (
-        <Avatar
-          size={isMobile ? "5xl" : "8xl"}
-          src={image.url}
-          avatarProps={{
-            style: styles.artistItemAvatar,
-          }}
-        />
-      )}
-      <Text
-        style={{ textAlign: "center" }}
-        variant={isMobile ? "body2" : "body1"}
-        numberOfLines={2}
+    <View style={[styles.artistItem, isMobile && { maxWidth: 136 }]}>
+      <button
+        className="mb-2 cursor-pointer"
+        onClick={() => router.push(artist.external_urls.spotify)}
+        title="Open in Spotify"
       >
+        <Image
+          width={64}
+          height={64}
+          alt="spotify-logo"
+          src={require("@/assets/images/text-spotify-white.svg")}
+          style={{ height: 22, width: 72 }}
+          objectFit="contain"
+        />
+      </button>
+
+      <Pressable onPress={() => router.push(`/artist/${artist.id}`)}>
+        {image && (
+          <Avatar
+            size={isMobile ? "5xl" : "8xl"}
+            src={image.url}
+            avatarProps={{
+              style: styles.artistItemAvatar,
+            }}
+          />
+        )}
+      </Pressable>
+      <TextButton color="primary" style={{ textAlign: "center" }}>
         {artist.name}
-      </Text>
-    </Pressable>
+      </TextButton>
+    </View>
   );
 });
 

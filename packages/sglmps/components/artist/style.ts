@@ -1,16 +1,13 @@
-import { opacity, THEME } from "@/lib";
+import { THEME } from "@/lib";
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   artistItem: {
-    gap: 12,
+    gap: 8,
     alignItems: "center",
     maxWidth: 196,
     padding: 8,
     borderRadius: 4,
-  },
-  artistItemHovered: {
-    backgroundColor: opacity(THEME.color["bg-30"], 0.2),
   },
   artistItemAvatar: {},
   artistContainer: {
